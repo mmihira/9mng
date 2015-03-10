@@ -1,0 +1,73 @@
+
+_glbl.fns.goToDashboard = function()
+{
+    // Remove the 
+    _glbl.main.contents().detach();
+    _glbl.main.append(glel.dsb_main);
+    
+    
+    _glbl.flotplot.createNetCashFlow(["2014","2015"]);
+    _glbl.flotplot.createNewNetPosition(["2014","2015"]);
+    
+};
+
+
+function createDashboard()
+{
+    glel.dsb_main = document.createElement("div");
+    glel.dsb_main.className = "dsbparent";
+    glel.dsb_main.style.width = "1200px";
+        
+        // Div to hold the options after the title
+        glel.dsb_choice_main = document.createElement("div");
+        glel.dsb_choice_main.className = "dsbchoicemain";
+        
+            //The buttons
+            glel.dsb_choice_btn_save = document.createElement("div");
+            glel.dsb_choice_btn_save.className = "dsbchoicebtn";
+            glel.dsb_choice_btn_save.innerHTML = "Save";
+            $(glel.dsb_choice_btn_save).on("click",_glbl.fns.saveDBToFile);
+            glel.dsb_choice_spacer1 = document.createElement("div");
+            glel.dsb_choice_spacer1.className = "dsbbtnspacer";
+            glel.dsb_choice_btn_add = document.createElement("div");
+            glel.dsb_choice_btn_add.className = "dsbchoicebtn";
+            glel.dsb_choice_btn_add.innerHTML = "Update DB"; 
+            $(glel.dsb_choice_btn_add).on("click",_glbl.fns.goToLoadFromNewPage);
+            
+            glel.dsb_choice_main.appendChild(glel.dsb_choice_btn_save);
+            glel.dsb_choice_main.appendChild(glel.dsb_choice_spacer1);
+            glel.dsb_choice_main.appendChild(glel.dsb_choice_btn_add);
+        
+        // Div to to hold the title name
+        glel.dsb_netcashflow_title = document.createElement("div");
+        glel.dsb_netcashflow_title.className = "netCashFlowTitle";
+        glel.dsb_netcashflow_title.innerHTML = "<br>Net Cash Flow<br>";
+    
+        // The div to hold the net cash flow chart
+        glel.dsb_netcashflow_flot = document.createElement("div");
+        glel.dsb_netcashflow_flot.id ="dsb_netcashflow_flot";
+        glel.dsb_netcashflow_flot.className = "dsbnetcashflowflot";        
+        glel.dsb_netcashflow_flot.style.width = "1200px";        
+        glel.dsb_netcashflow_flot.style.height = "300px";
+        
+        // Div to to hold the title name
+        glel.dsb_netposition_title = document.createElement("div");
+        glel.dsb_netposition_title.className = "netPositionTitle";
+        glel.dsb_netposition_title.innerHTML = "<br>Net Position<br>";        
+        
+        // The div to hold the net position.
+        glel.dsb_netposition_flot = document.createElement("div");
+        glel.dsb_netposition_flot.id ="dsb_netPosition_flot";
+        glel.dsb_netposition_flot.className = "dsbnetPositionFlot";        
+        glel.dsb_netposition_flot.style.width = "1200px";        
+        glel.dsb_netposition_flot.style.height = "300px";
+    
+    glel.dsb_main.appendChild(glel.dsb_choice_main);
+    glel.dsb_main.appendChild(glel.dsb_netcashflow_title);
+    glel.dsb_main.appendChild(glel.dsb_netcashflow_flot);
+    glel.dsb_main.appendChild(glel.dsb_netposition_title);
+    glel.dsb_main.appendChild(glel.dsb_netposition_flot);
+    
+    
+    
+};

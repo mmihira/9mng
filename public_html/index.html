@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="main.css" type="text/css">
+        <link rel="stylesheet" href="dashboard.css" type="text/css">
+        <link rel="stylesheet" href="save_page_css.css" type="text/css">
+        <script type="text/javascript" src="jquery-2.1.3.min.js"></script>
+        <script type="text/javascript" src="jquery.flot.js"></script>
+        <script type="text/javascript" src="jquery.flot.categories.min.js"></script>
+        <script type="text/javascript" src="papaparse.js"></script>
+        <script type="text/javascript" src="bigdecimal.js"></script>
+        <script type="text/javascript" src="appglobals.js"></script>
+        <script type="text/javascript" src="categorisefns.js"></script>
+        <script type="text/javascript" src="db_interface.js"></script>
+        <script type="text/javascript" src="db_interface_chart_data.js"></script>
+        <script type="text/javascript" src="db_interface_ext.js"></script>
+        <script type="text/javascript" src="upload_page.js"></script>
+        <script type="text/javascript" src="exist_update_page.js"></script>
+        <script type="text/javascript" src="dashboard.js"></script>
+        <script type="text/javascript" src="save_page.js"></script>
+        
+        <script type="text/javascript" src="plot_charts.js"></script>
+
+    </head>
+    <body>
+        <div class="Header" id="header"> 
+            <div style="display: table-cell; vertical-align: middle;">
+                <div>
+                    Finance Dashboard
+                </div>
+            </div>
+        </div>
+        <div id ="main">
+            <!--            <div class="initchoice">
+                                <div style ="display:inline-table;height:100%;width:100%">
+                                        <div style="display:table-cell;vertical-align: middle;">
+                                            <a href="xx.html"><h1>Load from existing database</h1></a>
+                                        </div>
+                                </div>
+                        </div>-->
+            <!--            <input type="file" id="fileToLoad">
+                        <button onclick="loadFileAsText()">Load Selected File</button>-->
+        </div>
+        <script>
+
+            /**
+             * All function start with lower case. New words in the name dont have space but start with Capital letter
+             * All object have a simple letter to start. words seperated by _, and proceeding words start with lower case
+             * All integers start with _ and then same rules as objects applies.
+             * All function parameters with same name as some name inside function should start with p_
+             */
+            
+            /* Execution point for all code created starts from here. Only exception is 3rd party libraries and the appglobals*/           
+            _glbl.main = $("#main");
+
+            /*********************************** CREATE THE STARTING PAGE **********************************/
+            
+            /**
+             * Creates the initial button visible to user
+             * 
+             * @param _w width of element
+             * @param _h height elment
+             * @param text A string which is put in between the h tag
+             * @param onclick the click call back function    
+             * @return An object with all elements created
+             */
+            createIntBtn = function (_w, _h, text, onclick)
+            {
+                ret = {btn1_parent_div: document.createElement("div"),
+                    btn1_table_div: document.createElement("div"),
+                    btn1_tablecell_div: document.createElement("div")
+                };
+
+                ret.btn1_parent_div.className = "initchoice";
+                ret.btn1_parent_div.style.height = _h + "px";
+                ret.btn1_parent_div.style.width = _w + "px";
+
+                ret.btn1_table_div.style.display = "inline-table";
+                ret.btn1_table_div.style.height = _h + "px";
+                ret.btn1_table_div.style.width = _w + "px";
+
+
+                ret.btn1_tablecell_div.style.display = "table-cell";
+                ret.btn1_tablecell_div.style.verticalAlign = "middle";
+
+                ret.btn1_text_h1 = document.createElement("h1");
+                ret.btn1_text_h1.innerHTML = text;
+
+                ret.btn1_tablecell_div.appendChild(ret.btn1_text_h1);
+                ret.btn1_table_div.appendChild(ret.btn1_tablecell_div);
+                ret.btn1_parent_div.appendChild(ret.btn1_table_div);
+
+                ret.btn1_tablecell_div.addEventListener("click", onclick);
+
+                return ret;
+            };
+            
+            
+            createNew = function ()
+            {
+                _glbl.main.empty();
+            };
+            glel.strt_pg_btn1 = createIntBtn(1200, 200, "Load from existing data", _glbl.fns.goToExtDatabasePage);
+            glel.strt_pg_btn2 = createIntBtn(1200, 200, "Create new database", _glbl.fns.goToLoadFromNewPage);
+
+            _glbl.main.append(glel.strt_pg_btn1.btn1_parent_div);
+            _glbl.main.append(glel.strt_pg_btn2.btn1_parent_div);
+
+           
+            // Create the create from new page
+            createUploadpage();
+            createDashboard();
+            createSavePage();
+
+        </script>
+    </body>
+</html>
