@@ -1,20 +1,27 @@
 // function for handling a txt file with existing database
 _glbl.dbint.addExtToDatabase = function (data)
 {
+    // Log program progress
     glel.cn_consolemain.innerHTML += "Parsing complete.";
     glel.cn_consolemain.innerHTML += "Rows of data to process : " + data.data.length + "<br>";
     
+    // Make a reference to the results from papa parse.
     var x = data.data;
     
     // The first part of the data will be category and configuration data
     // format is like this key,value;.......;key=%catend;value=0; .. database rows begin.
-    var z = 0;
+    
+    var z = 0;                                                  // Variable keeps track of index in x
     glel.cn_consolemain.innerHTML += "Adding category data.<br>";
-    var catcounter = 0;
-    var catendreached = false;
+    var catcounter = 0;                                         // Variable for counting the number of user categories added.
+    var catendreached = false;                                  // Variable to signal when "%catend" is read.
+    
+    // While not reached the end of category data, add any user categories.
     while(catendreached === false)
     {
+        // Remove when debugging not required.
         console.log(x[z]);
+        
         // Data validation to ignore empty rows ( they occur in downloaded netbank text files )
         if (x[z].length === 0)
         {
@@ -26,22 +33,23 @@ _glbl.dbint.addExtToDatabase = function (data)
             glel.cn_consolemain.innerHTML += "<span style=\"color:red\">The row was ignored.</span><br>";
             z++;
         }
+        // Reached the end of the user category data.
         else if (x[z][0] === "%catend")
         {
-            // Reached the end of the categoryend
             z++;
             catendreached = true;
-             
         }
         else
+        // Add to the user category to the database.
         {
-            // add to the category
             _glbl.cat[x[z][0]] = x[z][1];
             catcounter++;
             z++;
         }
+        // Remove when debugging not required.
         console.log(z + " " + catcounter);
     }
+    
     glel.cn_consolemain.innerHTML += catcounter + " entries was added to category file.<br>";
     
     var added_cnt = 0;
@@ -88,7 +96,8 @@ _glbl.dbint.addExtToDatabase = function (data)
                 // add the month
                 _glbl.db.d_map[w.acc][w.year][w.month] = {currindex:"0",data:[]};            
             }
-
+            
+            
             _glbl.db.d_map[w.acc][w.year][w.month].data.push([]);
             var curr_len = _glbl.db.d_map[w.acc][w.year][w.month].data.length;
             var curr_id = _glbl.db.d_map[w.acc][w.year][w.month].currindex; 
@@ -99,18 +108,19 @@ _glbl.dbint.addExtToDatabase = function (data)
             }
 
             // Add data to the the associative database.
-            tmp_rf[z.day] = w.day; // Day
-            tmp_rf[z.month] = w.month; // Month
-            tmp_rf[z.year] = w.year; // Year
-            tmp_rf[z.desc] = w.desc; // Descript
-            tmp_rf[z.val] = new BigDecimal(w.val); // Value -  We reference it  but all other existing should be deleted after the function returns 
-            tmp_rf[z.bal] = new BigDecimal(w.bal); // Balance - We reference it  but all other existing should be deleted after the function returns
+            tmp_rf[z.day] = w.day;                  // Day
+            tmp_rf[z.month] = w.month;              // Month
+            tmp_rf[z.year] = w.year;                // Year
+            tmp_rf[z.desc] = w.desc;                // Descript
+            tmp_rf[z.val] = new BigDecimal(w.val);  // Value -  We reference it  but all other existing should be deleted after the function returns 
+            tmp_rf[z.bal] = new BigDecimal(w.bal);  // Balance - We reference it  but all other existing should be deleted after the function returns
             tmp_rf[z.uid] = w.uid;
             _glbl.db.d_map[w.acc][w.year][w.month].currindex = (parseInt(_glbl.db.d_map[w.acc][w.year][w.month].currindex)+1).toString();
             
             
             
-            // Also add to all data;
+            // Also add to all data
+            
             _glbl.db.all_data.push([]);
             var all_data_len = _glbl.db.all_data.length;
             for(var xx in _glbl.dba)
