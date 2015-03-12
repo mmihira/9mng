@@ -38,9 +38,9 @@ _glbl.cat = {
 _glbl.catg.categorise = function (vstring, ndx)
 {
     var foundmatch = false;
-    for ( k in _glbl.cat)
+    for ( var k in _glbl.cat)
     {
-        if( vstring[ndx].search(k) !== -1)
+        if( vstring[ndx].toLowerCase().search(k) !== -1)
         {
             // found a match
             return _glbl.cat[k];
@@ -53,6 +53,24 @@ _glbl.catg.categorise = function (vstring, ndx)
     {
         return "NA";
     }    
+    
+};
+
+
+/**
+* A function created to convert the database from pre category version to category versions.
+* Not used in final version of the program.
+*/
+_glbl.catg.convcat = function()
+{
+    var x = _glbl.db.all_data;            // Temporary reference to the all_data database. 
+    // Loop through all the data in all_data and categorise as necesary.
+    for( var i in x)
+    {
+        x[i][_glbl.dba.cat] = _glbl.catg.categorise(x[i],_glbl.dba.desc);
+        console.log(x[i][_glbl.dba.desc] + " was categorised as a : " + x[i][_glbl.dba.cat] );
+    }
+    
     
 };
 
