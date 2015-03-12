@@ -1,6 +1,10 @@
 // All global variables
 _glbl = {
-            db : {      all_data: [], 
+            db : {      
+                        /*
+                         * All data has structure like {[dba structure],[],[]}
+                         */
+                        all_data: [], 
                         d_map : {}
             },
             
@@ -24,7 +28,8 @@ _glbl = {
                         year:3,
                         desc:4,
                         val:5,
-                        bal:6                                
+                        bal:6,
+                        cat:7
             },
             // all database
             dba: {
@@ -34,9 +39,10 @@ _glbl = {
                         month:3,
                         year:4,
                         desc:5,
-                        val:6, // BigDecimal object
-                        bal:7, // BigDecimal object
-                        cid:8  //for comparing 
+                        val:6,  // BigDecimal object
+                        bal:7,  // BigDecimal object
+                        cid:8,  // for comparing
+                        cat:9   // Category 
             },
             // the temporary data base used when first processing data from raw bank csv.
             tdb:{
