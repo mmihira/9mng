@@ -44,7 +44,7 @@ _glbl = {
                         cid:8,  // for comparing
                         cat:9   // Category 
             },
-            // the temporary data base used when first processing data from raw bank csv.
+            // The temporary data base used when first processing data from raw bank csv.
             tdb:{
                         preid:0,
                         day:1,
@@ -56,6 +56,8 @@ _glbl = {
                         cid:7, //for comparing 
                         acc:8
             },
+            
+            // Please comment on what this does....
             retindex : function(type)
             {
                 var ret = {};
