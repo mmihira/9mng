@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.2">
+  <help_text/>
+  <zoom_level>8</zoom_level>
+  <element>
+    <type>com.baselet.element.old.allinone.ActivityDiagramText</type>
+    <coordinates>
+      <x>0</x>
+      <y>0</y>
+      <w>705</w>
+      <h>987</h>
+    </coordinates>
+    <panel_attributes>title:program main
+Start
+	Idoc:index.html\fn = _glbl.fns.goToExtDatabasePage()
+	Indoc:index.html\fn= _glbl.goToLoadFromNewPage()
+	Fork
+		[User clicks load from exisiting]
+			
+		[User clicks Create new database]
+		Indoc:upload_page.js\Infn:_glbl.goToLoadFromNewPage()\- Add listener _glbl.fns.uploadFile() to btn \- Add acc selection menue\- Append cn_upload_main to main div\- Append cn_consolemain to main div
+		[User clicks upload file btn]
+		Indoc:upload_page.js\Infn:_glbl.fns.uploadFile()\- Create config var and attach \  callback _glbl.fns.cnPapaComplete()\- Parse file using papa parse using config var
+		[Thread blocks while parsing completes]
+		Indoc:upload_page.js\Infn:_glbl.fns.cnPapComplete( results ) where\papaparse binds results\- call _glbl.dbint.addNewToDatabase( results)
+		InDoc:db_interface.js\Infn:_glbl.dbint.addNewToDatabase( results ) 
+		If
+			[acc selected \is MASTER]
+			_glbl.dbint.compPapaData(results,acc,true)\ is called
+	
+			[acc selected \is not MASTER]
+			_glbl.dbint.compPapaData(results,acc,false)\ is called
+		
+End
+
+layer=1
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
