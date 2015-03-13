@@ -109,6 +109,7 @@ _glbl.dbint.addNewToDatabase = function (data)
      * Called after a raw file (from a bank) is parsed using PapaParse
      * 
      * @param {papaparse data} data is the results object which PapaParse will create form an object
+     * @returns {[bool,[[],[],...]} the bool indicates wether the function completed successfully.
      * 
      */
     _glbl.dbint.compPapaData = function (data, acc,mcheck)
