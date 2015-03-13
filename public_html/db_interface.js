@@ -1,5 +1,13 @@
 /* A collection of functions which work interfaces with the database object */
 
+/**
+* Given an entry in all_data return the matching entry in 
+* 
+* @param {[vector] v, int ndx} the string to categorise is accessed like this v[ndx]
+* @return {string} the category if found or "NA" if not found. 
+* 
+*/
+
 _glbl.dbint.addNewToDatabase = function (data)
     {
         var acc = glel.cn_acc_selection_drop_down.value;
@@ -506,80 +514,68 @@ _glbl.dbint.addNewToDatabase = function (data)
         for (var j = 0; j < pX.length; j++ )
         {
 
-             var i = pX[j];
+            var i = pX[j];
 
-             // If there is no account index in d_map
-             if (_glbl.db.d_map.hasOwnProperty(i[8]) === false)
-             {
-                 // No need to check against duplicate entries
-                 _glbl.db.d_map[i[8]] = {};
-                 glel.cn_consolemain.innerHTML += "Created account : "+ i[8] + " in database.<br>";
-                 // Add the year
-                 _glbl.db.d_map[i[8]][i[3]] = {};
-                 // add the month
-                 _glbl.db.d_map[i[8]][i[3]][i[2]] = {currindex:"0",data:[]};
-                 // now add the data
-                 _glbl.dbint.addEntryToDb(i[8],i[3],i[2], i);
-                 addedcounter ++;
-             }
-             else
-             {               
-                 // If there is no year then add
-                 
-                 if(_glbl.db.d_map[i[8]].hasOwnProperty(i[3]) === false)
-                 {
-                     // add to the database
-                     _glbl.dbint.addEntryToDb(i[8],i[3],i[2], i);
-                     addedcounter ++;
-                 }
-                 else if(_glbl.db.d_map[i[8]].hasOwnProperty(i[2]) === false) 
-                 {
-                     // add to the database
-                     _glbl.dbint.addEntryToDb(i[8],i[3],i[2], i);
-                     addedcounter ++;
-                 }    
-                 else
-                 {
-                     // Try and find a repeat.
-                     var repeat_found = 0;
-                     for( var z = 0 ; z < _glbl.db.all_data.length;)
-                     {
-                        if( _glbl.db.all_data[z][_glbl.dba.acc] === i[8] && _glbl.db.all_data[z][_glbl.dba.cid] === i[_glbl.tdb.cid]  )
-                        {
-                            // repeat found if we find another repeat in the next entry
-                            // then don't insert either value
-                            if( (z+1) < _glbl.db.all_data.length && (j+1) < pX.length )
-                            {
-                                var k = pX[j+1];
-                                if(_glbl.db.all_data[z+1][_glbl.dba.cid] === k[_glbl.tdb.cid] )
-                                {
-                                    // inform the user than two conseuctive repeats were found.
-                                    glel.cn_consolemain.innerHTML += "Two conscuitve repeats were found when trying to add MASTER data.<br>";
-                                    glel.cn_consolemain.innerHTML += _glbl.db.all_data[z][_glbl.dba.cid]+"<br>";
-                                    glel.cn_consolemain.innerHTML += _glbl.db.all_data[z+1][_glbl.dba.dec]+"<br>";
-                                    glel.cn_consolemain.innerHTML += "Both were ignored.<br>";
-                                    repeat_found = 1;
-                                }
-                                else
-                                {
-                                    
-                                }
-                            }
-                        }
-                     }
-                     
-                     if(repeat_found)
-                     {
-                         // don't insert 
-                     }
-                     else
-                     {
-                         // insert
-                         _glbl.dbint.addEntryToDb(i[8],i[3],i[2], i);
-                     addedcounter ++;
-                     }
-                 }     
-             }
+            // If there is no account index in d_map
+            if (_glbl.db.d_map.hasOwnProperty(i[8]) === false)
+            {
+                _glbl.dbint.addEntryToDb(i[8],i[3],i[2], i);
+                addedcounter ++;
+            }
+            else if(_glbl.db.d_map[i[8]].hasOwnProperty(i[3]) === false)
+            {
+                // add to the database
+                _glbl.dbint.addEntryToDb(i[8],i[3],i[2], i);
+                addedcounter ++;
+            }
+            else if(_glbl.db.d_map[i[8]].hasOwnProperty(i[2]) === false) 
+            {
+                // add to the database
+                _glbl.dbint.addEntryToDb(i[8],i[3],i[2], i);
+                addedcounter ++;
+            }    
+            else
+            {
+                // Try and find a repeat.
+                var repeat_found = 0;
+                for( var z = 0 ; z < _glbl.db.all_data.length;)
+                {
+                   if( _glbl.db.all_data[z][_glbl.dba.acc] === i[8] && _glbl.db.all_data[z][_glbl.dba.cid] === i[_glbl.tdb.cid]  )
+                   {
+                       // repeat found if we find another repeat in the next entry
+                       // then don't insert either value
+                       if( (z+1) < _glbl.db.all_data.length && (j+1) < pX.length )
+                       {
+                           var k = pX[j+1];
+                           if(_glbl.db.all_data[z+1][_glbl.dba.cid] === k[_glbl.tdb.cid] )
+                           {
+                               // inform the user than two conseuctive repeats were found.
+                               glel.cn_consolemain.innerHTML += "Two conscuitve repeats were found when trying to add MASTER data.<br>";
+                               glel.cn_consolemain.innerHTML += _glbl.db.all_data[z][_glbl.dba.cid]+"<br>";
+                               glel.cn_consolemain.innerHTML += _glbl.db.all_data[z+1][_glbl.dba.dec]+"<br>";
+                               glel.cn_consolemain.innerHTML += "Both were ignored.<br>";
+                               repeat_found = 1;
+                           }
+                           else
+                           {
+
+                           }
+                       }
+                   }
+                }
+
+                if(repeat_found)
+                {
+                    // don't insert 
+                }
+                else
+                {
+                    // insert
+                    _glbl.dbint.addEntryToDb(i[8],i[3],i[2], i);
+                addedcounter ++;
+                }
+            }     
+            
         }
         glel.cn_consolemain.innerHTML +="Added " + addedcounter + " entries to database.<br>";
     };
