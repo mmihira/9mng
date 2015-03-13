@@ -446,22 +446,22 @@ _glbl.dbint.addNewToDatabase = function (data)
     {
         // No need to check against duplicate entries
         
-        if (_glbl.db.d_map.hasOwnProperty(x[8]) === false)
+        if (_glbl.db.d_map.hasOwnProperty(acc) === false)
         {
-            _glbl.db.d_map[x[8]] = {};
-            glel.cn_consolemain.innerHTML += "Created account : "+ x[8] + " in database.<br>";
+            _glbl.db.d_map[acc] = {};
+            glel.cn_consolemain.innerHTML += "Created account : "+ acc + " in database.<br>";
         }
         
-        if (_glbl.db.d_map[x[8]].hasOwnProperty(x[3]) === false)
+        if (_glbl.db.d_map[acc].hasOwnProperty(year) === false)
         {
             // Add the year
-            _glbl.db.d_map[x[8]][x[3]] = {};            
+            _glbl.db.d_map[acc][year] = {};            
         }
         
-        if (_glbl.db.d_map[x[8]][x[3]].hasOwnProperty(x[2]) === false)
+        if (_glbl.db.d_map[acc][year].hasOwnProperty(month) === false)
         {
             // add the month
-            _glbl.db.d_map[x[8]][x[3]][x[2]] = {currindex:"0",data:[]};            
+            _glbl.db.d_map[acc][year][month] = {currindex:"0",data:[]};            
         }
         
         _glbl.db.d_map[acc][year][month].data.push([]);
@@ -473,12 +473,12 @@ _glbl.dbint.addNewToDatabase = function (data)
             tmp_rf.push([]);
         }
         
-        tmp_rf[_glbl.dbs.day] = x[1]; // Day
+        tmp_rf[_glbl.dbs.day] = x[_glbl.tdb.day]; // Day
         tmp_rf[_glbl.dbs.month] = month; // Month
         tmp_rf[_glbl.dbs.year] = year; // Year
-        tmp_rf[_glbl.dbs.desc] = x[4]; // Descript
-        tmp_rf[_glbl.dbs.val] = x[5]; // Value -  We reference it  but all other existing should be deleted after the function returns 
-        tmp_rf[_glbl.dbs.bal] = x[6]; // Balance - We reference it  but all other existing should be deleted after the function returns
+        tmp_rf[_glbl.dbs.desc] = x[_glbl.tdb.desc]; // Descript
+        tmp_rf[_glbl.dbs.val] = x[_glbl.tdb.val]; // Value -  We reference it  but all other existing should be deleted after the function returns 
+        tmp_rf[_glbl.dbs.bal] = x[_glbl.tdb.bal]; // Balance - We reference it  but all other existing should be deleted after the function returns
 
         // Create the unique Id
         var tmp_id = "";
@@ -487,7 +487,7 @@ _glbl.dbint.addNewToDatabase = function (data)
             tmp_id += "0";
         }
         tmp_id += curr_id;
-        tmp_rf[_glbl.dbs.uid] = x[0] + tmp_id; // Day
+        tmp_rf[_glbl.dbs.uid] = x[_glbl.tdb.preid] + tmp_id; // Day
         _glbl.db.d_map[acc][year][month].currindex = (parseInt(_glbl.db.d_map[acc][year][month].currindex)+1).toString();
         
         // Also add to all data;
@@ -498,14 +498,14 @@ _glbl.dbint.addNewToDatabase = function (data)
             _glbl.db.all_data[all_data_len-1].push([]);
         }        
         _glbl.db.all_data[all_data_len-1][_glbl.dba.acc] = acc;
-        _glbl.db.all_data[all_data_len-1][_glbl.dba.uid] = x[0] + tmp_id;
-        _glbl.db.all_data[all_data_len-1][_glbl.dba.day] = x[1];
+        _glbl.db.all_data[all_data_len-1][_glbl.dba.uid] = x[_glbl.tdb.preid] + tmp_id;
+        _glbl.db.all_data[all_data_len-1][_glbl.dba.day] = x[_glbl.tdb.day];
         _glbl.db.all_data[all_data_len-1][_glbl.dba.month] = month;
         _glbl.db.all_data[all_data_len-1][_glbl.dba.year] = year;
-        _glbl.db.all_data[all_data_len-1][_glbl.dba.desc] = x[4];
-        _glbl.db.all_data[all_data_len-1][_glbl.dba.val] = x[5];
-        _glbl.db.all_data[all_data_len-1][_glbl.dba.bal] = x[6];
-        _glbl.db.all_data[all_data_len-1][_glbl.dba.cid] = x[7];
+        _glbl.db.all_data[all_data_len-1][_glbl.dba.desc] =x[_glbl.tdb.desc];
+        _glbl.db.all_data[all_data_len-1][_glbl.dba.val] = x[_glbl.tdb.val];
+        _glbl.db.all_data[all_data_len-1][_glbl.dba.bal] = x[_glbl.tdb.bal];
+        _glbl.db.all_data[all_data_len-1][_glbl.dba.cid] = x[_glbl.tdb.cid];
         
     };
     
@@ -518,21 +518,21 @@ _glbl.dbint.addNewToDatabase = function (data)
             var i = pX[j];
 
             // If there is no account index in d_map
-            if (_glbl.db.d_map.hasOwnProperty(i[8]) === false)
+            if (_glbl.db.d_map.hasOwnProperty(i[_glbl.tdb.acc]) === false)
             {
-                _glbl.dbint.addEntryToDb(i[8],i[3],i[2], i);
+                _glbl.dbint.addEntryToDb(i[_glbl.tdb.acc],i[_glbl.tdb.year],i[_glbl.tdb.month], i);
                 addedcounter ++;
             }
-            else if(_glbl.db.d_map[i[8]].hasOwnProperty(i[3]) === false)
+            else if(_glbl.db.d_map[i[_glbl.tdb.acc]].hasOwnProperty(i[_glbl.tdb.year]) === false)
             {
                 // add to the database
-                _glbl.dbint.addEntryToDb(i[8],i[3],i[2], i);
+                _glbl.dbint.addEntryToDb(i[_glbl.tdb.acc],i[_glbl.tdb.year],i[_glbl.tdb.month], i);
                 addedcounter ++;
             }
-            else if(_glbl.db.d_map[i[8]].hasOwnProperty(i[2]) === false) 
+            else if(_glbl.db.d_map[i[_glbl.tdb.acc]].hasOwnProperty(i[_glbl.tdb.month]) === false) 
             {
                 // add to the database
-                _glbl.dbint.addEntryToDb(i[8],i[3],i[2], i);
+                _glbl.dbint.addEntryToDb(i[_glbl.tdb.acc],i[_glbl.tdb.year],i[_glbl.tdb.month], i);
                 addedcounter ++;
             }    
             else
@@ -541,7 +541,7 @@ _glbl.dbint.addNewToDatabase = function (data)
                 var repeat_found = 0;
                 for( var z = 0 ; z < _glbl.db.all_data.length;)
                 {
-                   if( _glbl.db.all_data[z][_glbl.dba.acc] === i[8] && _glbl.db.all_data[z][_glbl.dba.cid] === i[_glbl.tdb.cid]  )
+                   if( _glbl.db.all_data[z][_glbl.dba.acc] === i[_glbl.tdb.acc] && _glbl.db.all_data[z][_glbl.dba.cid] === i[_glbl.tdb.cid]  )
                    {
                        // repeat found if we find another repeat in the next entry
                        // then don't insert either value
@@ -572,7 +572,7 @@ _glbl.dbint.addNewToDatabase = function (data)
                 else
                 {
                     // insert
-                    _glbl.dbint.addEntryToDb(i[8],i[3],i[2], i);
+                    _glbl.dbint.addEntryToDb(i[_glbl.tdb.acc],i[_glbl.tdb.year],i[_glbl.tdb.month], i);
                 addedcounter ++;
                 }
             }     
@@ -583,7 +583,7 @@ _glbl.dbint.addNewToDatabase = function (data)
     
     /**
      * 
-     * @param {vector temp db} pX
+     * @param {tdb type database} pX
      * @returns {Boolean}
      */
     _glbl.dbint.addToAllData = function (pX)
@@ -595,17 +595,17 @@ _glbl.dbint.addNewToDatabase = function (data)
             var i = pX[j];
            
             // If there is no account index in d_map
-            if (_glbl.db.d_map.hasOwnProperty(i[8]) === false)
+            if (_glbl.db.d_map.hasOwnProperty(i[_glbl.tdb.acc]) === false)
             {
                 // now add the data
-                _glbl.dbint.addEntryToDb(i[8],i[3],i[2], i);
+                _glbl.dbint.addEntryToDb(i[_glbl.tdb.acc],i[_glbl.tdb.year],i[_glbl.tdb.month], i);
                 addedcounter ++;
             }
             else
             {
                 // Get the last data input in the account
                 var l_y = "0000";
-                var map_ref = _glbl.db.d_map[i[8]];
+                var map_ref = _glbl.db.d_map[i[_glbl.tdb.acc]];
                 for (var m in map_ref)
                 {
                     if( parseInt(l_y) < parseInt(m))
@@ -624,18 +624,18 @@ _glbl.dbint.addNewToDatabase = function (data)
                 var l_x = map_ref[l_y][l_m].data[map_ref[l_y][l_m].data.length -1];
                 // Add to the database if the order is kept
                 // Otherwise throw an error and stop adding data. 
-                var order_test = i[6].compareTo(l_x[6].add(i[5]));
+                var order_test = i[_glbl.tdb.bal].compareTo(l_x[_glbl.tdb.bal].add(i[_glbl.tdb.val]));
                 // If it compare equal add the entry
                 if( order_test === 0)
                 {
                     // Now add the data.
-                    _glbl.dbint.addEntryToDb(i[8],i[3],i[2], i);
+                    _glbl.dbint.addEntryToDb(i[_glbl.tdb.acc],i[_glbl.tdb.year],i[_glbl.tdb.month], i);
                     addedcounter ++;
                 }
                 else
                 {
                     // Log what was not added.
-                    glel.cn_consolemain.innerHTML += "<span style=\"color:red\">" + "Out of order in database. Not added : " + i[0] + " " + i[4] + "</span><br>";
+                    glel.cn_consolemain.innerHTML += "<span style=\"color:red\">" + "Out of order in database. Not added : " + i[_glbl.tdb.preid] + " " + i[_glbl.tdb.desc] + "</span><br>";
                     
                 }
             }
