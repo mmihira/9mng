@@ -22,14 +22,16 @@ _glbl = {
             // structure database
             dbs: {
                         uidmaxlen:4,
-                        uid:0,
-                        day:1,
-                        month:2,
-                        year:3,
-                        desc:4,
-                        val:5,
-                        bal:6,
-                        cat:7
+                        acc:0,
+                        uid:1,
+                        day:2,
+                        month:3,
+                        year:4,
+                        desc:5,
+                        val:6,  // BigDecimal object
+                        bal:7,  // BigDecimal object
+                        cid:8,  // for comparing
+                        cat:9   // Category
             },
             // all database
             dba: {

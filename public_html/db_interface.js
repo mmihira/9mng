@@ -472,14 +472,15 @@ _glbl.dbint.addNewToDatabase = function (data)
         {
             tmp_rf.push([]);
         }
-        
+        tmp_rf[_glbl.dbs.acc] = acc;
         tmp_rf[_glbl.dbs.day] = x[_glbl.tdb.day]; // Day
         tmp_rf[_glbl.dbs.month] = month; // Month
         tmp_rf[_glbl.dbs.year] = year; // Year
         tmp_rf[_glbl.dbs.desc] = x[_glbl.tdb.desc]; // Descript
         tmp_rf[_glbl.dbs.val] = x[_glbl.tdb.val]; // Value -  We reference it  but all other existing should be deleted after the function returns 
         tmp_rf[_glbl.dbs.bal] = x[_glbl.tdb.bal]; // Balance - We reference it  but all other existing should be deleted after the function returns
-
+        tmp_rf[_glbl.dba.cid] = x[_glbl.tdb.cid];
+        
         // Create the unique Id
         var tmp_id = "";
         for ( var k = 0 ; k < _glbl.dbs.uidmaxlen - curr_id.length; k++)
@@ -491,21 +492,7 @@ _glbl.dbint.addNewToDatabase = function (data)
         _glbl.db.d_map[acc][year][month].currindex = (parseInt(_glbl.db.d_map[acc][year][month].currindex)+1).toString();
         
         // Also add to all data;
-        _glbl.db.all_data.push([]);
-        var all_data_len = _glbl.db.all_data.length;
-        for(var xx in _glbl.dba)
-        {
-            _glbl.db.all_data[all_data_len-1].push([]);
-        }        
-        _glbl.db.all_data[all_data_len-1][_glbl.dba.acc] = acc;
-        _glbl.db.all_data[all_data_len-1][_glbl.dba.uid] = x[_glbl.tdb.preid] + tmp_id;
-        _glbl.db.all_data[all_data_len-1][_glbl.dba.day] = x[_glbl.tdb.day];
-        _glbl.db.all_data[all_data_len-1][_glbl.dba.month] = month;
-        _glbl.db.all_data[all_data_len-1][_glbl.dba.year] = year;
-        _glbl.db.all_data[all_data_len-1][_glbl.dba.desc] =x[_glbl.tdb.desc];
-        _glbl.db.all_data[all_data_len-1][_glbl.dba.val] = x[_glbl.tdb.val];
-        _glbl.db.all_data[all_data_len-1][_glbl.dba.bal] = x[_glbl.tdb.bal];
-        _glbl.db.all_data[all_data_len-1][_glbl.dba.cid] = x[_glbl.tdb.cid];
+        _glbl.db.all_data.push(tmp_rf);
         
     };
     
@@ -529,7 +516,7 @@ _glbl.dbint.addNewToDatabase = function (data)
                 _glbl.dbint.addEntryToDb(i[_glbl.tdb.acc],i[_glbl.tdb.year],i[_glbl.tdb.month], i);
                 addedcounter ++;
             }
-            else if(_glbl.db.d_map[i[_glbl.tdb.acc]].hasOwnProperty(i[_glbl.tdb.month]) === false) 
+            else if(_glbl.db.d_map[i[_glbl.tdb.acc]][i[_glbl.tdb.year]].hasOwnProperty(i[_glbl.tdb.month]) === false) 
             {
                 // add to the database
                 _glbl.dbint.addEntryToDb(i[_glbl.tdb.acc],i[_glbl.tdb.year],i[_glbl.tdb.month], i);
@@ -539,29 +526,18 @@ _glbl.dbint.addNewToDatabase = function (data)
             {
                 // Try and find a repeat.
                 var repeat_found = 0;
-                for( var z = 0 ; z < _glbl.db.all_data.length;)
+                for( var z = 0 ; z < _glbl.db.all_data.length;z++)
                 {
                    if( _glbl.db.all_data[z][_glbl.dba.acc] === i[_glbl.tdb.acc] && _glbl.db.all_data[z][_glbl.dba.cid] === i[_glbl.tdb.cid]  )
                    {
-                       // repeat found if we find another repeat in the next entry
-                       // then don't insert either value
-                       if( (z+1) < _glbl.db.all_data.length && (j+1) < pX.length )
-                       {
-                           var k = pX[j+1];
-                           if(_glbl.db.all_data[z+1][_glbl.dba.cid] === k[_glbl.tdb.cid] )
-                           {
-                               // inform the user than two conseuctive repeats were found.
-                               glel.cn_consolemain.innerHTML += "Two conscuitve repeats were found when trying to add MASTER data.<br>";
-                               glel.cn_consolemain.innerHTML += _glbl.db.all_data[z][_glbl.dba.cid]+"<br>";
-                               glel.cn_consolemain.innerHTML += _glbl.db.all_data[z+1][_glbl.dba.dec]+"<br>";
-                               glel.cn_consolemain.innerHTML += "Both were ignored.<br>";
-                               repeat_found = 1;
-                           }
-                           else
-                           {
-
-                           }
-                       }
+                        // repeat found if we find another repeat in the next entry
+                        // then don't insert value
+                        // inform the user than two conseuctive repeats were found.
+                        glel.cn_consolemain.innerHTML += "Repeats were found when trying to add MASTER data.<br>";
+                        glel.cn_consolemain.innerHTML += _glbl.db.all_data[z][_glbl.dba.cid]+"<br>";
+                        glel.cn_consolemain.innerHTML += i[_glbl.tdb.cid]+"<br>";
+                        glel.cn_consolemain.innerHTML += "The data was not inserted.<br>";
+                        repeat_found = 1;
                    }
                 }
 
@@ -573,7 +549,7 @@ _glbl.dbint.addNewToDatabase = function (data)
                 {
                     // insert
                     _glbl.dbint.addEntryToDb(i[_glbl.tdb.acc],i[_glbl.tdb.year],i[_glbl.tdb.month], i);
-                addedcounter ++;
+                    addedcounter ++;
                 }
             }     
             

@@ -74,9 +74,8 @@ _glbl.dbint.addExtToDatabase = function (data)
             // insert
             // No need to check against duplicate entries
             
-            var w = _glbl.retref("dba",x[i]);
+            var w = _glbl.retref("dbs",x[i]);
             var z = _glbl.retindex("dbs");
-            var y = _glbl.retindex("dba");
             
             
             if (_glbl.db.d_map.hasOwnProperty(w.acc) === false)
@@ -108,6 +107,7 @@ _glbl.dbint.addExtToDatabase = function (data)
             }
 
             // Add data to the the associative database.
+            tmp_rf[z.acc] = w.acc;
             tmp_rf[z.day] = w.day;                  // Day
             tmp_rf[z.month] = w.month;              // Month
             tmp_rf[z.year] = w.year;                // Year
@@ -115,29 +115,12 @@ _glbl.dbint.addExtToDatabase = function (data)
             tmp_rf[z.val] = new BigDecimal(w.val);  // Value -  We reference it  but all other existing should be deleted after the function returns 
             tmp_rf[z.bal] = new BigDecimal(w.bal);  // Balance - We reference it  but all other existing should be deleted after the function returns
             tmp_rf[z.uid] = w.uid;
+            tmp_rf[z.cid] = w.cid;
             _glbl.db.d_map[w.acc][w.year][w.month].currindex = (parseInt(_glbl.db.d_map[w.acc][w.year][w.month].currindex)+1).toString();
             
-            
-            
-            // Also add to all data
-            
-            _glbl.db.all_data.push([]);
-            var all_data_len = _glbl.db.all_data.length;
-            for(var xx in _glbl.dba)
-            {
-                _glbl.db.all_data[all_data_len-1].push([]);
-            }
-            
-            _glbl.db.all_data[all_data_len-1][y.acc] = w.acc;
-            _glbl.db.all_data[all_data_len-1][y.uid] = w.uid;
-            _glbl.db.all_data[all_data_len-1][y.day] = w.day;
-            _glbl.db.all_data[all_data_len-1][y.month] = w.month;
-            _glbl.db.all_data[all_data_len-1][y.year] = w.year;
-            _glbl.db.all_data[all_data_len-1][y.desc] = w.desc;
-            _glbl.db.all_data[all_data_len-1][y.val] = tmp_rf[z.val]; // reference the same object
-            _glbl.db.all_data[all_data_len-1][y.bal] = tmp_rf[z.bal]; // reference the same object
-            _glbl.db.all_data[all_data_len-1][y.cid] = w.cid;
-            
+            // All data simply stores a reference to the data is db_map
+            _glbl.db.all_data.push(tmp_rf);
+                   
             added_cnt++;
             
         }
