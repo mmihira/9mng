@@ -8,22 +8,22 @@
 * 
 */
 
-_glbl.dbint.addNewToDatabase = function (data)
+_glbl.dbint.addNewToDatabase = function (results)
     {
         var acc = glel.cn_acc_selection_drop_down.value;
 
         glel.cn_consolemain.innerHTML += "Parsing complete. Processing data and saving as " + acc + ".<br>";
-        glel.cn_consolemain.innerHTML += "Rows of data to process : " + data.data.length + "<br>";
+        glel.cn_consolemain.innerHTML += "Rows of data to process : " + results.data.length + "<br>";
 
         
         // if the account is a master than the balance column is missing
         if(acc === "MASTER")
         {
-            var db_tmp = _glbl.dbint.compPapaData(data, acc, true);
+            var db_tmp = _glbl.dbint.compPapaData(results, acc, true);
         }
         else
         {
-            var db_tmp = _glbl.dbint.compPapaData(data, acc, false);
+            var db_tmp = _glbl.dbint.compPapaData(results, acc, false);
         }
 
         // If processing the data failed
