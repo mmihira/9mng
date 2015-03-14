@@ -109,6 +109,7 @@ _glbl.dbint.addExtToDatabase = function (data)
             tmp_rf[z.bal] = new BigDecimal(w.bal);  // Balance - We reference it  but all other existing should be deleted after the function returns
             tmp_rf[z.uid] = w.uid;
             tmp_rf[z.cid] = w.cid;
+            tmp_rf[z.cat] = w.cat;
             _glbl.db.d_map[w.acc][w.year][w.month].currindex = (parseInt(_glbl.db.d_map[w.acc][w.year][w.month].currindex)+1).toString();
             
             // All data simply stores a reference to the data is db_map

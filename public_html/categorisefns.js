@@ -67,7 +67,7 @@ _glbl.catg.convcat = function()
     // Loop through all the data in all_data and categorise as necesary.
     for( var i in x)
     {
-        x[i][_glbl.dbs.cat] = _glbl.catg.categorise(x[i],_glbl.dbs.desc);
+        x[i][_glbl.dbs.cat] = _glbl.catg.categorise(x[i],_glbl.dbs.desc); 
         console.log(x[i][_glbl.dbs.desc] + " was categorised as a : " + x[i][_glbl.dbs.cat] );
     }
     

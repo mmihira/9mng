@@ -471,7 +471,8 @@ _glbl.dbint.addNewToDatabase = function (results)
         for(var xx in _glbl.dbs)
         {
             tmp_rf.push([]);
-        }
+        } 
+        
         tmp_rf[_glbl.dbs.acc] = acc;
         tmp_rf[_glbl.dbs.day] = x[_glbl.tdb.day]; // Day
         tmp_rf[_glbl.dbs.month] = month; // Month
@@ -480,6 +481,7 @@ _glbl.dbint.addNewToDatabase = function (results)
         tmp_rf[_glbl.dbs.val] = x[_glbl.tdb.val]; // Value -  We reference it  but all other existing should be deleted after the function returns 
         tmp_rf[_glbl.dbs.bal] = x[_glbl.tdb.bal]; // Balance - We reference it  but all other existing should be deleted after the function returns
         tmp_rf[_glbl.dbs.cid] = x[_glbl.tdb.cid];
+        tmp_rf[_glbl.dbs.cat] = _glbl.catg.categorise(x,_glbl.tdb.desc);
         
         // Create the unique Id
         var tmp_id = "";

@@ -27,7 +27,7 @@ _glbl.fns.saveDBToFile = function()
                 + "," + x[i][s.val].toPlainString()
                 + "," + x[i][s.bal].toPlainString()
                 + "," + "\""+x[i][s.cid]+"\""
-                //+ "," + "\""+x[i][s.cat]+"\""
+                + "," + "\""+x[i][s.cat]+"\""
                 +"\n";
     }
     
