@@ -33,19 +33,6 @@ _glbl = {
                         cid:8,  // for comparing
                         cat:9   // Category
             },
-            // all database
-            dba: {
-                        acc:0,
-                        uid:1,
-                        day:2,
-                        month:3,
-                        year:4,
-                        desc:5,
-                        val:6,  // BigDecimal object
-                        bal:7,  // BigDecimal object
-                        cid:8,  // for comparing
-                        cat:9   // Category 
-            },
             // The temporary data base used when first processing data from raw bank csv.
             tdb:{
                         preid:0,

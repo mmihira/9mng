@@ -14,7 +14,7 @@ _glbl.fns.saveDBToFile = function()
     // create the text;
     var o = "";
     var x = _glbl.db.all_data;
-    var s = _glbl.dba;
+    var s = _glbl.dbs;
     o += "BP,Fuel\n%catend\n";
     for( var i in _glbl.db.all_data)
     {

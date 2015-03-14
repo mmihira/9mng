@@ -61,13 +61,6 @@ _glbl.dbint.addExtToDatabase = function (data)
             glel.cn_consolemain.innerHTML += "Empty row ignored<br>";
             dataok = 0;
         }
-        else if ( x[i].length > _glbl.dba.length || x[i].length < _glbl.dba.length  )
-        {
-            glel.cn_consolemain.innerHTML += "Row ignored because length was " + x[i]/length;
-            glel.cn_consolemain.innerHTML += " and was expecting "+ _glbl.dba.length +".<br>";
-            dataok =0;
-            
-        }
 
         if(dataok)
         {
@@ -101,7 +94,7 @@ _glbl.dbint.addExtToDatabase = function (data)
             var curr_len = _glbl.db.d_map[w.acc][w.year][w.month].data.length;
             var curr_id = _glbl.db.d_map[w.acc][w.year][w.month].currindex; 
             var tmp_rf = _glbl.db.d_map[w.acc][w.year][w.month].data[curr_len-1];
-            for(var xx in _glbl.dba)
+            for(var xx in _glbl.dbs)
             {
                 tmp_rf.push([]);
             }

@@ -479,7 +479,7 @@ _glbl.dbint.addNewToDatabase = function (results)
         tmp_rf[_glbl.dbs.desc] = x[_glbl.tdb.desc]; // Descript
         tmp_rf[_glbl.dbs.val] = x[_glbl.tdb.val]; // Value -  We reference it  but all other existing should be deleted after the function returns 
         tmp_rf[_glbl.dbs.bal] = x[_glbl.tdb.bal]; // Balance - We reference it  but all other existing should be deleted after the function returns
-        tmp_rf[_glbl.dba.cid] = x[_glbl.tdb.cid];
+        tmp_rf[_glbl.dbs.cid] = x[_glbl.tdb.cid];
         
         // Create the unique Id
         var tmp_id = "";
@@ -528,13 +528,13 @@ _glbl.dbint.addNewToDatabase = function (results)
                 var repeat_found = 0;
                 for( var z = 0 ; z < _glbl.db.all_data.length;z++)
                 {
-                   if( _glbl.db.all_data[z][_glbl.dba.acc] === i[_glbl.tdb.acc] && _glbl.db.all_data[z][_glbl.dba.cid] === i[_glbl.tdb.cid]  )
+                   if( _glbl.db.all_data[z][_glbl.dbs.acc] === i[_glbl.tdb.acc] && _glbl.db.all_data[z][_glbl.dbs.cid] === i[_glbl.tdb.cid]  )
                    {
                         // repeat found if we find another repeat in the next entry
                         // then don't insert value
                         // inform the user than two conseuctive repeats were found.
                         glel.cn_consolemain.innerHTML += "Repeats were found when trying to add MASTER data.<br>";
-                        glel.cn_consolemain.innerHTML += _glbl.db.all_data[z][_glbl.dba.cid]+"<br>";
+                        glel.cn_consolemain.innerHTML += _glbl.db.all_data[z][_glbl.dbs.cid]+"<br>";
                         glel.cn_consolemain.innerHTML += i[_glbl.tdb.cid]+"<br>";
                         glel.cn_consolemain.innerHTML += "The data was not inserted.<br>";
                         repeat_found = 1;
