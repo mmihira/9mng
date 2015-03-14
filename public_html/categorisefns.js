@@ -68,9 +68,7 @@ _glbl.catg.convcat = function()
     for( var i in x)
     {
         x[i][_glbl.dbs.cat] = _glbl.catg.categorise(x[i],_glbl.dbs.desc); 
-        console.log(x[i][_glbl.dbs.desc] + " was categorised as a : " + x[i][_glbl.dbs.cat] );
     }
-    
     
 };
 

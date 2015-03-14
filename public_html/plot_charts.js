@@ -18,7 +18,9 @@ _glbl.flotplot.createNetCashFlow = function(yrs)
                             val_bal:"val",
                             deb_cred:"cred",
                             notinc:["8600","4239"],
+                            notinccat:[],
                             inc:[],
+                            inccat:[],
                             yrs:yrs ,
                             mo:["all"]                          
                         });
@@ -26,15 +28,19 @@ _glbl.flotplot.createNetCashFlow = function(yrs)
                             val_bal:"val",
                             deb_cred:"cred",
                             notinc:["2659"],
+                            notinccat:[],
                             inc:[],
+                            inccat:[],
                             yrs:yrs ,
                             mo:["all"]                          
                         });
     var so = _glbl.dbint.get_data({  acc:"SAVER",
                             val_bal:"val",
-                            deb_cred:"cred",
+                            deb_cred:"deb",
                             notinc:["4239","8600"],
+                            notinccat:[],
                             inc:[],
+                            inccat:[],
                             yrs:yrs ,
                             mo:["all"]                          
                         });

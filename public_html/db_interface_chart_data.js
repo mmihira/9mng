@@ -6,9 +6,11 @@
  * {
  *  acc: the type of account
  *  val_bal: sum the "val" or the "bal"
- *  deb_cred: sum for debits("deb") or income("inc")
- *  notinc: a array of string with words not to be included in descrip. If emptry ignored.
- *  inc: a array of string with words that must be in the descript. If empty ignored.
+ *  deb_cred: sum for debits("deb") or credits("cred")
+ *  notinc: an array of string with words not to be included in descrip. If emptry ignored.
+ *  notinccat: an array of category strings which cannot match the category of the data.
+ *  inc: an array of string with words that must be in the descript. If empty ignored.
+ *  incat : an array of category strings, any one of which must match the category.
  *  yrs: An array of yrs to lookup
  *  mo: An array of months to lookup.
  *  @return {array}
@@ -22,7 +24,9 @@ _glbl.dbint.get_data = function(param)
     var mn = param.mo;
     var acc = param.acc;
     var inc = param.inc;
+    var inccat = param.inccat;
     var ninc = param.notinc;
+    var ninccat = param.notinccat;
     var tdb = 0;
     var data = [];
     var bigz = new BigDecimal("0.0");
@@ -79,36 +83,66 @@ _glbl.dbint.get_data = function(param)
                             var inc_cnt = 0;
                             for (var a in inc)
                             {
-                                if(tdb[yrs[i]][mn[m]].data[x][4].indexOf(inc[a]) !== -1 )
+                                if(tdb[yrs[i]][mn[m]].data[x][_glbl.dbs.desc].indexOf(inc[a]) !== -1 )
                                 {
                                     inc_cnt ++;
                                 }
                             }
+                            
                             // look not includes
-                            var ninc_cnt = ninc.length;
+                            var ninc_cnt = 0;
                             for (var a in ninc)
                             {
-                                if(tdb[yrs[i]][mn[m]].data[x][4].indexOf(ninc[a]) !== -1 )
+                                if(tdb[yrs[i]][mn[m]].data[x][_glbl.dbs.desc].indexOf(ninc[a]) !== -1 )
                                 {
-                                    inc_cnt --;
+                                    ninc_cnt ++;
                                 }
                             }
                             
-                            
-                            // if the inlcudes are there and not includes not there
-                            if (inc_cnt === inc.length && ninc_cnt === ninc.length)
+                            // look for must include categories only one has to match
+                            if(inccat.length > 0)
                             {
-                                // check to see if debit or credit
-                                if(tdb[yrs[i]][mn[m]].data[x][ndx].compareTo(bigz) === bigdcomp )
+                                var inccat_cnt = 0;
+                                for(var a in inccat)
                                 {
-                                   data[data.length-1][1] = data[data.length-1][1].add(tdb[yrs[i]][mn[m]].data[x][ndx]); 
+                                    if(tdb[yrs[i]][mn[m]].data[x][_glbl.dbs.cat] === inccat[a])
+                                    {
+                                        inccat_cnt ++;
+                                        break;
+                                    }
+
+                                }
+                            }
+                            else
+                            {
+                                var inccat_cnt = 1;
+                            }
+                            
+                            // look for must not include cats
+                            var ninccat_cnt = 0;
+                            for (var a in ninccat)
+                            {
+                                if(tdb[yrs[i]][mn[m]].data[x][_glbl.dbs.cat] === ninccat[a])
+                                {
+                                    ninccat_cnt ++;
                                 }
                                 
-                                
                             }
-
                             
-
+                            // Ensure the must inlucdes are present
+                            if (inc_cnt === inc.length && inccat_cnt >0)
+                            {
+                                // None of the not includes are accepted
+                                if(ninc_cnt === 0 && ninccat_cnt === 0)
+                                {
+                                    // check to see if debit or credit
+                                    if(tdb[yrs[i]][mn[m]].data[x][ndx].compareTo(bigz) === bigdcomp )
+                                    {
+                                       data[data.length-1][1] = data[data.length-1][1].add(tdb[yrs[i]][mn[m]].data[x][ndx]); 
+                                    }
+                                }  
+                                
+                            }                          
                         }
                     }
                 }
