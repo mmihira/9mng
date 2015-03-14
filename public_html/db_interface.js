@@ -602,7 +602,7 @@ _glbl.dbint.addNewToDatabase = function (results)
                 var l_x = map_ref[l_y][l_m].data[map_ref[l_y][l_m].data.length -1];
                 // Add to the database if the order is kept
                 // Otherwise throw an error and stop adding data. 
-                var order_test = i[_glbl.tdb.bal].compareTo(l_x[_glbl.tdb.bal].add(i[_glbl.tdb.val]));
+                var order_test = i[_glbl.tdb.bal].compareTo(l_x[_glbl.dbs.bal].add(i[_glbl.tdb.val]));
                 // If it compare equal add the entry
                 if( order_test === 0)
                 {
