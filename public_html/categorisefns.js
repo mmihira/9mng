@@ -26,7 +26,8 @@ _glbl.cat = {
             
 };
 
-
+// A vector used to hold a list of the categories in _glbl.cat
+_glbl.catlist = {};
 
 /**
 * Called by cnPapaComplete and reCat to Categorise the data
@@ -89,4 +90,24 @@ _glbl.catg.addCat = function (catkey,catvalue)
         _glbl.useraddcat[catkey] = [catvalue];
         
     }    
+};
+
+
+/*
+ * Updates the catg.catlist with the current categories
+ */
+_glbl.catg.updateCatlist = function()
+{
+    _glbl.catlist = {};
+    for( var i in _glbl.cat)
+    {
+        if(_glbl.catlist.hasOwnProperty(_glbl.cat[i]) === false)
+        {
+            _glbl.catlist[_glbl.cat[i]] = [i];
+        }
+        else
+        {
+            _glbl.catlist[_glbl.cat[i]].push(i);
+        }
+    }
 };

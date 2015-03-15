@@ -6,7 +6,7 @@
 .cnfchoicemain{
     margin: 2px auto;
     width: 1200px;
-    height: 50px;
+    height: 100px;
     display:block;
 }
 
@@ -33,5 +33,26 @@
 .cnfbtnspacer{
     width: 25px;
     display:inline-block;
+    
+}
+
+.cnfcatviewmain{
+    margin: 2px auto;
+    width: 1000px;
+    height: 250px;
+    display:block;
+    overflow:scroll;
+    white-space: nowrap;
+    
+}
+
+.catpanelmain{
+    margin: 2px auto;
+    width: 100px;
+    height: 250px;
+    display:inline-block;    
+}
+
+.catpaneltitle{
     
 }

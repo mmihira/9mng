@@ -2,19 +2,39 @@ _glbl.fns.goToCatConfig = function()
 {
     // Remove the previous contents 
     _glbl.main.contents().detach();
+    $(glel.cnf_parent).contents().detach();
+    $(glel.cnf_cat_view_main).contents().detach();
     
-    // The following must be done dynamically 
+    // Remove the only references to previously created panels.
+    glel.panelvec = [];
+    _glbl.catg.updateCatlist();
+    var pRef = false;
+    for(var i in _glbl.catlist)
+    {
+        glel.panelvec.push({});
+        pRef = glel.panelvec[glel.panelvec.length -1];
+        
+        // The main panel div which holds the panel.
+        pRef.main = document.createElement("div");
+        pRef.main.className = "catpanelmain";
+            // The div to hold the category title
+            pRef.title_div = document.createElement("div");
+            pRef.title_div.className = "catpaneltitle";
+            pRef.title_div.innerHTML = i;
+        // Append to the main panel div
+        pRef.main.appendChild(pRef.title_div);
+        
+    }
     
-    // Create the category display area
-    // Detatch any remaining displays
-    // Release memoery
-    // Create displays
     // Attach displays
-    
-    
+    for( var i in glel.panelvec)
+    {
+        glel.cnf_cat_view_main.appendChild(glel.panelvec[i].main);
+    }  
     
     // Create the category table view
-    
+    glel.cnf_parent.appendChild(glel.cnf_choice_main);
+    glel.cnf_parent.appendChild(glel.cnf_cat_view_main);
     _glbl.main.append(glel.cnf_parent);
 };
 
@@ -50,9 +70,8 @@ _glbl.fns.createCatConfigPage =  function()
             
         // Div to hold the category editing panel
         glel.cnf_cat_view_main = document.createElement("div");
+        glel.cnf_cat_view_main.className = "cnfcatviewmain";
         
-        // Div to hold the table of data showing categories.
-        
-    glel.cnf_parent.appendChild(glel.cnf_choice_main);
-        
+        // Variable to hole the editing panels
+        glel.panelvec = [];        
 };
