@@ -12,7 +12,7 @@ _glbl.fns.goToDashboard = function()
 };
 
 
-function createDashboard()
+_glbl.fn.createDashboard = function()
 {
     glel.dsb_main = document.createElement("div");
     glel.dsb_main.className = "dsbparent";
@@ -78,7 +78,4 @@ function createDashboard()
     glel.dsb_main.appendChild(glel.dsb_netcashflow_flot);
     glel.dsb_main.appendChild(glel.dsb_netposition_title);
     glel.dsb_main.appendChild(glel.dsb_netposition_flot);
-    
-    
-    
 };
