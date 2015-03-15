@@ -1,8 +1,8 @@
 
 _glbl.fns.goToDashboard = function()
 {
-    // Remove the 
-    _glbl.main.contents().detach();
+    // Remove the previous contents 
+    _glbl.main.contents().detach();    
     _glbl.main.append(glel.dsb_main);
     
     
@@ -22,21 +22,32 @@ function createDashboard()
         glel.dsb_choice_main = document.createElement("div");
         glel.dsb_choice_main.className = "dsbchoicemain";
         
-            //The buttons
+            // The save button
             glel.dsb_choice_btn_save = document.createElement("div");
             glel.dsb_choice_btn_save.className = "dsbchoicebtn";
             glel.dsb_choice_btn_save.innerHTML = "Save";
             $(glel.dsb_choice_btn_save).on("click",_glbl.fns.saveDBToFile);
             glel.dsb_choice_spacer1 = document.createElement("div");
             glel.dsb_choice_spacer1.className = "dsbbtnspacer";
+            // The update database button
             glel.dsb_choice_btn_add = document.createElement("div");
             glel.dsb_choice_btn_add.className = "dsbchoicebtn";
             glel.dsb_choice_btn_add.innerHTML = "Update DB"; 
             $(glel.dsb_choice_btn_add).on("click",_glbl.fns.goToLoadFromNewPage);
+            glel.dsb_choice_spacer2 = document.createElement("div");
+            glel.dsb_choice_spacer2.className = "dsbbtnspacer";
+            // The category config button.
+            glel.dsb_choice_btn_catconfig = document.createElement("div");
+            glel.dsb_choice_btn_catconfig.className = "dsbchoicebtn";
+            glel.dsb_choice_btn_catconfig.innerHTML = "Category Config"; 
+            glel.dsb_choice_btn_catconfig.style.width = "130px"; 
+            $(glel.dsb_choice_btn_catconfig).on("click",_glbl.fns.goToCatConfig);
             
             glel.dsb_choice_main.appendChild(glel.dsb_choice_btn_save);
             glel.dsb_choice_main.appendChild(glel.dsb_choice_spacer1);
             glel.dsb_choice_main.appendChild(glel.dsb_choice_btn_add);
+            glel.dsb_choice_main.appendChild(glel.dsb_choice_spacer2);
+            glel.dsb_choice_main.appendChild(glel.dsb_choice_btn_catconfig);
         
         // Div to to hold the title name
         glel.dsb_netcashflow_title = document.createElement("div");
