@@ -12,7 +12,7 @@ _glbl.fns.goToDashboard = function()
 };
 
 
-_glbl.fn.createDashboard = function()
+_glbl.fns.createDashboard = function()
 {
     glel.dsb_main = document.createElement("div");
     glel.dsb_main.className = "dsbparent";
