@@ -20,10 +20,29 @@ _glbl.fns.goToCatConfig = function()
             // The div to hold the category title
             pRef.title_div = document.createElement("div");
             pRef.title_div.className = "catpaneltitle";
-            pRef.title_div.innerHTML = i;
+                pRef.title_div_table = document.createElement("div");
+                pRef.title_div_table.className = "titledivtable";
+                    pRef.title_div_table_cell  = document.createElement("div");
+                    pRef.title_div_table_cell.className = "titledivtablecell";
+                    pRef.title_div_table_cell.innerHTML = i;
+                pRef.title_div_table.appendChild(pRef.title_div_table_cell);
+            pRef.title_div.appendChild(pRef.title_div_table);
+            
+            // The textarea
+            pRef.cat_terms = document.createElement("textarea");
+            pRef.cat_terms.className = "catterms";
+            pRef.cat_terms.rows = 20;
+            pRef.cat_terms.cols = 20;
+            
+            for(var j in _glbl.catlist[i])
+            {
+                pRef.cat_terms.innerHTML += _glbl.catlist[i][j] + "\n"; 
+            }
+            
+            
         // Append to the main panel div
         pRef.main.appendChild(pRef.title_div);
-        
+        pRef.main.appendChild(pRef.cat_terms);
     }
     
     // Attach displays

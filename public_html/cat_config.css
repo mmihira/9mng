@@ -38,8 +38,8 @@
 
 .cnfcatviewmain{
     margin: 2px auto;
-    width: 1000px;
-    height: 250px;
+    width: 1100px;
+    height: 400px;
     display:block;
     overflow:scroll;
     white-space: nowrap;
@@ -47,12 +47,43 @@
 }
 
 .catpanelmain{
-    margin: 2px auto;
-    width: 100px;
-    height: 250px;
+    margin: 0px auto;
+    padding: 0px 10px 0px 10px;
+    width: 150px;
+    //height: 450px;
     display:inline-block;    
 }
 
 .catpaneltitle{
+    margin:0px auto;
+    display: block;
+    height : 30px;
+    width:inherit;
+    background-color: #F9FCFF;
+    
+}
+
+.titledivtable{
+    margin: 0px auto;
+    height:inherit;
+    width:inherit;
+    display:table;
+    
+}
+
+.titledivtablecell{
+    margin: 0px auto;
+    height:inherit;
+    width:inherit;
+    display: table-cell;
+    text-align:center; 
+    vertical-align:middle;
+    
+}
+
+.catterms{
+    resize: none;
+    overflow:auto;
+    width:144px;
     
 }
