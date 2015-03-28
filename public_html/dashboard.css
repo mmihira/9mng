@@ -17,6 +17,12 @@
     height: 300px;
 }
 
+.dsbd3netcashflow{
+    margin: 2px auto;
+    width: 960px;
+    height: 500px;    
+}
+
 .dsbchoicemain{
     margin: 2px auto;
     width: 1200px;
@@ -63,3 +69,28 @@
     width: 1200px;
     height: 300px;
 }
+
+/************************* D3 SVG CSS ELEMTENTS *************************/
+
+.bar {
+        fill: steelblue;
+    }
+
+    .bar:hover {
+        fill: brown;
+    }
+
+    .axis {
+        font: 10px sans-serif;
+    }
+
+    .axis path,
+    .axis line {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+    }
+
+    .x.axis path {
+        display: none;
+    }

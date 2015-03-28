@@ -18,6 +18,7 @@ _glbl = {
             catg:{},
             fns:{},
             flotplot:{},
+            d3plot:{},
             
             // structure database
             dbs: {

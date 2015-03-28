@@ -52,9 +52,12 @@ _glbl.flotplot.createNetCashFlow = function(yrs)
                [gi,function(l,r){return parseFloat(l) + parseFloat(r);}], 
                [so,function(l,r){return parseFloat(l) + parseFloat(r);}]
                 ];
+                
+    // Sort the data so that the symbol with the most data goes first
     srt.sort(function(x,y){return x[0].length-y[0].length;});
     
     // Make the data vector of format [[yr-mo as string,float value],.....]    
+    // We make the date vector big enough to fit the largest data length.
     for(var i in srt[srt.length-1][0])
     {
         _data.push([srt[srt.length-1][0][i][0],0.0]);
@@ -104,7 +107,7 @@ _glbl.flotplot.createNetCashFlow = function(yrs)
                 clickable: true
             }
         });
-
+        /*
         $("<div id='tooltip'></div>")
             .css({
                 position: "absolute",
@@ -116,7 +119,7 @@ _glbl.flotplot.createNetCashFlow = function(yrs)
                 opacity: 0.90
             })
             .appendTo("body");
-
+        */
         function show_tooltip(x, y, contents, z) {
             $('<div id="bar_tooltip">' + contents + '</div>')
                 .css({
@@ -128,6 +131,7 @@ _glbl.flotplot.createNetCashFlow = function(yrs)
                 .fadeIn();
         }
         
+        /*
         $("#dsb_netcashflow_flot")
             .on("plothover", function (event, pos, item) {
                 if (item) {
@@ -143,6 +147,7 @@ _glbl.flotplot.createNetCashFlow = function(yrs)
                     previous_label = null;
                 }
             });
+            */
     });
 };
 
@@ -211,7 +216,7 @@ _glbl.flotplot.createNewNetPosition = function(yrs)
                 clickable: true
             }
         });
-
+        /*
         $("<div id='tooltip'></div>")
             .css({
                 position: "absolute",
@@ -223,7 +228,8 @@ _glbl.flotplot.createNewNetPosition = function(yrs)
                 opacity: 0.90
             })
             .appendTo("body");
-
+        */
+        
         function show_tooltip(x, y, contents, z) {
             $('<div id="bar_tooltip">' + contents + '</div>')
                 .css({
@@ -234,7 +240,7 @@ _glbl.flotplot.createNewNetPosition = function(yrs)
                 .appendTo("body")
                 .fadeIn();
         }
-        
+        /*
         $("#dsb_netPosition_flot")
             .on("plothover", function (event, pos, item) {
                 if (item) {
@@ -250,6 +256,7 @@ _glbl.flotplot.createNewNetPosition = function(yrs)
                     previous_label = null;
                 }
             });
+            */
     });
     
 };
