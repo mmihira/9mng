@@ -69,8 +69,8 @@ _glbl.d3plot.createNetCashFlow = function(yrs)
     console.log(_data);
     
     var margin = {top: 20, right: 30, bottom: 30, left: 80},
-    width = 1100 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    width = 1200 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
 
     var x = d3.scale.ordinal()
         .rangeRoundBands([0, width], .1);
@@ -97,6 +97,7 @@ _glbl.d3plot.createNetCashFlow = function(yrs)
     var svg = d3.select("#dsb_d3netcashflow").append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
+        .attr("float","left")
       .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -119,11 +120,10 @@ _glbl.d3plot.createNetCashFlow = function(yrs)
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Frequency");
+      .text("$AUSD");
     
-    svg.selectAll(".bar")
-      .data(_data)
-    .enter().append("rect")
+    var d3bars = svg.selectAll(".b").data(_data);
+    d3bars.enter().append("rect")
       .attr("class", "bar")
       .attr("x", function(d) { return x(d.name); })
       .attr("width", x.rangeBand())
@@ -143,7 +143,31 @@ _glbl.d3plot.createNetCashFlow = function(yrs)
                 return y(d.value)-y(0); 
           }
       });
-    
+      
+    d3bars.enter().append("text")
+        .attr("class", "bartext")
+      .attr("x", function(d){return x(d.name) +x.rangeBand()/2;})
+      .attr("y", function(d){
+          if(d.value >= 0){
+                return y(d.value)+3;
+            }
+            else{
+                return y(d.value)-3;
+            }
+        })
+      .attr("dy", function(d) {
+          if(d.value >= 0){
+                return "0.75em";
+            }
+            else{
+                return "-0.75em";
+            }
+        })
+      .attr("dx",function(d){
+            return "-"+(String(Math.round(d.value)).length/2) + "em";
+        })
+      .text(function(d) { return Math.round(d.value); });
+      
     
       
       

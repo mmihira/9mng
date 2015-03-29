@@ -79,13 +79,7 @@ _glbl.fns.createDashboard = function()
         glel.dsb_d3netcashflow.id = "dsb_d3netcashflow";
         glel.dsb_d3netcashflow.className = "dsbd3netcashflow";
         //glel.dsb_d3netcashflow.width = "1200px";
-        //glel.dsb_d3netcashflow.height = "300px";
-            glel.dsb_d3netcashflow_svg = document.createElement("svg");
-            glel.dsb_d3netcashflow_svg.id = "dsb_d3netcashflow_svg";
-            //glel.dsb_d3netcashflow_svg.className = "chart";
-        glel.dsb_d3netcashflow.appendChild(glel.dsb_d3netcashflow_svg);    
-            
-        
+        //glel.dsb_d3netcashflow.height = "300px";         
     
     glel.dsb_main.appendChild(glel.dsb_choice_main);
     glel.dsb_main.appendChild(glel.dsb_netcashflow_title);

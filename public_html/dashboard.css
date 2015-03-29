@@ -19,8 +19,8 @@
 
 .dsbd3netcashflow{
     margin: 2px auto;
-    width: 960px;
-    height: 500px;    
+    //width: 960px;
+    //height: 500px;    
 }
 
 .dsbchoicemain{
@@ -82,6 +82,12 @@
 
     .axis {
         font: 10px sans-serif;
+    }
+    
+    .bartext{
+        font: 10px sans-serif;
+        font-weight: bold;
+        color: #FFFFFF;
     }
 
     .axis path,
