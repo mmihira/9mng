@@ -85,7 +85,7 @@ _glbl.d3plot.createNetCashFlow = function(yrs)
 
     var yAxis = d3.svg.axis()
         .scale(y)
-        .orient("left")
+        .orient("left");
         //.ticks(10, "%");
     
     /* These methods don't work :
@@ -104,7 +104,7 @@ _glbl.d3plot.createNetCashFlow = function(yrs)
       x.domain(data.map(function(d) { return d.name; }));
       y.domain([0, d3.max(data, function(d) { return d.value; })]);*/
     x.domain(_data.map(function(d) { return d.name; }));
-    y.domain([0, d3.max(_data, function(d) { return d.value; })]);
+    y.domain([d3.min(_data, function(d) { return d.value; }), d3.max(_data, function(d) { return d.value; })]);
     
     svg.append("g")
       .attr("class", "x axis")
@@ -127,6 +127,24 @@ _glbl.d3plot.createNetCashFlow = function(yrs)
       .attr("class", "bar")
       .attr("x", function(d) { return x(d.name); })
       .attr("width", x.rangeBand())
-      .attr("y", function(d) { return y(d.value); })
-      .attr("height", function(d) { return height - y(d.value); });
+      .attr("y", function(d) {
+          if(d.value >= 0){
+                return y(d.value);
+            }
+            else{
+                return y(0);
+            }
+        })
+      .attr("height", function(d) {
+          if(d.value >= 0){
+                return y(0) - y(d.value);
+          }
+          else{
+                return y(d.value)-y(0); 
+          }
+      });
+    
+    
+      
+      
 };
