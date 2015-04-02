@@ -19,8 +19,14 @@
 
 .dsbd3netcashflow{
     margin: 2px auto;
+    display:block;
     //width: 960px;
     //height: 500px;    
+}
+
+.dsbd3netposition{
+    margin: 2px auto;
+    display:block;
 }
 
 .dsbchoicemain{
@@ -76,27 +82,32 @@
         fill: steelblue;
     }
 
-    .bar:hover {
-        fill: brown;
-    }
+.bar:hover {
+    fill: brown;
+}
 
-    .axis {
-        font: 10px sans-serif;
-    }
-    
-    .bartext{
-        font: 10px sans-serif;
-        font-weight: bold;
-        color: #FFFFFF;
-    }
+.axis {
+    font: 10px sans-serif;
+}
 
-    .axis path,
-    .axis line {
-        fill: none;
-        stroke: #000;
-        shape-rendering: crispEdges;
-    }
+.bartext{
+    font: 10px sans-serif;
+    font-weight: bold;
+    color: #FFFFFF;
+}
 
-    .x.axis path {
-        display: none;
-    }
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.x.axis path {
+    display: none;
+}
+
+.netposline{
+    stroke:steelblue;
+    stroke-width:2;
+}
