@@ -15,7 +15,13 @@ _glbl.fns.saveDBToFile = function()
     var o = "";
     var x = _glbl.db.all_data;
     var s = _glbl.dbs;
-    o += "BP,Fuel\n%catend\n";
+    o += "%catvalstart\n";
+    
+    for(i in _glbl.cat){
+        o += i +"," + _glbl.cat[i] + "\n";
+    }
+    
+    o += "%catvalend\n";
     for( var i in _glbl.db.all_data)
     {
         o += x[i][s.acc] 

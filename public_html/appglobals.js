@@ -10,6 +10,17 @@ _glbl = {
             
             // the default categories
             cat : {},
+            
+            /* cat_db is the data base holding the categories as their associated data.
+             * it is constructed from an existing database file>. It is modified when the 
+             * user adds or removes a category type
+             * cat_db has structure [{},{},{}....]
+             * where the element of cat_sb is an object with structure
+             * { name:String categoryname,
+             *   tag:Wether this category denotes an income or expenditure
+             * }
+             */
+            cat_db: {},
             // categories added by user these are saved in the users database text
             useraddcat : {},
             

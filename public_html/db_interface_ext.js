@@ -16,6 +16,10 @@ _glbl.dbint.addExtToDatabase = function (data)
     var catcounter = 0;                                         // Variable for counting the number of user categories added.
     var catendreached = false;                                  // Variable to signal when "%catend" is read.
     
+    
+    //The first loaded will be a %catvalstart so ignore it
+    z++;
+       
     // While not reached the end of category data, add any user categories.
     while(catendreached === false)
     {
@@ -34,7 +38,7 @@ _glbl.dbint.addExtToDatabase = function (data)
             z++;
         }
         // Reached the end of the user category data.
-        else if (x[z][0] === "%catend")
+        else if (x[z][0] === "%catvalend")
         {
             z++;
             catendreached = true;
