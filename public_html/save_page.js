@@ -15,10 +15,19 @@ _glbl.fns.saveDBToFile = function()
     var o = "";
     var x = _glbl.db.all_data;
     var s = _glbl.dbs;
-    o += "%catvalstart\n";
     
+    o += "%catstart\n";
+    
+        _glbl.catg.updateCatlist();
+        for( i in _glbl.cat_db){
+            o += _glbl.cat_db[i]["name"] +"," + _glbl.cat_db[i]["tag"] + "\n";
+        }
+    
+    o += "%catend\n" ;
+    o += "%catvalstart\n";
+
     for(i in _glbl.cat){
-        o += i +"," + _glbl.cat[i] + "\n";
+        o += i +"," + _glbl.cat[i]["name"] + "\n";
     }
     
     o += "%catvalend\n";

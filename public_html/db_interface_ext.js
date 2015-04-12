@@ -13,15 +13,39 @@ _glbl.dbint.addExtToDatabase = function (data)
     
     var z = 0;                                                  // Variable keeps track of index in x
     glel.cn_consolemain.innerHTML += "Adding category data.<br>";
-    var catcounter = 0;                                         // Variable for counting the number of user categories added.
-    var catendreached = false;                                  // Variable to signal when "%catend" is read.
     
     
-    //The first loaded will be a %catvalstart so ignore it
+    
+    //Ignore the %catstart
     z++;
-       
+    
+    var catendreached = false;
+    var catcounter = 0;
+    
+    while(catendreached === false){
+        if (x[z][0] === "%catend")
+        {
+            catendreached = true;
+        }
+        else
+        {
+            _glbl.cat_db[x[z][0]] = _glbl.catg.createNewCat(x[z][0],x[z][1]);
+            catcounter++;
+            
+        }
+        z++;
+    }
+        
+    glel.cn_consolemain.innerHTML += catcounter + " entries was added to category type database.<br>";    
+        
+    var catvalcounter = 0;                                         // Variable for counting the number of user categories added.
+    var catvalendreached = false;                               // Variable to signal when "%catvalend" is read.
+    
+    //Ignore the %catvalstart 
+    z++;
+    
     // While not reached the end of category data, add any user categories.
-    while(catendreached === false)
+    while(catvalendreached === false)
     {
         // Remove when debugging not required.
         console.log(x[z]);
@@ -41,20 +65,20 @@ _glbl.dbint.addExtToDatabase = function (data)
         else if (x[z][0] === "%catvalend")
         {
             z++;
-            catendreached = true;
+            catvalendreached = true;
         }
         else
         // Add to the user category to the database.
         {
-            _glbl.cat[x[z][0]] = x[z][1];
-            catcounter++;
+            _glbl.cat[x[z][0]] = _glbl.cat_db[x[z][1]];
+            catvalcounter++;
             z++;
         }
         // Remove when debugging not required.
-        console.log(z + " " + catcounter);
+        console.log(z + " " + catvalcounter);
     }
     
-    glel.cn_consolemain.innerHTML += catcounter + " entries was added to category file.<br>";
+    glel.cn_consolemain.innerHTML += catvalcounter + " entries was added to category file.<br>";
     
     var added_cnt = 0;
     for( var i = z ; i < x.length ; i ++)

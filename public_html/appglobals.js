@@ -8,8 +8,13 @@ _glbl = {
                         d_map : {}
             },
             
-            // the default categories
+            /*
+             * cat has structure {"category":reference Object,....}
+             * where the reference is to a object held in cat_db
+             */
             cat : {},
+            // A object used to hold a list of the categories in _glbl.cat
+            catlist : {},
             
             /* cat_db is the data base holding the categories as their associated data.
              * it is constructed from an existing database file>. It is modified when the 
@@ -21,8 +26,6 @@ _glbl = {
              * }
              */
             cat_db: {},
-            // categories added by user these are saved in the users database text
-            useraddcat : {},
             
             accTypes : ["SAVER", "MASTER", "NETBANK", "GOAL"],
             dbint:{},
