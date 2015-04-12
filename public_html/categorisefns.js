@@ -1,12 +1,8 @@
 
 /*
- * Called by the reccategorise button in the category config
- * page to recategorise the data. Also the category table is refreshed.
- * 
- */
-
-/*
  * This function is used to create a new category type in the category database
+ * designed to act similar to the constructor of a class.. consider making a class
+ * for the category insted ?
  * @param name      the name of the category
  * @param tag       the category tag
  * @returns         an object of type category_db
@@ -38,7 +34,10 @@ _glbl.catg.savecat = function()
     var r = window.confirm(" Are your sure you want to save the category data ?\nNote : Cat data will not be saved on your hard disk.\nClick update DB on the dasboard to do so after saving cat data.");
     if(r === true)
     {
+        // Delete both the cat and cat_db database
+        // addCat will fill both as necessary
         _glbl.cat = {};
+        _glbl.cat_db = {};
         for( var i in glel.panelvec)
         {
             // create a vector of the cat terms
@@ -48,7 +47,7 @@ _glbl.catg.savecat = function()
                 // Ignore empty values;
                 if(catrmsv[k].length > 0)
                 {
-                    _glbl.catg.addCat(catrmsv[k],glel.panelvec[i].title_div_table_cell.innerHTML);
+                    _glbl.catg.addCat(catrmsv[k],glel.panelvec[i].title_div_table_cell.innerHTML,glel.panelvec[i].tag_input.value);
 
                 }
             }
@@ -86,20 +85,28 @@ _glbl.catg.categorise = function (vstring, ndx)
 };
 
 
-// Add a user category to the category database
-_glbl.catg.addCat = function (catkey,catvalue)
+/**
+ * Called when the user clicks the "save category" button on the cat_config page
+ * @param   {string}catvalue    is the category identifier i.e what should go in the name field of a category object
+ * @param   {string}catkey      is the key used in _glbl.cat, or the term used when seraching the data desc   
+ * @param   {string}tag         is the tag field 
+ * @returns {undefined}
+ */
+_glbl.catg.addCat = function (catkey,catvalue,tag)
 {
-    // first check if the key allready exists or not
-    
-    if( _glbl.cat.hasOwnProperty(catkey) === true )
-    {
-        // allready exists don't add.
+    // first check if the category exist in the cat_db database
+    // and add if it doesn't
+    if( _glbl.cat_db.hasOwnProperty(catvalue) === false ){
+        
+         _glbl.cat_db[catvalue] = _glbl.catg.createNewCat(catvalue,tag); 
     }
-    else
+
+    // if there is not key in cat
+    // then add it into cat
+    if( _glbl.cat.hasOwnProperty(catkey) === false )
     {
         // doesn't exit so add to the database
-        // TODO : add functionality for the tad
-        _glbl.cat[catkey] = _glbl.catg.createNewCat(catvalue,"");      
+        _glbl.cat[catkey] = _glbl.cat_db[catvalue];   
     }    
 };
 

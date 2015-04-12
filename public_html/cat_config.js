@@ -34,8 +34,16 @@ _glbl.fns.goToCatConfig = function()
                     pRef.title_div_table_cell  = document.createElement("div");
                     pRef.title_div_table_cell.className = "titledivtablecell";
                     pRef.title_div_table_cell.innerHTML = i;
+            
                 pRef.title_div_table.appendChild(pRef.title_div_table_cell);
+
             pRef.title_div.appendChild(pRef.title_div_table);
+            
+            // The div to hold the category tag
+            pRef.tag_input = document.createElement("input");
+            pRef.tag_input.className = "taginput";
+            pRef.tag_input.type = "text";
+            pRef.tag_input.value = _glbl.cat_db[i]["tag"];
             
             // The textarea
             pRef.cat_terms = document.createElement("textarea");
@@ -50,6 +58,7 @@ _glbl.fns.goToCatConfig = function()
    
         // Append to the main panel div
         pRef.main.appendChild(pRef.title_div);
+        pRef.main.appendChild(pRef.tag_input);
         pRef.main.appendChild(pRef.cat_terms);
     }
     
@@ -146,6 +155,7 @@ _glbl.fns.createCatConfigPage =  function()
         // Div to hold the category editing panel
         glel.cnf_cat_view_main = document.createElement("div");
         glel.cnf_cat_view_main.className = "cnfcatviewmain";
+            // Div to hold the Expenditure type categories
         
         // Div to hold the table of data showing category
         glel.cnf_cat_table_main = document.createElement("div");

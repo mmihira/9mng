@@ -59,8 +59,24 @@
     display: block;
     height : 30px;
     width:inherit;
-    background-color: #F9FCFF;
+    background-color: #99CCFF;
+
     
+}
+.taginput{
+    
+    width: 120px;
+    display :block;
+    margin: 2px auto;
+    background: #F9FCFF;
+    border:none; 
+    text-align: center;
+    //outline:solid 10px silver;
+}
+
+.taginput:hover{
+    //outline:solid 10px red;
+    background: #CCFFCC;
 }
 
 .titledivtable{
@@ -78,8 +94,11 @@
     display: table-cell;
     text-align:center; 
     vertical-align:middle;
+    font-weight: bold;
     
 }
+
+
 
 .catterms{
     resize: none;
