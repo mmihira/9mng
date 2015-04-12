@@ -160,16 +160,17 @@ _glbl.dbint.get_data = function(param)
 };
 
 /**
- * 
- * @param {type} param is a struct with structure
- *  @return {array}
+ * Returns a vector whith net positions for the years,months, and accounts specified
+ * @param  {String Vector} yrs   the years to calculate the net position
+ * @param  {String Vector} mn    the months to calculate the new position for
+ * @param  {String} acc          the account to calculate 
+ * @return {Vector}              Return is an vector of vectors. with structure [ [String,float],... ] the
+ *                               string has format like "yyyy-mm"
  *  format is [float,float,...] size is yrs * months of data available in that year
  *  
  */
-_glbl.dbint.get_net_position = function(yrs,acc){
+_glbl.dbint.get_net_position = function(yrs,acc,mn){
      
-    var mn = ["01","02","03","04","05","06","07","08","09","10","11","12"];
-    
     // get the balance of the last entry in every month which exists
     // for year which exists in acc that exists
    

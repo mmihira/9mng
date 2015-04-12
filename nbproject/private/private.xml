@@ -12,20 +12,16 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/jquery-2.1.3.min.js</file>
-            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/main.css</file>
-            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/db_interface.js</file>
+            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/categorisefns.js</file>
+            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/exist_update_page.js</file>
             <file>file:/R:/Google%20Drive/Coding/9mng/public_html/d3plot.js</file>
-            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/dashboard.js</file>
-            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/plot_charts.js</file>
-            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/papaparse.js</file>
-            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/index.html</file>
-            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/jquery.flot.js</file>
-            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/dashboard.css</file>
             <file>file:/R:/Google%20Drive/Coding/9mng/public_html/db_interface_ext.js</file>
             <file>file:/R:/Google%20Drive/Coding/9mng/public_html/appglobals.js</file>
+            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/dashboard.js</file>
             <file>file:/R:/Google%20Drive/Coding/9mng/public_html/cat_config.js</file>
-            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/jquery.flot.categories.min.js</file>
+            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/index.html</file>
+            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/save_page.js</file>
+            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/upload_page.js</file>
         </group>
     </open-files>
 </project-private>

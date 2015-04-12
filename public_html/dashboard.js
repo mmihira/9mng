@@ -8,10 +8,16 @@ _glbl.fns.goToDashboard = function()
     // Remove existing netcashflow svg
     $("#dsb_d3netcashflow").contents().detach();
     $("#dsb_d3netposition").contents().detach();
+    // Remove the cashflow statement
+    $("#dsb_cfstatement").contents().detach();
+    
     
     // Create the charts
     _glbl.d3plot.createNetCashFlow(["2014","2015"]);
     _glbl.d3plot.createNewNetPosition(["2014","2015"]);
+    
+    // Create the cash flow statement
+    _glbl.cfstat.createNewCashFlowStat();
     
     
 };
@@ -78,6 +84,13 @@ _glbl.fns.createDashboard = function()
         glel.dsb_d3netposition.width = "1200px";
         //glel.dsb_d3netcashflow.height = "300px";
         
+        // Div to hold the finance table
+        glel.dsb_cfstatement = document.createElement("div");
+        glel.dsb_cfstatement.id  = "dsb_cfstatement";        
+        glel.dsb_cfstatement.className = "dsbcfstatement";
+        glel.dsb_cfstatement.width = "1200px";                         
+            // The rest of the table is constructed using functions in cashflowstat.js
+               
                 
     
     glel.dsb_main.appendChild(glel.dsb_choice_main);
@@ -85,6 +98,7 @@ _glbl.fns.createDashboard = function()
     glel.dsb_main.appendChild(glel.dsb_d3netcashflow);
     glel.dsb_main.appendChild(glel.dsb_netposition_title);
     glel.dsb_main.appendChild(glel.dsb_d3netposition);
+    glel.dsb_main.appendChild(glel.dsb_cfstatement);
     
     
 };

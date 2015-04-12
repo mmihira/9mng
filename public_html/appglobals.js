@@ -34,6 +34,9 @@ _glbl = {
             flotplot:{},
             d3plot:{},
             
+            // An object which holds and defines the cash flow statement
+            cfstat:{},
+            
             // structure database
             dbs: {
                         uidmaxlen:4,
