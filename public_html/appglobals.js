@@ -22,7 +22,7 @@ _glbl = {
              * cat_db has structure [{},{},{}....]
              * where the element of cat_sb is an object with structure
              * { name:String categoryname,
-             *   tag:Wether this category denotes an income or expenditure
+             *   tag:Wether this category denotes an Income or Expenditure
              * }
              */
             cat_db: {},
