@@ -28,6 +28,9 @@ _glbl = {
             cat_db: {},
             
             accTypes : ["SAVER", "MASTER", "NETBANK", "GOAL"],
+            // Used to determine what account to calculate the cashflow stats.
+            // currently hardcoded but later need to make this variable.
+            accTypesForcfstats : ["SAVER", "NETBANK", "GOAL"],
             dbint:{},
             catg:{},
             fns:{},

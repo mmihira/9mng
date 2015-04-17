@@ -131,6 +131,8 @@ _glbl.cfstat.createNewCashFlowStat = function () {
     glel.cfTableRow3.innerHTML = "Income";
     
     // rows for tags
+    // structure of IncomeTagRowVec is 
+    // [ { tbrow: <document.Element>, tbcells: [document.Element,... ] }....]
     glel.IncomeTagRowVec = [];
     for (var i in IncomeTagsVec ){
         
@@ -153,7 +155,17 @@ _glbl.cfstat.createNewCashFlowStat = function () {
         glel.IncomeTagRowVec.push (temp);
     }
     
+    var elValFns = _glbl.retElValVector();
     
+    // fill in the values for the 
+    
+    for( var i in glel.IncomeTagRowVec ){
+        
+        glel.IncomeTagRowVec[i].tbcells[2].innerHTML = elValFns[0].call(glel.IncomeTagRowVec[i].tbcells[1].innerHTML,
+                                                                    latestYear[0],
+                                                                    convertToMMStringFormat(latestMonthInt));
+        
+    }
     
 
 
@@ -184,7 +196,7 @@ _glbl.cfstat.findIncomeTags = function () {
 
     for (var i in _glbl.cat_db) {
 
-        if (_glbl.cat_db[i].tag === "Income") {
+        if (_glbl.cat_db[i].tag === "Expenditure") {
             ret.push( _glbl.cat_db[i].name); 
         }
     }
@@ -193,4 +205,58 @@ _glbl.cfstat.findIncomeTags = function () {
 
 
 };
-            
+
+/**
+ * Return the object used to determine what function is called
+ * when calculating the value that goes into cells 3 onwards
+ * for each of the categories
+ * @return Vector [ Object,....]
+ *          the object contained has a function varaible call which takes
+ *          an argument category.
+ *          the first element of the vector correspons to the first column after the labels
+ */
+_glbl.retElValVector = function() {
+    
+    
+    var ret = [
+                {
+                    // yrs must be a string
+                    // mo must be a string
+                    // cat must be a string
+                    call:function(cat,yrs,mo){
+                        
+                        var accVec = [];
+                        for(var i in _glbl.accTypesForcfstats)
+                        {
+                            accVec.push( _glbl.dbint.get_data({  acc:_glbl.accTypesForcfstats[i],
+                                                            val_bal:"val",
+                                                            deb_cred:"any",
+                                                            notinc:[],
+                                                            notinccat:[],
+                                                            inc:[],
+                                                            inccat:[cat],
+                                                            yrs:[yrs],
+                                                            mo:[mo]                          
+                                                            })
+                                        );
+                        }
+                        
+                        // Add the values from each diffirent category type
+                        // structure of accVec is [[["text",BigDecimal,Floatvalue]]]
+                        // since an implicit assumption is only one month of one year will be calculated
+                        var retFloat = 0.0;
+                        
+                        for (var i in accVec){
+                            retFloat = retFloat + accVec[i][0][2];
+                           
+                        }
+                        
+                        return retFloat;                        
+                    }
+                        
+                }
+    ];
+    
+    return ret;
+    
+};

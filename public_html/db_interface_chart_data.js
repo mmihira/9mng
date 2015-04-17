@@ -5,12 +5,12 @@
  * @param {type} param is a struct with structure
  * {
  *  acc: the type of account
- *  val_bal: sum the "val" or the "bal"
+ *  val_bal: sum the "val" or the "bal" or "any" 
  *  deb_cred: sum for debits("deb") or credits("cred")
  *  notinc: an array of string with words not to be included in descrip. If emptry ignored.
  *  notinccat: an array of category strings which cannot match the category of the data.
  *  inc: an array of string with words that must be in the descript. If empty ignored.
- *  incat : an array of category strings, any one of which must match the category.
+ *  inccat : an array of category strings, only 1 must match to be included
  *  yrs: An array of yrs to lookup
  *  mo: An array of months to lookup.
  *  @return {array}
@@ -135,8 +135,12 @@ _glbl.dbint.get_data = function(param)
                                 // None of the not includes are accepted
                                 if(ninc_cnt === 0 && ninccat_cnt === 0)
                                 {
-                                    // check to see if debit or credit
-                                    if(tdb[yrs[i]][mn[m]].data[x][ndx].compareTo(bigz) === bigdcomp )
+                                    // if any then return
+                                    if( param.deb_cred === "any" ){
+                                        data[data.length-1][1] = data[data.length-1][1].add(tdb[yrs[i]][mn[m]].data[x][ndx]);
+                                        
+                                    }// otherwise check to see if we have the correct type deb or credit
+                                    else if(tdb[yrs[i]][mn[m]].data[x][ndx].compareTo(bigz) === bigdcomp)
                                     {
                                        data[data.length-1][1] = data[data.length-1][1].add(tdb[yrs[i]][mn[m]].data[x][ndx]); 
                                     }
