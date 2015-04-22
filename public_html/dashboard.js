@@ -60,45 +60,66 @@ _glbl.fns.createDashboard = function()
             glel.dsb_choice_main.appendChild(glel.dsb_choice_spacer2);
             glel.dsb_choice_main.appendChild(glel.dsb_choice_btn_catconfig);
         
+        
+        //Div to hold the left chart and the cashflow statement
+        glel.dsb_netposAndCashFlowParent = document.createElement("div");
+        glel.dsb_netposAndCashFlowParent.className = "dsbnetposAndCashFlowParent";
+        
+        
+            //Div to hold the net position chart
+            glel.dsb_d3netpositionParent = document.createElement("div");
+            glel.dsb_d3netpositionParent.className = "dsbd3netpositionParent";
+                // Div to to hold the title name
+                glel.dsb_netposition_title = document.createElement("div");
+                glel.dsb_netposition_title.className = "netPositionTitle";
+                glel.dsb_netposition_title.innerHTML = "<br>Net Position<br>";
+
+                // Div to hold the d3 net position chart
+                glel.dsb_d3netposition = document.createElement("div");
+                glel.dsb_d3netposition.id = "dsb_d3netposition";
+                glel.dsb_d3netposition.className = "dsbd3netposition";
+            
+            glel.dsb_d3netpositionParent.appendChild(glel.dsb_netposition_title);
+            glel.dsb_d3netpositionParent.appendChild(glel.dsb_d3netposition);
+                
+            //Div to hold the cash flow statement
+            glel.dsb_cashflowstatParent = document.createElement("div");
+            glel.dsb_cashflowstatParent.className = "dsbcashflowstatParent";
+            
+                // Div to hold the finance table
+                glel.dsb_cfstatement = document.createElement("div");
+                glel.dsb_cfstatement.id  = "dsb_cfstatement";        
+                glel.dsb_cfstatement.className = "dsbcfstatement";                       
+                // The rest of the table is constructed using functions in cashflowstat.js
+            glel.dsb_cashflowstatParent.appendChild(glel.dsb_cfstatement);          
+        
+        glel.dsb_netposAndCashFlowParent.appendChild(glel.dsb_d3netpositionParent);
+        glel.dsb_netposAndCashFlowParent.appendChild(glel.dsb_cashflowstatParent);
+           
+        
+        
         // Div to to hold the title name
         glel.dsb_netcashflow_title = document.createElement("div");
         glel.dsb_netcashflow_title.className = "netCashFlowTitle";
         glel.dsb_netcashflow_title.innerHTML = "<br>Net Cash Flow<br>";
-    
+        
+        
+        
+        
         // Div to hold the d3 net cash flow chart
         glel.dsb_d3netcashflow = document.createElement("div");
         glel.dsb_d3netcashflow.id = "dsb_d3netcashflow";
         glel.dsb_d3netcashflow.className = "dsbd3netcashflow";
         glel.dsb_d3netcashflow.width = "1200px";
-        //glel.dsb_d3netcashflow.height = "300px"; 
-        
-        // Div to to hold the title name
-        glel.dsb_netposition_title = document.createElement("div");
-        glel.dsb_netposition_title.className = "netPositionTitle";
-        glel.dsb_netposition_title.innerHTML = "<br>Net Position<br>";        
-        
-        // Div to hold the d3 net position chart
-        glel.dsb_d3netposition = document.createElement("div");
-        glel.dsb_d3netposition.id = "dsb_d3netposition";
-        glel.dsb_d3netposition.className = "dsbd3netposition";
-        glel.dsb_d3netposition.width = "1200px";
         //glel.dsb_d3netcashflow.height = "300px";
         
-        // Div to hold the finance table
-        glel.dsb_cfstatement = document.createElement("div");
-        glel.dsb_cfstatement.id  = "dsb_cfstatement";        
-        glel.dsb_cfstatement.className = "dsbcfstatement";
-        glel.dsb_cfstatement.width = "1200px";                         
-            // The rest of the table is constructed using functions in cashflowstat.js
-               
                 
     
     glel.dsb_main.appendChild(glel.dsb_choice_main);
+    
+    glel.dsb_main.appendChild(glel.dsb_netposAndCashFlowParent);
     glel.dsb_main.appendChild(glel.dsb_netcashflow_title);
-    glel.dsb_main.appendChild(glel.dsb_d3netcashflow);
-    glel.dsb_main.appendChild(glel.dsb_netposition_title);
-    glel.dsb_main.appendChild(glel.dsb_d3netposition);
-    glel.dsb_main.appendChild(glel.dsb_cfstatement);
+    glel.dsb_main.appendChild(glel.dsb_d3netcashflow);    
     
     
 };

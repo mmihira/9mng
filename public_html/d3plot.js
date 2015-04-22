@@ -223,7 +223,7 @@ _glbl.d3plot.createNewNetPosition = function(yrs)
     _data[_data.length-1]["next"]["not_last"] = true;
     
     var margin = {top: 20, right: 30, bottom: 30, left: 80},
-    width = 1200 - margin.left - margin.right,
+    width = 800 - margin.left - margin.right,
     height = 350 - margin.top - margin.bottom;
 
     var x = d3.scale.ordinal()

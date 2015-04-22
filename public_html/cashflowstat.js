@@ -13,24 +13,24 @@ _glbl.cfstat.createNewCashFlowStat = function () {
     glel.cf_title = document.createElement("div");
     glel.cf_title.className = "cftitle";
     glel.cf_title.width = "500px";
-    glel.cf_title.innerHTML = "Cashflow Statement";
+    //glel.cf_title.innerHTML = "Cashflow Statement";
 
     // --- Object containing the column information ---
     var elValFns = _glbl.cfstat.retElValVector();
-    var tableColTotal = 5;
+    _glbl.cfstat.tableColTotal = 5;
 
     // The main table
     glel.cf_table = document.createElement("table");
     glel.cf_table.className = "cftable";
-    glel.cf_table.border = 1;
+    glel.cf_table.border = 0;
 
     /* --------------------------------------------  FIRST ROW -------------------------------------------- */
     glel.cfTableRow1 = document.createElement("tr");
     // the net position
     glel.cf_netposrow = document.createElement("td");
-    glel.cf_netposrow.colSpan = tableColTotal;
+    glel.cf_netposrow.colSpan = _glbl.cfstat.tableColTotal;
 
-    glel.cf_netposrow.innerHTML = "Net Position : " + netPosition.toString();
+    glel.cf_netposrow.innerHTML = "Net Position : " + netPosition.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
 
     glel.cfTableRow1.appendChild(glel.cf_netposrow);
     
@@ -60,7 +60,12 @@ _glbl.cfstat.createNewCashFlowStat = function () {
     /* -------------------------------------------- INCOME TAG START -------------------------------------------- */ 
     
     glel.cfTableRow3 = document.createElement("tr");
-    glel.cfTableRow3.innerHTML = "Income";
+    glel.cfTableRow3cell = document.createElement("td");
+    glel.cfTableRow3cell.colSpan = _glbl.cfstat.tableColTotal;
+    glel.cfTableRow3cell.innerHTML = "Income";    
+    glel.cfTableRow3cell.className = "cfTableRow3cell";    
+    glel.cfTableRow3.appendChild(glel.cfTableRow3cell);
+    
     
     
     // The tags to include
@@ -74,7 +79,7 @@ _glbl.cfstat.createNewCashFlowStat = function () {
         
         var temp = { tbrow:document.createElement("tr"),tbcells:[]};
         // make the table cells
-        for( var j = 0 ; j < tableColTotal; j++)
+        for( var j = 0 ; j < _glbl.cfstat.tableColTotal; j++)
         {
             temp.tbcells.push(document.createElement("td"));
         }
@@ -97,19 +102,35 @@ _glbl.cfstat.createNewCashFlowStat = function () {
     
     for( var i in glel.IncomeTagRowVec ){
         
-        for( var j = 2; j <tableColTotal; j ++ ){
-            glel.IncomeTagRowVec[i].tbcells[j].innerHTML = elValFns[j-2].call(glel.IncomeTagRowVec[i].tbcells[1].innerHTML);
+        for( var j = 2; j <_glbl.cfstat.tableColTotal; j ++ ){
+            var value =  elValFns[j-2].call(glel.IncomeTagRowVec[i].tbcells[1].innerHTML) * -1;
+            glel.IncomeTagRowVec[i].tbcells[j].innerHTML = value.toFixed(2);
         }
         
     }
+    
+    glel.cfTableIncomeEndcells = [];
+    for(var i =0; i < _glbl.cfstat.tableColTotal -1; i++){
+        var temp = document.createElement("td");
+        glel.cfTableIncomeEndcells.push(temp);
+    }
+    
     
     /* -------------------------------------------- EXPENDIURE TAG START -------------------------------------------- */
     
     // The Expenditure Tags
     var ExpendutreTagsVec = _glbl.cfstat.findTags("Expenditure");
     
+    // Expenditure row header
+    
     glel.cfTableRow4 = document.createElement("tr");
-    glel.cfTableRow4.innerHTML = "Expenditure";
+    glel.cfTableRow4cell = document.createElement("td");
+    glel.cfTableRow4cell.colSpan = _glbl.cfstat.tableColTotal;
+    glel.cfTableRow4cell.innerHTML = "Expenditure";    
+    glel.cfTableRow4cell.className = "cfTableRow3cell";    
+    glel.cfTableRow4.appendChild(glel.cfTableRow4cell);
+    
+    
     
     // rows for tags
     // structure of ExpenditureTagRowVec is 
@@ -119,7 +140,7 @@ _glbl.cfstat.createNewCashFlowStat = function () {
         
         var temp = { tbrow:document.createElement("tr"),tbcells:[]};
         // make the table cells
-        for( var j = 0 ; j < tableColTotal; j++)
+        for( var j = 0 ; j < _glbl.cfstat.tableColTotal; j++)
         {
             temp.tbcells.push(document.createElement("td"));
         }
@@ -140,11 +161,15 @@ _glbl.cfstat.createNewCashFlowStat = function () {
  
     for( var i in glel.ExpenditureRowVec ){
         
-        for( var j = 2; j <tableColTotal; j ++ ){
-            glel.ExpenditureRowVec[i].tbcells[j].innerHTML = elValFns[j-2].call(glel.ExpenditureRowVec[i].tbcells[1].innerHTML);
+        for( var j = 2; j <_glbl.cfstat.tableColTotal; j ++ ){
+            var value = elValFns[j-2].call(glel.ExpenditureRowVec[i].tbcells[1].innerHTML) * -1;
+            glel.ExpenditureRowVec[i].tbcells[j].innerHTML = value.toFixed(2) ;
         }
         
     }
+    
+    // Apply styling as necessary
+    _glbl.cfstat.applyTableStyle();
     
     
     /* -------------------------------------------- TABLE END -------------------------------------------- */
@@ -171,6 +196,50 @@ _glbl.cfstat.createNewCashFlowStat = function () {
     glel.dsb_cfstatement.appendChild(glel.cf_title);
     glel.dsb_cfstatement.appendChild(glel.cf_table);
 
+};
+
+
+/**
+ * Styles the table
+ */
+_glbl.cfstat.applyTableStyle = function(){
+
+    // the top row
+    glel.cf_netposrow.className = "netPositionStyle";
+    
+    //style the column headers
+    for(var i in glel.cfColumnHeaderLabel){
+        glel.cfColumnHeaderLabel[i].className = "cfTableColHeader";
+        
+        
+    }
+    
+    // Apply styles to the Expediture value cells
+    for( var i in glel.ExpenditureRowVec ){
+        // The first two columns are dealt with differently
+        for( var j = 2; j <_glbl.cfstat.tableColTotal; j ++ ){
+            glel.ExpenditureRowVec[i].tbcells[j].className = "cftablevalel";
+        }
+        
+        // formate left spacer cell
+        glel.ExpenditureRowVec[i].tbcells[0].className = "cftableleftspacecol";
+        
+    }
+    
+    // Apply styles to the Income value cells
+    for( var i in glel.IncomeTagRowVec ){
+        // The first two columns are dealt with differently
+        for( var j = 2; j <_glbl.cfstat.tableColTotal; j ++ ){
+            glel.IncomeTagRowVec[i].tbcells[j].className = "cftablevalel";
+        }
+        
+        // formate left spacer cell
+        glel.IncomeTagRowVec[i].tbcells[0].className = "cftableleftspacecol";
+        
+    }
+    
+    
+    
 };
 
 
