@@ -37,13 +37,19 @@
 }
 
 .cnfcatviewmain{
+    margin: 0px 0px 0px 5px;
+    width: 1055px;
+    height: inherit;
+    display:inline-block;
+    overflow:scroll;
+    white-space: nowrap;
+}
+
+.cnfcatviewparent{
     margin: 2px auto;
     width: 1100px;
     height: 400px;
-    display:block;
-    overflow:scroll;
-    white-space: nowrap;
-    
+    display:block;    
 }
 
 .catpanelmain{
@@ -54,12 +60,31 @@
     display:inline-block;    
 }
 
+.addbutton{
+    margin: 0px 5px 0px 0px;
+    background-color:#A1ED82;
+    opacity: 0.8;
+    width: 35px;
+    height: 400px;
+    display:inline-block;    
+}
+
+.addbutton:hover{
+
+    background-color:#A1ED82;
+    opacity: 0.6;
+   
+}
+
+
 .catpaneltitle{
     margin:0px auto;
     display: block;
     height : 30px;
     width:inherit;
     background-color: #99CCFF;
+    border:none; 
+    text-align: center;
 
     
 }

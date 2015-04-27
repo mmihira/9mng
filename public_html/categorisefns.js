@@ -32,6 +32,13 @@ _glbl.catg.config_categorise = function()
 _glbl.catg.savecat = function()
 {
     var r = window.confirm(" Are your sure you want to save the category data ?\nNote : Cat data will not be saved on your hard disk.\nClick update DB on the dasboard to do so after saving cat data.");
+    
+    // merge the temporary and the panelvec
+    
+    for( i in glel.tempPanel){
+        glel.panelvec.push(glel.tempPanel[i]);
+    }
+    
     if(r === true)
     {
         // Delete both the cat and cat_db database
@@ -41,13 +48,21 @@ _glbl.catg.savecat = function()
         for( var i in glel.panelvec)
         {
             // create a vector of the cat terms
-            var catrmsv = glel.panelvec[i].cat_terms.value.split("\n");
+            if(glel.panelvec[i].cat_terms.value !== ""){
+                var catrmsv = glel.panelvec[i].cat_terms.value.split("\n");
+            }else
+            {
+                var catrmsv = [];
+            }
+            
             for(var k in catrmsv)
             {
                 // Ignore empty values;
                 if(catrmsv[k].length > 0)
                 {
-                    _glbl.catg.addCat(catrmsv[k],glel.panelvec[i].title_div_table_cell.innerHTML,glel.panelvec[i].tag_input.value);
+                    _glbl.catg.addCat(catrmsv[k],
+                                        glel.panelvec[i].title_div_input.value,
+                                        glel.panelvec[i].tag_input.value);
 
                 }
             }
@@ -87,8 +102,8 @@ _glbl.catg.categorise = function (vstring, ndx)
 
 /**
  * Called when the user clicks the "save category" button on the cat_config page
- * @param   {string}catvalue    is the category identifier i.e what should go in the name field of a category object
- * @param   {string}catkey      is the key used in _glbl.cat, or the term used when seraching the data desc   
+ * @param   {string}catvalue    is the category  i.e what should go in the name field of a category object
+ * @param   {string}catkey      is the category identifier used in _glbl.cat, or the term used when seraching the data desc   
  * @param   {string}tag         is the tag field 
  * @returns {undefined}
  */

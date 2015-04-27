@@ -8,18 +8,33 @@ _glbl = {
                         d_map : {}
             },
             
+            /******************** DEFINING CATEGORIES AND CATEGORY VALUES **********************/
+            /* Each catgeory is determined by a number of catgory identifiers.
+             * Categories are the categories which are held in _glbl.cat_db.Used as a storage for the category data type.
+             * 
+             * _glbl.cat holds the category identifiers and a reference to the corresponding category. This
+             * is used in categorising data.
+             * 
+             * _glbl.catlist holds for each category a list of category identifiers. It is used in organising categories.
+             */
+            
+            
             /*
-             * cat has structure {"category":reference Object,....}
-             * where the reference is to a object held in cat_db
+             * cat has structure {"category identifier":reference Object,....}
+             * where the reference is to a category object held in cat_db
              */
             cat : {},
-            // A object used to hold a list of the categories in _glbl.cat
+           
+            /**
+             *  A object used to hold a list of the categories in _glbl.cat
+             *  Structure is like {"category":["category-identifier","category-identifier"]...],.....}
+             */
             catlist : {},
             
             /* cat_db is the data base holding the categories as their associated data.
-             * it is constructed from an existing database file>. It is modified when the 
+             * it is constructed from an existing database file. It is modified when the 
              * user adds or removes a category type
-             * cat_db has structure [{},{},{}....]
+             * cat_db has structure {{},{},{}....}
              * where the element of cat_sb is an object with structure
              * { name:String categoryname,
              *   tag:Wether this category denotes an Income or Expenditure
