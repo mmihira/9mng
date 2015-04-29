@@ -103,7 +103,7 @@ _glbl.cfstat.createNewCashFlowStat = function () {
     for( var i in glel.IncomeTagRowVec ){
         
         for( var j = 2; j <_glbl.cfstat.tableColTotal; j ++ ){
-            var value =  elValFns[j-2].call(glel.IncomeTagRowVec[i].tbcells[1].innerHTML) * -1;
+            var value =  elValFns[j-2].call(glel.IncomeTagRowVec[i].tbcells[1].innerHTML);
             glel.IncomeTagRowVec[i].tbcells[j].innerHTML = value.toFixed(2);
         }
         

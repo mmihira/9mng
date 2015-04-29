@@ -76,17 +76,40 @@
    
 }
 
+.titlemain{
+    margin:0px auto;
+    display: block;
+    height : 32px;
+    width:inherit;
+    text-align: center;
+    
+}
 
 .catpaneltitle{
     margin:0px auto;
-    display: block;
+    display: inline-block;
     height : 30px;
-    width:inherit;
+    width:140px;
     background-color: #99CCFF;
     border:none; 
     text-align: center;
+    float:left
 
+}
+
+.catdeletebutton{
+    width : 10px;
+    margin:0px auto;
+    height : 32px;
+    display: inline-block;
+    background-color: #99CCFF;
+    text-align: center;
+    float:right
     
+}
+
+.catdeletebutton:hover{
+    background-color:#A1ED82;
 }
 .taginput{
     
@@ -96,6 +119,7 @@
     background: #F9FCFF;
     border:none; 
     text-align: center;
+    clear:both
     //outline:solid 10px silver;
 }
 

@@ -5,14 +5,17 @@ _glbl.fns.goToCatConfig = function()
     $(glel.cnf_parent).contents().detach();
     $(glel.cnf_cat_view_main).contents().detach();
     
+    // Remove any temporary panels
+    glel.tempPanel = [];
+    
     /******************* Create Cat Display Panels *******************/
-    _glbl.catg.refreshCatPanels();
+    _glbl.catg.clearAndRefreshCatPanels();
     
     /******************* Create Cat Display Table *******************/
     _glbl.catg.rfrsgCatTable(); 
     
     // Clear the temporary cat panels added using the add button
-    glel.tempPanel = [];
+    
     
     glel.cnf_parent.appendChild(glel.cnf_choice_main);
     glel.cnf_parent.appendChild(glel.cnf_cat_view_parent);
@@ -23,13 +26,13 @@ _glbl.fns.goToCatConfig = function()
 
 
 /**
- * This function is called within goToCatConfig and xxx
+ * This function is called within goToCatConfig and addCatButtonListener
  * It refreshes the panels in cnf_vat_view_main
  * All elements contained within cnf_cat_view_main are deleted and then re-created
  * @param hook  Used by the add category listener to create an additonal blank category
  * @returns {undefined}
  */
-_glbl.catg.refreshCatPanels = function(){
+_glbl.catg.clearAndRefreshCatPanels = function(){
     
     $(glel.cnf_cat_view_main).contents().detach();   
     /******************* Cat Editing Panel Creation *******************
@@ -55,16 +58,38 @@ _glbl.catg.refreshCatPanels = function(){
     {
         glel.panelvec.push({});
         pRef = glel.panelvec[glel.panelvec.length -1];
+        pRef.index = glel.panelvec.length -1;
         
+        // Any changes here need to be replicated in the addCatButtonListener function 
         // The main panel div which holds the panel.
         pRef.main = document.createElement("div");
         pRef.main.className = "catpanelmain";
-
-            // The div to hold the category title
-            pRef.title_div_input = document.createElement("input");
-            pRef.title_div_input.type = "text";
-            pRef.title_div_input.className = "catpaneltitle";
-            pRef.title_div_input.value = i;
+        
+        
+            // Div to hold the category title and delete button 
+            pRef.title_main = document.createElement("div");
+            pRef.title_main.className = "titlemain";
+            
+                // The div to hold the category title
+                pRef.title_div_input = document.createElement("input");
+                pRef.title_div_input.type = "text";
+                pRef.title_div_input.className = "catpaneltitle";
+                pRef.title_div_input.value = i;
+                
+                // The Div for the exit button.
+                pRef.delete_button = document.createElement("div");
+                pRef.delete_button.className = "catdeletebutton";
+                pRef.delete_button.innerHTML = "x";
+                $(pRef.delete_button).on("click", (function() { var nIndex = glel.panelvec.length -1;
+                                                               return function(){
+                                                                                    glel.panelvec.splice(nIndex,1);
+                                                                                    _glbl.catg.RefreshCatPanels();
+                                                                                };  
+                                                                            })());        
+                
+            pRef.title_main.appendChild(pRef.title_div_input);    
+            pRef.title_main.appendChild(pRef.delete_button);    
+                
             
             // The div to hold the category tag
             pRef.tag_input = document.createElement("input");
@@ -84,10 +109,21 @@ _glbl.catg.refreshCatPanels = function(){
             }
    
         // Append to the main panel div
-        pRef.main.appendChild(pRef.title_div_input);
+        pRef.main.appendChild(pRef.title_main);
         pRef.main.appendChild(pRef.tag_input);
         pRef.main.appendChild(pRef.cat_terms);
     }
+    
+    // Attach the category panels in glel.panelvec to cnf_cat_view_main
+    _glbl.catg.AttachCatPanels();
+    
+};
+
+/**
+ * Attaches the displays in glel.tempPanel and glel.panelvec to cnf_cat_view_main
+ * Called by _glbl.catg.clearAndRefreshCatPanels
+ */
+_glbl.catg.AttachCatPanels = function(){
     
     // Attach displays
     for( var i in glel.tempPanel)
@@ -99,6 +135,19 @@ _glbl.catg.refreshCatPanels = function(){
     {
         glel.cnf_cat_view_main.appendChild(glel.panelvec[i].main);
     }
+    
+};
+
+
+/**
+ * A simple detach and re-attachemnt of panels
+ * This is used in the listener attached to the delete buttons in the display panels
+ */
+_glbl.catg.RefreshCatPanels = function(){
+    
+    $(glel.cnf_cat_view_main).contents().detach();
+    _glbl.catg.AttachCatPanels();
+    
 };
 
 
@@ -217,12 +266,30 @@ _glbl.fns.addCatButtonListener = function(){
     // The main panel div which holds the panel.
     pRef.main = document.createElement("div");
     pRef.main.className = "catpanelmain";
+    
+        // Div to hold the category title and delete button 
+        pRef.title_main = document.createElement("div");
+        pRef.title_main.className = "titlemain";
 
-        // The div to hold the category title
-        pRef.title_div_input = document.createElement("input");
-        pRef.title_div_input.type = "text";
-        pRef.title_div_input.className = "catpaneltitle";
-        pRef.title_div_input.value = "NewCat";
+            // The div to hold the category title
+            pRef.title_div_input = document.createElement("input");
+            pRef.title_div_input.type = "text";
+            pRef.title_div_input.className = "catpaneltitle";
+            pRef.title_div_input.value = "NewCat";
+            
+            // The Div for the exit button.
+            pRef.delete_button = document.createElement("div");
+            pRef.delete_button.className = "catdeletebutton";
+            pRef.delete_button.innerHTML = "x";
+            $(pRef.delete_button).on("click", (function() { var nIndex = glel.tempPanel.length -1;
+                                                               return function(){
+                                                                                    glel.tempPanel.splice(nIndex,1);
+                                                                                    _glbl.catg.RefreshCatPanels();
+                                                                                };  
+                                                                            })()); 
+        
+        pRef.title_main.appendChild(pRef.title_div_input);    
+        pRef.title_main.appendChild(pRef.delete_button);
 
 
         // The div to hold the category tag
@@ -239,12 +306,12 @@ _glbl.fns.addCatButtonListener = function(){
 
 
     // Append to the main panel div
-    pRef.main.appendChild(pRef.title_div_input);
+    pRef.main.appendChild(pRef.title_main);
     pRef.main.appendChild(pRef.tag_input);
     pRef.main.appendChild(pRef.cat_terms);
 
     
-    _glbl.catg.refreshCatPanels();
+    _glbl.catg.clearAndRefreshCatPanels();
     
     
     
