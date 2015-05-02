@@ -5,9 +5,20 @@ _glbl.cfstat.createNewCashFlowStat = function () {
     console.log(latestDates);
     
     // get the net position
-    var netPosition = _glbl.dbint.get_net_position([latestDates.latestYear], "SAVER", [latestDates.latestMonth])[0][1] +
-            _glbl.dbint.get_net_position([latestDates.latestYear], "GOAL", [latestDates.latestMonth])[0][1] +
-            _glbl.dbint.get_net_position([latestDates.latestYear], "NETBANK", [latestDates.latestMonth])[0][1];
+    var netPosition = 0;    
+    // For later customisation
+    var accs = ["SAVER", "GOAL", "NETBANK"];
+    
+    
+    var nettemp = [];
+    for( i in accs){
+        
+        nettemp = _glbl.dbint.get_net_position([latestDates.latestYear], "SAVER", [latestDates.latestMonth]);
+        // Deal with when when one accounts has data from a month the others dont
+        if(nettemp.length > 0){
+            netPosition += nettemp[0][1];
+        }       
+    }
 
     // Title for the cashflow statement table
     glel.cf_title = document.createElement("div");
@@ -416,7 +427,10 @@ _glbl.cfstat.retElValVector = function() {
                         var retFloat = 0.0;
                         
                         for (var i in accVec){
+                            // If the data exists for this particular account
+                            if( accVec[i].length > 0){
                             retFloat = retFloat + accVec[i][0][2];
+                            }
                            
                         }
                         
@@ -462,7 +476,10 @@ _glbl.cfstat.retElValVector = function() {
                         var retFloat = 0.0;
                         
                         for (var i in accVec){
+                            // If the data exists for this particular account
+                            if( accVec[i].length > 0){
                             retFloat = retFloat + accVec[i][0][2];
+                            }
                            
                         }
                         
@@ -508,7 +525,10 @@ _glbl.cfstat.retElValVector = function() {
                         var retFloat = 0.0;
                         
                         for (var i in accVec){
+                            // If the data exists for this particular account
+                            if( accVec[i].length > 0){
                             retFloat = retFloat + accVec[i][0][2];
+                            }
                            
                         }
                         

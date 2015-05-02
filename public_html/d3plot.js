@@ -194,7 +194,7 @@ _glbl.d3plot.createNewNetPosition = function(yrs)
     
     // Make the data vector of format [[yr-mo as string,float value],.....]    
     // We make the date vector big enough to fit the largest data length.
-    for(var i in srt[srt.length-2][0])
+    for(var i in srt[srt.length-1][0])
     {
         _data.push({name:srt[srt.length-1][0][i][0],value:0.0,next:{},not_last:false});
     }
