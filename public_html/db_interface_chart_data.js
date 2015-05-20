@@ -4,18 +4,19 @@
  * 
  * @param {type} param is a struct with structure
  * {
- *  acc: the type of account
- *  val_bal: sum the "val" or the "bal" or "any" 
- *  deb_cred: sum for debits("deb") or credits("cred")
- *  notinc: an array of string with words not to be included in descrip. If emptry ignored.
- *  notinccat: an array of category strings which cannot match the category of the data.
- *  inc: an array of string with words that must be in the descript. If empty ignored.
- *  inccat : an array of category strings, only 1 must match to be included
- *  yrs: An array of yrs to lookup
- *  mo: An array of months to lookup.
+ *  acc:        the type of account
+ *  val_bal:    sum the "val" or the "bal" or "any" 
+ *  deb_cred:   sum for debits("deb") or credits("cred")
+ *  notinc:     an array of string with words not to be included in descrip. If emptry ignored.
+ *  notinccat:  an array of category strings which cannot match the category of the data.
+ *  notinctag:  an array of one tag as string. Any data with category with specified tag is not included (only 1 can be specified)
+ *  inc:        an array of string with words that must be in the descript. If empty ignored.
+ *  inccat :    an array of category strings, only 1 must match to be included
+ *  yrs:        An array of yrs to lookup
+ *  mo:         An array of months to lookup.
  *  @return {array}
- *  format is [[str type yr-mnt,BigDecimal,float value],...,]
- *  Only the existing data is returned.
+ *              format is [[str type yr-mnt,BigDecimal,float value],...,]
+ *              Only the existing data is returned.
  *  
  */
 _glbl.dbint.get_data = function(param)
@@ -27,6 +28,7 @@ _glbl.dbint.get_data = function(param)
     var inccat = param.inccat;
     var ninc = param.notinc;
     var ninccat = param.notinccat;
+    var notinccattag = param.notinccattag;
     var tdb = 0;
     var data = [];
     var bigz = new BigDecimal("0.0");
@@ -129,11 +131,25 @@ _glbl.dbint.get_data = function(param)
                                 
                             }
                             
+                            // Ensure the category doesn't have the included tag
+                            var notincattest = true;
+                            if (notinccattag.length > 0){
+                                // the "NA" category  doesnt have a tag
+                                var  dataCategory = tdb[yrs[i]][mn[m]].data[x][_glbl.dbs.cat];
+                                if( dataCategory !== "NA"){
+                                    if( _glbl.cat_db[dataCategory]["tag"] === notinccattag[0]){
+                                        notincattest = false;
+                                    }
+                                    
+                                }
+                            }
+                            
+                            
                             // Ensure the must inlucdes are present
                             if (inc_cnt === inc.length && inccat_cnt >0)
                             {
                                 // None of the not includes are accepted
-                                if(ninc_cnt === 0 && ninccat_cnt === 0)
+                                if(ninc_cnt === 0 && ninccat_cnt === 0 && notincattest === true)
                                 {
                                     // if any then return
                                     if( param.deb_cred === "any" ){

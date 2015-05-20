@@ -106,25 +106,7 @@ _glbl.cfstat.createNewCashFlowStat = function () {
         
         glel.IncomeTagRowVec.push (temp);
     }
-    
-    
-    
-    // fill in the values for cells in all the income rows
-    
-    for( var i in glel.IncomeTagRowVec ){
-        
-        for( var j = 2; j <_glbl.cfstat.tableColTotal; j ++ ){
-            var value =  elValFns[j-2].call(glel.IncomeTagRowVec[i].tbcells[1].innerHTML);
-            glel.IncomeTagRowVec[i].tbcells[j].innerHTML = value.toFixed(2);
-        }
-        
-    }
-    
-    glel.cfTableIncomeEndcells = [];
-    for(var i =0; i < _glbl.cfstat.tableColTotal -1; i++){
-        var temp = document.createElement("td");
-        glel.cfTableIncomeEndcells.push(temp);
-    }
+       
     
     
     /* -------------------------------------------- EXPENDIURE TAG START -------------------------------------------- */
@@ -168,8 +150,35 @@ _glbl.cfstat.createNewCashFlowStat = function () {
         glel.ExpenditureRowVec.push (temp);
     }
         
-    // fill in the values for cells in all the income rows
- 
+    
+    
+    
+    /******** The miscellanious Expenditure row ********/
+    
+    glel.ExpeditureMisc = { tbrow:document.createElement("tr"),tbcells:[]};
+    var temp = glel.ExpeditureMisc;
+    // make the table cells
+    for( var j = 0 ; j < _glbl.cfstat.tableColTotal; j++)
+    {
+        temp.tbcells.push(document.createElement("td"));
+    }
+    // the second of the cells contains the category name
+    temp.tbcells[1].innerHTML = "Misc Expenditure";
+    
+    // append the table cells
+        for( var k = 0 ;  k < temp.tbcells.length ; k++){
+            
+            temp.tbrow.appendChild(temp.tbcells[k]);
+            
+        }
+    
+    glel.ExpenditureRowVec.push (temp);
+    
+    
+    
+    /* -------------------------------------------- FILL IN TABLE -------------------------------------------- */
+    
+    // fill in the values for cells in all the Expenditure Rows
     for( var i in glel.ExpenditureRowVec ){
         
         for( var j = 2; j <_glbl.cfstat.tableColTotal; j ++ ){
@@ -179,7 +188,18 @@ _glbl.cfstat.createNewCashFlowStat = function () {
         
     }
     
-    // Apply styling as necessary
+    // fill in the values for cells in all the income rows
+    for( var i in glel.IncomeTagRowVec ){
+        
+        for( var j = 2; j <_glbl.cfstat.tableColTotal; j ++ ){
+            var value =  elValFns[j-2].call(glel.IncomeTagRowVec[i].tbcells[1].innerHTML);
+            glel.IncomeTagRowVec[i].tbcells[j].innerHTML = value.toFixed(2);
+        }
+        
+    }
+    
+    /* -------------------------------------------- Apply styling -------------------------------------------- */
+    
     _glbl.cfstat.applyTableStyle();
     
     
@@ -230,6 +250,14 @@ _glbl.cfstat.applyTableStyle = function(){
         // The first two columns are dealt with differently
         for( var j = 2; j <_glbl.cfstat.tableColTotal; j ++ ){
             glel.ExpenditureRowVec[i].tbcells[j].className = "cftablevalel";
+            
+            //if the value is 0 then font color is white
+            if (glel.ExpenditureRowVec[i].tbcells[j].innerHTML === "0.00"){
+                
+                glel.ExpenditureRowVec[i].tbcells[j].style.color = "#A8A3A3";
+                
+            }
+            
         }
         
         // formate left spacer cell
@@ -242,6 +270,15 @@ _glbl.cfstat.applyTableStyle = function(){
         // The first two columns are dealt with differently
         for( var j = 2; j <_glbl.cfstat.tableColTotal; j ++ ){
             glel.IncomeTagRowVec[i].tbcells[j].className = "cftablevalel";
+            
+            //if the value is 0 then font color is white
+            if (glel.IncomeTagRowVec[i].tbcells[j].innerHTML === "0.00"){
+                
+                glel.IncomeTagRowVec[i].tbcells[j].style.color = "#A8A3A3";
+            }
+                
+            
+            
         }
         
         // formate left spacer cell
@@ -405,36 +442,9 @@ _glbl.cfstat.retElValVector = function() {
                      */ 
                     call:function(cat){
                         
-                        var accVec = [];
-                        for(var i in _glbl.accTypesForcfstats)
-                        {
-                            accVec.push( _glbl.dbint.get_data({  acc:_glbl.accTypesForcfstats[i],
-                                                            val_bal:"val",
-                                                            deb_cred:"any",
-                                                            notinc:[],
-                                                            notinccat:[],
-                                                            inc:[],
-                                                            inccat:[cat],
-                                                            yrs:[latestDates.latestYear],
-                                                            mo:[_glbl.cfstat.convertToMMStringFormat(latestDates.latestMonthInt)]                          
-                                                            })
-                                        );
-                        }
-                        
-                        // Add the values from each diffirent category type
-                        // structure of accVec is [[["text",BigDecimal,Floatvalue]]]
-                        // since an implicit assumption is only one month of one year will be calculated
-                        var retFloat = 0.0;
-                        
-                        for (var i in accVec){
-                            // If the data exists for this particular account
-                            if( accVec[i].length > 0){
-                            retFloat = retFloat + accVec[i][0][2];
-                            }
-                           
-                        }
-                        
-                        return retFloat;                        
+                        return _glbl.cfstat.ElValVectorInnerFunction(latestDates.latestYear,
+                                                                        latestDates.latestMonthInt,
+                                                                        cat);                       
                     }
                         
                 },
@@ -454,36 +464,9 @@ _glbl.cfstat.retElValVector = function() {
                      */ 
                     call:function(cat){
                         
-                        var accVec = [];
-                        for(var i in _glbl.accTypesForcfstats)
-                        {
-                            accVec.push( _glbl.dbint.get_data({  acc:_glbl.accTypesForcfstats[i],
-                                                            val_bal:"val",
-                                                            deb_cred:"any",
-                                                            notinc:[],
-                                                            notinccat:[],
-                                                            inc:[],
-                                                            inccat:[cat],
-                                                            yrs:[latestDates.yearBefore],
-                                                            mo:[_glbl.cfstat.convertToMMStringFormat(latestDates.monthBefore)]                          
-                                                            })
-                                        );
-                        }
-                        
-                        // Add the values from each diffirent category type
-                        // structure of accVec is [[["text",BigDecimal,Floatvalue]]]
-                        // since an implicit assumption is only one month of one year will be calculated
-                        var retFloat = 0.0;
-                        
-                        for (var i in accVec){
-                            // If the data exists for this particular account
-                            if( accVec[i].length > 0){
-                            retFloat = retFloat + accVec[i][0][2];
-                            }
-                           
-                        }
-                        
-                        return retFloat;                        
+                        return _glbl.cfstat.ElValVectorInnerFunction(latestDates.yearBefore,
+                                                                        latestDates.monthBefore,
+                                                                        cat);                      
                     }
                         
                 },
@@ -503,36 +486,10 @@ _glbl.cfstat.retElValVector = function() {
                      */ 
                     call:function(cat){
                         
-                        var accVec = [];
-                        for(var i in _glbl.accTypesForcfstats)
-                        {
-                            accVec.push( _glbl.dbint.get_data({  acc:_glbl.accTypesForcfstats[i],
-                                                            val_bal:"val",
-                                                            deb_cred:"any",
-                                                            notinc:[],
-                                                            notinccat:[],
-                                                            inc:[],
-                                                            inccat:[cat],
-                                                            yrs:[latestDates.yearBefore2],
-                                                            mo:[_glbl.cfstat.convertToMMStringFormat(latestDates.monthBefore2)]                          
-                                                            })
-                                        );
-                        }
-                        
-                        // Add the values from each diffirent category type
-                        // structure of accVec is [[["text",BigDecimal,Floatvalue]]]
-                        // since an implicit assumption is only one month of one year will be calculated
-                        var retFloat = 0.0;
-                        
-                        for (var i in accVec){
-                            // If the data exists for this particular account
-                            if( accVec[i].length > 0){
-                            retFloat = retFloat + accVec[i][0][2];
-                            }
-                           
-                        }
-                        
-                        return retFloat;                        
+                        return _glbl.cfstat.ElValVectorInnerFunction(latestDates.yearBefore2,
+                                                                        latestDates.monthBefore2,
+                                                                        cat);
+                                               
                     }
                         
                 }
@@ -542,4 +499,91 @@ _glbl.cfstat.retElValVector = function() {
     
     return ret;
     
+};
+
+/**
+ * This function is only called by _glbl.cfstat.retElValVector
+ * For a specified category it calculates data that falls into that category
+ * Only the specified month and year is calculated.
+ * The accounts considered is stored in _glbl.accTypesForcfstats
+ * @param   year    The only year considerd, as a string, example "2012"
+ * @param   month   The only month considerd, as an integer value
+ * @param   cat     The only category considered, as a String
+ * @return          A Double value of the calculated data.
+ *                  It will be 0.0 if year,month,cat or acc doesn't exist in database 
+ */
+_glbl.cfstat.ElValVectorInnerFunction = function(year,month,cat){
+    
+    var accVec = [];
+    
+    // Special case for the miscelanious expediture category which is not an actual category
+    if(cat === glel.ExpeditureMisc.tbcells[1].innerHTML)
+    {
+        // For any other valid category
+        for(var i in _glbl.accTypesForcfstats)
+        {
+            accVec.push( _glbl.dbint.get_data({  acc:_glbl.accTypesForcfstats[i],
+                                            val_bal:"val",
+                                            deb_cred:"deb",
+                                            notinc:[],
+                                            notinccat:[],
+                                            notinccattag:[],
+                                            inc:[],
+                                            inccat:["NA"],
+                                            yrs:[year],
+                                            mo:[_glbl.cfstat.convertToMMStringFormat(month)]                          
+                                            })
+                        );
+        }
+
+        // Add the values from each diffirent category type
+        // structure of accVec is [[["text",BigDecimal,Floatvalue]]]
+        // since an implicit assumption is only one month of one year will be calculated
+        var retFloat = 0.0;
+
+        for (var i in accVec){
+            // If the data exists for this particular account
+            if( accVec[i].length > 0){
+            retFloat = retFloat + accVec[i][0][2];
+            }
+
+        }
+
+        return retFloat;
+        
+    }else{
+        
+        
+        // For any other valid category
+        for(var i in _glbl.accTypesForcfstats)
+        {
+            accVec.push( _glbl.dbint.get_data({  acc:_glbl.accTypesForcfstats[i],
+                                            val_bal:"val",
+                                            deb_cred:"any",
+                                            notinc:[],
+                                            notinccat:[],
+                                            notinccattag:[],
+                                            inc:[],
+                                            inccat:[cat],
+                                            yrs:[year],
+                                            mo:[_glbl.cfstat.convertToMMStringFormat(month)]                          
+                                            })
+                        );
+        }
+
+        // Add the values from each diffirent category type
+        // structure of accVec is [[["text",BigDecimal,Floatvalue]]]
+        // since an implicit assumption is only one month of one year will be calculated
+        var retFloat = 0.0;
+
+        for (var i in accVec){
+            // If the data exists for this particular account
+            if( accVec[i].length > 0){
+            retFloat = retFloat + accVec[i][0][2];
+            }
+
+        }
+
+        return retFloat;
+    }
 };

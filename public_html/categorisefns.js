@@ -83,7 +83,7 @@ _glbl.catg.categorise = function (vstring, ndx)
     var foundmatch = false;
     for ( var k in _glbl.cat)
     {
-        if( vstring[ndx].toLowerCase().search(k) !== -1)
+        if( vstring[ndx].toLowerCase().search(k.toLowerCase()) !== -1)
         {
             // found a match
             return _glbl.cat[k]["name"];

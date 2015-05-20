@@ -156,6 +156,36 @@
     
 }
 
+.cnf_spacer1{
+    
+    margin:auto;
+    display:block;
+    width:inherit;
+    height:25px;    
+    
+}
+
+.cnf_cattabletitle{
+    
+    margin:auto;
+    display:block;
+    width:inherit;
+    height:25px;
+    text-align: center;
+    font: 18px Tahoma, Verdana, Segoe, sans-serif;
+    
+}
+
+.cnf_cateditpaneltitle{
+    
+    margin:auto;
+    display:block;
+    width:inherit;
+    height:50px;
+    text-align: center;
+    font: 18px Tahoma, Verdana, Segoe, sans-serif;
+}
+
 .cnfcattablemain{
     margin : 0px auto;
     display :block;

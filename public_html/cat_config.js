@@ -15,10 +15,11 @@ _glbl.fns.goToCatConfig = function()
     _glbl.catg.rfrsgCatTable(); 
     
     // Clear the temporary cat panels added using the add button
-    
-    
     glel.cnf_parent.appendChild(glel.cnf_choice_main);
+    glel.cnf_parent.appendChild(glel.cnf_cateditpaneltitle);
     glel.cnf_parent.appendChild(glel.cnf_cat_view_parent);
+    glel.cnf_parent.appendChild(glel.cnf_spacer1);
+    glel.cnf_parent.appendChild(glel.cnf_cattabletitle);
     glel.cnf_parent.appendChild(glel.cnf_cat_table_main);
     _glbl.main.append(glel.cnf_parent);
     
@@ -189,6 +190,11 @@ _glbl.fns.createCatConfigPage =  function()
     glel.cnf_parent.className = "cnfparent";
     glel.cnf_parent.style.width = "1200px";
     
+        // Category editing panel
+        glel.cnf_cateditpaneltitle = document.createElement("div");
+        glel.cnf_cateditpaneltitle.innerHTML = "Category Editing Panel";
+        glel.cnf_cateditpaneltitle.className = "cnf_cateditpaneltitle";
+    
         // Div to hold the options after the title
         glel.cnf_choice_main = document.createElement("div");
         glel.cnf_choice_main.className = "cnfchoicemain";
@@ -241,19 +247,39 @@ _glbl.fns.createCatConfigPage =  function()
             glel.cnf_addNewButton.appendChild(glel.cnf_inner_table);
             $(glel.cnf_addNewButton).on("click",_glbl.fns.addCatButtonListener);
         
-            // Where all the panels are held
-            glel.cnf_cat_view_main = document.createElement("div");
-            glel.cnf_cat_view_main.className = "cnfcatviewmain";
-            
-            
+        // Where all the panels are held
+        glel.cnf_cat_view_main = document.createElement("div");
+        glel.cnf_cat_view_main.className = "cnfcatviewmain";
+
+
         glel.cnf_cat_view_parent.appendChild(glel.cnf_addNewButton);
         glel.cnf_cat_view_parent.appendChild(glel.cnf_cat_view_main);
+
+        // Spacer
+        glel.cnf_spacer1 = document.createElement("div");
+        glel.cnf_spacer1.className = "cnf_spacer1";
+
+        // Category view title
+        glel.cnf_cattabletitle = document.createElement("div");
+        glel.cnf_cattabletitle.innerHTML = "Data Table";
+        glel.cnf_cattabletitle.className = "cnf_cattabletitle";
         
+        // Category display filter
+        // Only show categorised
+        // Year drop down
+        // Year
+        // anything else ?
+        // Apply filter button
+        
+
         // Div to hold the table of data showing category
         glel.cnf_cat_table_main = document.createElement("div");
         glel.cnf_cat_table_main.className = "cnfcattablemain";
-            glel.cnf_cat_table = document.createElement("div");
-            glel.cnf_cat_table.className = "cnfcattable";
+            
+                // The category table itself
+                glel.cnf_cat_table = document.createElement("div");
+                glel.cnf_cat_table.className = "cnfcattable";
+            
         glel.cnf_cat_table_main.appendChild(glel.cnf_cat_table);  
                 
 };

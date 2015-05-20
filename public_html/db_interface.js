@@ -148,14 +148,9 @@ _glbl.dbint.addNewToDatabase = function (results)
                 db_tmp[_l - 1][_glbl.tdb.month] = temp_date[1][1]; // Month 
                 db_tmp[_l - 1][_glbl.tdb.year] = temp_date[1][2]; // Year
 
-                // Cleanup the description text
-                while (x[i][2].search("\s") !== -1 && x[i][2].search("\t") !== -1)
-                {
-                    x[i][2].replace("\s\s", " ");
-                    x[i][2].replace("\s", " ");
-                }
                 // add the text to database
-                db_tmp[_l - 1][_glbl.tdb.desc] = x[i][2];
+                // also remove multiple whitespaces
+                db_tmp[_l - 1][_glbl.tdb.desc] = x[i][2].replace(/\s+/g, " ");;
 
                 // Add the balances and values. Converting all strings to floats. 
                 db_tmp[_l - 1][_glbl.tdb.val] = new BigDecimal(x[i][1]);
