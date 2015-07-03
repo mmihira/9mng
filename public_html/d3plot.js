@@ -47,7 +47,8 @@ _glbl.d3plot.createNetCashFlow = function(yrs)
     // Sort the data so that the symbol with the most data goes first
     srt.sort(function(x,y){return x[0].length-y[0].length;});
     
-    // Make the data vector of format [[yr-mo as string,float value],.....]    
+    // Data has the format [{name:"Some String,value:123.23},.....] 
+    //eg : var _data = [{"20-02",20},{"21-02",22},{"22-02",22}]  
     // We make the date vector big enough to fit the largest data length.
     for(var i in srt[srt.length-1][0])
     {

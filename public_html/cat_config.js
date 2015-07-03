@@ -264,6 +264,13 @@ _glbl.fns.createCatConfigPage =  function()
         glel.cnf_cattabletitle.innerHTML = "Data Table";
         glel.cnf_cattabletitle.className = "cnf_cattabletitle";
         
+        glel.cnf_catfilterparent = document.createElement("div");
+        glel.cnf_catfilterparent.className = "";
+        
+        //Only show categorised 
+        glel.cnf_onlyshowcategorised  = document.createElement("div");
+        
+        
         // Category display filter
         // Only show categorised
         // Year drop down

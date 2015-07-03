@@ -5,32 +5,16 @@
             <url>public_html/cat_config.js</url>
             <bookmark id="1">
                 <name/>
-                <line>258</line>
+                <line>255</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/categorisefns.js</file>
-            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/db_interface.js</file>
             <file>file:/R:/Google%20Drive/Coding/9mng/public_html/d3plot.js</file>
-            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/d3.min.js</file>
-            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/dashboard.js</file>
-            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/cat_config.css</file>
-            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/plot_charts.js</file>
             <file>file:/R:/Google%20Drive/Coding/9mng/public_html/index.html</file>
-            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/cashflowstat.js</file>
-            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/save_page.js</file>
-            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/upload_page.js</file>
-            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/bigdecimal.js</file>
             <file>file:/R:/Google%20Drive/Coding/9mng/public_html/dashboard.css</file>
-            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/exist_update_page.js</file>
-            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/db_interface_ext.js</file>
-            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/appglobals.js</file>
-            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/db_interface_chart_data.js</file>
-            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/cat_config.js</file>
-            <file>file:/R:/Google%20Drive/Coding/9mng/public_html/test.js</file>
         </group>
     </open-files>
 </project-private>
