@@ -148,7 +148,7 @@ h1 {
 
 @media (max-width: 768px) {
   .btn {
-	font-size:11px;
+	font-size:14px;
     padding:4px 6px;
   }
   
@@ -160,7 +160,7 @@ h1 {
 @media (min-width: 768px) {
   .btn {
 	font-size:12px;
-    padding:6px 12px;
+    padding:6px 16px;
   }
   
   .main_btn_spacer{
@@ -171,7 +171,7 @@ h1 {
 @media (min-width: 992px) {
   .btn {
 	font-size:14px;
-    padding:8px 12px;
+    padding:8px 18px;
   }
   
   .main_btn_spacer{
@@ -184,7 +184,7 @@ h1 {
 @media (min-width: 1200px) {
   .btn {
     padding:10px 16px;
-    font-size:18px;
+    font-size:20px;
     
   }
   
