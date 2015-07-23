@@ -89,28 +89,23 @@
             </div><!-- /.container-fluid -->
         </nav>
         
-        <div class="Header" id="header"> 
-            <div style="display: table-cell; vertical-align: middle;">
-                <div>
-                    Finance Dashboard
+        <div id ="main">
+            
+            <div style="padding-left:25%;padding-right:25%">
+                <div class="btn-group-vertical center-block mainbtn" role="group"  aria-label="...">
+                        <div class="btn-group"  role="group" >
+                            <button id="load_ext" type="button" class="btn btn-primary btn-lg " >Load from existing file</button>
+                        </div>
+                    <div id="main_btn_spacer" class="main_btn_spacer"></div>
+
+
+                        <div class="btn-group" role="group" >
+                          <button id="create_new" type="button" class="btn btn-primary btn-lg " >Create new dashboard</button>
+                        </div>
                 </div>
             </div>
         </div>
-        <div id ="main">
-            <!--            <div class="initchoice">
-                                <div style ="display:inline-table;height:100%;width:100%">
-                                        <div style="display:table-cell;vertical-align: middle;">
-                                            <a href="xx.html"><h1>Load from existing database</h1></a>
-                                        </div>
-                                </div>
-                        </div>-->
-            <!--            <input type="file" id="fileToLoad">
-                        <button onclick="loadFileAsText()">Load Selected File</button>-->
-        </div>
-        <div>
-            <svg id="stest">
-            </svg>
-        </div>
+
         <script>
 
             /**
@@ -124,57 +119,19 @@
             _glbl.main = $("#main");
 
             /*********************************** CREATE THE STARTING PAGE **********************************/
-            
-            /**
-             * Creates the initial button visible to user
-             * 
-             * @param _w width of element
-             * @param _h height elment
-             * @param text A string which is put in between the h tag
-             * @param onclick the click call back function    
-             * @return An object with all elements created
-             */
-            createIntBtn = function (_w, _h, text, onclick)
-            {
-                ret = {btn1_parent_div: document.createElement("div"),
-                    btn1_table_div: document.createElement("div"),
-                    btn1_tablecell_div: document.createElement("div")
-                };
-
-                ret.btn1_parent_div.className = "initchoice";
-                ret.btn1_parent_div.style.height = _h + "px";
-                ret.btn1_parent_div.style.width = _w + "px";
-
-                ret.btn1_table_div.style.display = "inline-table";
-                ret.btn1_table_div.style.height = _h + "px";
-                ret.btn1_table_div.style.width = _w + "px";
-
-
-                ret.btn1_tablecell_div.style.display = "table-cell";
-                ret.btn1_tablecell_div.style.verticalAlign = "middle";
-
-                ret.btn1_text_h1 = document.createElement("h1");
-                ret.btn1_text_h1.innerHTML = text;
-
-                ret.btn1_tablecell_div.appendChild(ret.btn1_text_h1);
-                ret.btn1_table_div.appendChild(ret.btn1_tablecell_div);
-                ret.btn1_parent_div.appendChild(ret.btn1_table_div);
-
-                ret.btn1_tablecell_div.addEventListener("click", onclick);
-
-                return ret;
-            };
-            
+                               
             
             createNew = function ()
             {
                 _glbl.main.empty();
             };
-            glel.strt_pg_btn1 = createIntBtn(1200, 200, "Load from existing data", _glbl.fns.goToExtDatabasePage);
-            glel.strt_pg_btn2 = createIntBtn(1200, 200, "Create new database", _glbl.fns.goToLoadFromNewPage);
+            
 
-            _glbl.main.append(glel.strt_pg_btn1.btn1_parent_div);
-            _glbl.main.append(glel.strt_pg_btn2.btn1_parent_div);
+            document.getElementById("load_ext").addEventListener("click", _glbl.fns.goToExtDatabasePage);
+            document.getElementById("create_new").addEventListener("click", _glbl.fns.goToLoadFromNewPage);
+
+            //_glbl.main.append(glel.strt_pg_btn1.btn1_parent_div);
+            //_glbl.main.append(glel.strt_pg_btn2.btn1_parent_div);
 
            
             // Create the create from new page
