@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="bower_components/papaparse/papaparse.min.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/services/serviceDownloadForm.js"></script>
+    <script type="text/javascript" src="js/services/serviceDatabaseElement.js"></script>
+    <script type="text/javascript" src="js/services/serviceDatabase.js"></script>
+    <script type="text/javascript" src="js/controllers/controllerDownloadForm.js"></script>
+    <script type="text/javascript" src="js/directives/directiveDownloadFormInput.js"></script>
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"></script>
+    <link href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet"></script>
+    <link href="css/inputTypeCss.css" rel="stylesheet"></script>
+
+    <title></title>
+</head>
+<body>
+    <header class="jumbotron">
+
+        <!-- Main component for a primary marketing message or call to action -->
+
+        <div class="container">
+            <div class="row row-content">
+                <div class="col-xs-12 col-sm-8">
+                    <h1>9mng</h1>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container" ng-app="app">
+
+        <div ng-controller="downloadFormController as dFc">
+
+             <div class="row" >
+                 <div class="col-sm-7" >
+                    <form class="form-inline"  ng-submit="dFc.onSubmitCallBack()">
+                        <div class="form-group">
+                            
+                            <update-label></update-label>
+                            
+                        </div>
+                        <div class="form-group">
+                            <label for="accountTypeSelection">Account Type</label>
+                            <input type="text" class="form-control" id="accountTypeSelection" placeholder="jane.doe@example.com">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Download</button>
+                    </form>
+                 </div>
+             </div>
+
+             <br>
+
+             <div class="row">
+                 <div class="col-sm-12">
+                     <div class="panel panel-default">
+                         <div class="panel-heading panel-title">
+                             Log
+                         </div>
+                         <div class="panel-body" style="height:500px;overflow:auto" >
+                                 <div ng-repeat="i in dFc.log">
+                                     <p> - {{ i }} </p>
+                                 </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+
+         </div>
+
+    </div>
+    
+</body>
+</html>
