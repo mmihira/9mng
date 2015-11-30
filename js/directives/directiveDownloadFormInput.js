@@ -15,7 +15,7 @@ angular.module("directive.input.label",['service.downloadFormService']).directiv
 
         scope : {},
 
-        template: "<label id=\"downloadId\"  for=\"exstFileDownload\">Download : </label><span class=\"btn btn-default btn-file\" id=\"exstFileDownload\" ><input type=\"file\">ChooseFile : {{ fileName }}</input></span>",
+        template: "<label class=\"col-sm-2 form-control-label\" id=\"downloadId\"  for=\"exstFileDownload\">Download : </label><span class=\"btn btn-default btn-file\" id=\"exstFileDownload\" ><input class=\"form-control\" type=\"file\">ChooseFile : {{ fileName }}</input></span>",
 
         link: function(scope,element,attr){
             // Expose a new variable to the parent scope

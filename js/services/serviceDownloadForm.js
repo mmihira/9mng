@@ -8,12 +8,13 @@
  * papaComplete: The callback function executed by papaparse on behalf of
  *               the parseData function.
  */
-angular.module('service.downloadFormService',['service.database']).factory('downloadFormService',['dB',function(dB){
+angular.module('service.downloadFormService',['service.database']).service('downloadFormService',['dB',function(dB){
 
     var dlForm = {};
-
+    
     dlForm.fileName = "None";
     dlForm.accountSelected = "None";
+    dlForm.log = [];
 
     // Used by papaParse 
     dlForm.elementReference = null;
@@ -26,7 +27,7 @@ angular.module('service.downloadFormService',['service.database']).factory('down
      * This function is called by th downloadForm controller when
      * the submit button is clicked
      */
-    dlForm.parseData = function(){
+    dlForm.parseData = function(scope){
 
         // Note this function call doesn't not block.
         // The parsing is done asynchronously and
@@ -35,7 +36,7 @@ angular.module('service.downloadFormService',['service.database']).factory('down
 
         $(dlForm.elementReference).parse({
             config: {
-                        complete: dlForm.papaComplete
+                        complete: dlForm.papaComplete(scope)
                     }
             });
 
@@ -43,12 +44,27 @@ angular.module('service.downloadFormService',['service.database']).factory('down
 
     /**
      * Called after papaParse has completed parsing the data from
-     * the form
+     * the form also note that this funtion is not called in the
+     * angular context therefore we have to manually call it inside.
      */ 
-    dlForm.papaComplete = function(results){
+    dlForm.papaComplete = function(_scope){
+        var scope = _scope;
+        
+        return function(results){
 
-        dB.addToDataBaseFromFile(results,'acc');
+            scope.$apply(dB.addToDataBaseFromFileNew(   
+                        results,
+                        'acc',
+                        (function(){
+                        var log = dlForm.log;
+                        return function(msg){
+                            log.push(msg);
+                            console.log(log);
+                            };
 
+                        }())
+            ));
+        };
     };
 
     return dlForm;
