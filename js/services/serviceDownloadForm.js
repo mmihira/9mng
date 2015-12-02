@@ -8,7 +8,8 @@
  * papaComplete: The callback function executed by papaparse on behalf of
  *               the parseData function.
  */
-angular.module('service.downloadFormService',['service.database']).service('downloadFormService',['dB',function(dB){
+angular.module('service.downloadFormService',['service.databaseInterface','service.mainAppLinker']).service('downloadFormService',
+        ['dBInt','mainAppLinker',function(dBInt,mAppLn){
 
     var dlForm = {};
     
@@ -49,21 +50,39 @@ angular.module('service.downloadFormService',['service.database']).service('down
      */ 
     dlForm.papaComplete = function(_scope){
         var scope = _scope;
+        var appLn = mAppLn;
         
         return function(results){
 
-            scope.$apply(dB.addToDataBaseFromFileNew(   
-                        results,
-                        'acc',
-                        (function(){
-                        var log = dlForm.log;
-                        return function(msg){
-                            log.push(msg);
-                            console.log(log);
-                            };
+            if(appLn.downLoadFromFile){
 
-                        }())
-            ));
+                scope.$apply(dBInt.addToDataBaseFromfileExisting(   
+                            results,
+                            (function(){
+                            var log = dlForm.log;
+                            return function(msg){
+                                log.push(msg);
+                                console.log(log);
+                                };
+
+                            }())
+                ));
+
+            }else{
+
+                scope.$apply(dBInt.addToDataBaseFromFileNew(   
+                            results,
+                            'acc',
+                            (function(){
+                            var log = dlForm.log;
+                            return function(msg){
+                                log.push(msg);
+                                console.log(log);
+                                };
+
+                            }())
+                ));
+            }
         };
     };
 

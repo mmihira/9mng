@@ -1,8 +1,16 @@
-angular.module('controller.mainChoice',[]).controller('mainChoice',function(){
+angular.module('controller.mainChoice',['service.mainAppLinker']).controller('mainChoice',['mainAppLinker',function(mAppLn){
 
     var self = this;
 
-    self.hide = false;
+    self.hide = mAppLn.hideMainChoice;
+
+    self.clickLoadFromFile = function(){
+
+        mAppLn.hideDownLoadForm.value = false;
+        self.hide.value = true;
+        mAppLn.downLoadFromFile = true;
+
+    };
 
 
-});
+}]);

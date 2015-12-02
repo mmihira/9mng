@@ -2,8 +2,12 @@ angular.module('service.mainAppLinker',[]).service('mainAppLinker',function(dB){
 
     var self = this;
 
-    self.hideMenu = false;
-    self.hideMainChoice = false;
-    self.hideDownLoadForm = false;
+    self.hideMenu = {value:false};
+    self.hideMainChoice = {value:false};
+    self.hideDownLoadForm = {value:true};
+
+    // This two variables show how the 
+    self.hideDownLoadFormAcc = {value:true};
+    self.downLoadFromFile = true;
 
 });

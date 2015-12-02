@@ -1,10 +1,10 @@
 
 
-angular.module('controller.menuController',[]).controller('menuController',function(){
+angular.module('controller.menuController',['service.mainAppLinker']).controller('menuController',['mainAppLinker',function(mAppLn){
 
     var self = this;
 
-    self.showMenu = false;
+    self.hideMenu = mAppLn.hideMenu;
 
 
-});
+}]);

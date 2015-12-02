@@ -1,14 +1,18 @@
 /*
  * 
  */
-angular.module('controller.downloadForm',['service.downloadFormService']).controller(
-        'downloadFormController',['downloadFormService','$scope', function(dlFormServ,$scope){
+angular.module('controller.downloadForm',['service.mainAppLinker','service.downloadFormService']).controller(
+        'downloadFormController',['mainAppLinker','downloadFormService','$scope', function(mAppLn,dlFormServ,$scope){
 
                 var self = this;
 
                 // log is a string of objects which are printed
                 // in the given log
                 self.log = dlFormServ.log;
+
+                self.hideDownLoadForm =  mAppLn.hideDownLoadForm;
+                self.hideDownLoadFormAcc = mAppLn.hideDownLoadFormAcc;
+
 
                 self.onSubmitCallBack = function(){
                     console.log($scope);
