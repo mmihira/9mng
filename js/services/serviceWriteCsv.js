@@ -8,7 +8,7 @@ angular.module('service.writeCsv',[]).service('writeCsv',function(){
         day=2;
         month=3;
         year=4;
-        desc=5;
+        description=5;
         value=6;
         balance=7;
         category=9;

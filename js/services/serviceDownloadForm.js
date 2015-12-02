@@ -62,7 +62,6 @@ angular.module('service.downloadFormService',['service.databaseInterface','servi
                             var log = dlForm.log;
                             return function(msg){
                                 log.push(msg);
-                                console.log(log);
                                 };
 
                             }())
@@ -77,7 +76,6 @@ angular.module('service.downloadFormService',['service.databaseInterface','servi
                             var log = dlForm.log;
                             return function(msg){
                                 log.push(msg);
-                                console.log(log);
                                 };
 
                             }())

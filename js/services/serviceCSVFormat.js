@@ -6,7 +6,7 @@ angular.module('service.CSVFormat',[]).service('CSVFormat',function(){
     csvF.catTypeStart = "%catstart";
     csvF.catTypeEnd = "%catend";
     csvF.catValStart = "%catvatstart";
-    cavF.catValEnd = "%catvalend";
+    csvF.catValEnd = "%catvalend";
 
     csvF.dataOutFormat = {
         acc:0,
@@ -20,6 +20,8 @@ angular.module('service.CSVFormat',[]).service('CSVFormat',function(){
         description:8,
         category:9
     };
+
+    return csvF;
 
 });
 

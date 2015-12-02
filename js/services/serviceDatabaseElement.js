@@ -54,7 +54,14 @@ angular.module('service.databaseElement',[]).service('dBElement',function(){
 
             // The database rows have allready been created so just copy 
             // them accross
-            
+            this.acc = i.acc;
+            this.id = i.id;
+            this.date = i.date;
+            //this.shortDescript = i.shortDescript;
+            this.value = i.value;
+            this.balance = i.balance;
+            this.description = i.description;
+            this.category = i.category
 
         }else{ 
 

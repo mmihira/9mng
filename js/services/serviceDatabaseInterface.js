@@ -8,8 +8,8 @@
  *  - tranformRawdataRow
  *
  */
-angular.module('service.databaseInterface',['service.database','service.databaseElement']).service('dBInt',
-        ['dB','dBElement',function(dB,dBElement){
+angular.module('service.databaseInterface',['service.database','service.databaseElement','service.CSVFormat']).service('dBInt',
+        ['dB','dBElement','CSVFormat',function(dB,dBElement,csvF){
 
     var dBInt = {};
 
@@ -38,6 +38,7 @@ angular.module('service.databaseInterface',['service.database','service.database
      *
      */
     dBInt.addToDataBaseFromfileExisting = function(dataWrapper,addLog){
+
 
         var data = dataWrapper.data;
 
@@ -69,14 +70,12 @@ angular.module('service.databaseInterface',['service.database','service.database
         /**************************************************************/
 
         //Ignore the %catvalstart 
-        var catvalendreached = false;
         z++;
-        
+        var catvalendreached = false;
+
         // While not reached the end of category data, add any user categories.
         while(catvalendreached === false)
         {
-            // Remove when debugging not required.
-            console.log(data[z]);
             
             // Reached the end of the user category data.
             if (data[z][0] === "%catvalend")
@@ -98,11 +97,63 @@ angular.module('service.databaseInterface',['service.database','service.database
         /* Process the database data  */
         /**************************************************************/
 
+        var endOfFile = false;
+        var tempRow = {};
+        var tempDatabaseElement = {};
+
+        while(!endOfFile){
+
+            if(data[z][0] == ""){
+
+                endOfFile = true;
+
+            }else{
+
+                
+
+                tempRow.date = new Date(data[z][csvF.dataOutFormat.year],
+                                       data[z][csvF.dataOutFormat.month],
+                                       data[z][csvF.dataOutFormat.month],
+                                       0,0,0);
+
+                tempRow.acc = data[z][csvF.dataOutFormat.acc];
+                tempRow.id = data[z][csvF.dataOutFormat.id];
+                tempRow.description = data[z][csvF.dataOutFormat.description];
+                tempRow.value = new BigDecimal(data[z][csvF.dataOutFormat.value]);
+                tempRow.balance = new BigDecimal(data[z][csvF.dataOutFormat.balance]);
+                tempRow.category = data[z][csvF.dataOutFormat.category];
+
+                tempDatabaseElement = new dBElement.createDatabaseElement(tempRow,true);
+
+                if (dB.dMap.hasOwnProperty(tempRow.acc) === false)
+                {
+                    dB.dMap[tempRow.acc] = {};
+                    addLog("Created account : "+ tempRow.acc + " in database.")
+                }
+
+                if (dB.dMap[tempRow.acc].hasOwnProperty(tempRow.date.getYear()) === false)
+                {
+                    // Add the year
+                    dB.dMap[tempRow.acc][tempRow.date.getYear()] = {};            
+                }
+
+                if (dB.dMap[tempRow.acc][tempRow.date.getYear()].hasOwnProperty(tempRow.date.getMonth()) === false)
+                {
+                    // add the month
+                    dB.dMap[tempRow.acc][tempRow.date.getYear()][tempRow.date.getMonth()] = {data:[]};            
+                }
+
+                //  Add the new row to the database
+                dB.dMap[tempRow.acc][tempRow.date.getYear()][tempRow.date.getMonth()].data.push(tempDatabaseElement);
 
 
+            }
+
+            z++;
+        }
 
 
-    }
+    };
 
     /**
      * @param   data        This is the result return from the papaparse

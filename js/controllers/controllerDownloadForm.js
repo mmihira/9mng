@@ -15,7 +15,6 @@ angular.module('controller.downloadForm',['service.mainAppLinker','service.downl
 
 
                 self.onSubmitCallBack = function(){
-                    console.log($scope);
 
                     // Make sure a file is selected
                     if ( dlFormServ.fileName == "None" )
