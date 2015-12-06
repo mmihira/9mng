@@ -69,6 +69,8 @@ angular.module('service.databaseElement',[]).service('dBElement',function(){
             this.rawValue = i.value;
             this.rawDescription = i.description;
             this.rawBalance = i.balance;
+            this.acc = i.acc;
+            this.category = "";
 
         }
 

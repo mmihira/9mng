@@ -2,7 +2,8 @@
  * 
  */
 angular.module('controller.downloadForm',['service.mainAppLinker','service.downloadFormService']).controller(
-        'downloadFormController',['mainAppLinker','downloadFormService','$scope', function(mAppLn,dlFormServ,$scope){
+        'downloadFormController',['mainAppLinker','downloadFormService','$scope','$rootScope', 
+        function(mAppLn,dlFormServ,$scope,$rootScope){
 
                 var self = this;
 
@@ -27,6 +28,9 @@ angular.module('controller.downloadForm',['service.mainAppLinker','service.downl
                     dlFormServ.parseData($scope);
 
                 }
+
+                // Let's other controllers clear the log when necessary
+                $rootScope.$on('clearLog',function(){ self.log.length = 0;});
 
 
 

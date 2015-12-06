@@ -8,6 +8,9 @@ angular.module('service.mainAppLinker',[]).service('mainAppLinker',function(dB){
 
     // This two variables show how the 
     self.hideDownLoadFormAcc = {value:true};
-    self.downLoadFromFile = true;
+    self.hideDashboard = {value:false};
+
+
+
 
 });

@@ -14,10 +14,9 @@ angular.module('service.CSVFormat',[]).service('CSVFormat',function(){
         day:2,
         month:3,
         year:4,
-        shortDescript:5,
+        description:5,
         value:6,
         balance:7,
-        description:8,
         category:9
     };
 

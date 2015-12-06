@@ -10,6 +10,7 @@
     <script type="text/javascript" src="js/bigdecimal.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
 
+    <script type="text/javascript" src="js/services/customDate.js"></script>
     <script type="text/javascript" src="js/services/serviceMainAppLinker.js"></script>
     <script type="text/javascript" src="js/services/serviceDownloadForm.js"></script>
     <script type="text/javascript" src="js/services/serviceDatabaseElement.js"></script>
@@ -54,7 +55,8 @@
         <div class="row">
             <div id='cssmenu' ng-controller="menuController as menC"  >
                     <ul ng-hide="menC.hideMenu.value">
-                       <li class='active'><a href='#'><span>Download</span></a></li>
+                       <li ng-class="menC.menActive.download" ng-click="menC.clickDownload()"><a href='#'><span>Download</span></a></li>
+                       <li ng-class="menC.menActive.update" ng-click="menC.clickUpdate()"><a href="#"><span>Update</span></a></li>
                        <li><a href='#'><span>Dashboard</span></a></li>
                        <li><a href='#'><span>Categories</span></a></li>
                        <li class='last'><a href='#'><span>Config</span></a></li>
@@ -67,7 +69,7 @@
             <div ng-hide="manC.hide.value">
                 <div style="padding:20px"></div>
                 <button class="btn btn-lg btn-mainChoice" ng-click="manC.clickLoadFromFile()">Load from file</button>
-                <button class="btn btn-lg btn-mainChoice">Create new</button>
+                <button class="btn btn-lg btn-mainChoice" ng-click=>Create new</button>
             </div>
         </div>
 

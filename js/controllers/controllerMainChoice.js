@@ -1,4 +1,5 @@
-angular.module('controller.mainChoice',['service.mainAppLinker']).controller('mainChoice',['mainAppLinker',function(mAppLn){
+angular.module('controller.mainChoice',['service.mainAppLinker','service.downloadFormService']).controller('mainChoice',
+        ['mainAppLinker','downloadFormService',function(mAppLn,dlFS){
 
     var self = this;
 
@@ -8,7 +9,8 @@ angular.module('controller.mainChoice',['service.mainAppLinker']).controller('ma
 
         mAppLn.hideDownLoadForm.value = false;
         self.hide.value = true;
-        mAppLn.downLoadFromFile = true;
+        mAppLn.hideDownLoadFormAcc.value = true;
+        dlFS.setFormBehaviour('downloadFromExistingFile');
 
     };
 

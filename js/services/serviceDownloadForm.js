@@ -8,17 +8,40 @@
  * papaComplete: The callback function executed by papaparse on behalf of
  *               the parseData function.
  */
-angular.module('service.downloadFormService',['service.databaseInterface','service.mainAppLinker']).service('downloadFormService',
-        ['dBInt','mainAppLinker',function(dBInt,mAppLn){
+angular.module('service.downloadFormService',['service.databaseInterface']).service('downloadFormService',
+        ['dBInt',function(dBInt){
 
     var dlForm = {};
     
+    // The name of the file which has been selected
     dlForm.fileName = "None";
+    // The account which has been selected
     dlForm.accountSelected = "None";
+    // The messages in the  log
     dlForm.log = [];
-
     // Used by papaParse 
     dlForm.elementReference = null;
+    // Used to decide the functionality of the submit button on the form
+    dlForm.formBehaviour = {
+        downloadFromExistingFile:false,
+        updateDatabase:false
+    };
+
+
+    /**
+     * Set the form behaviour to that specified by
+     * the behaviour argument. The behaviour arugment
+     * must be a key in dlForm.behaviour.
+     */
+    dlForm.setFormBehaviour = function(behaviour){
+
+        for(var i in dlForm.formBehaviour){
+            dlForm.formBehaviour[i] = false;
+        }
+
+        dlForm.formBehaviour[behaviour] = true;
+    }
+
 
     dlForm.changeFileName = function(newFileName){
         dlForm.fileName = newFileName;
@@ -50,11 +73,10 @@ angular.module('service.downloadFormService',['service.databaseInterface','servi
      */ 
     dlForm.papaComplete = function(_scope){
         var scope = _scope;
-        var appLn = mAppLn;
         
         return function(results){
 
-            if(appLn.downLoadFromFile){
+            if(dlForm.formBehaviour.downloadFromExistingFile){
 
                 scope.$apply(dBInt.addToDataBaseFromfileExisting(   
                             results,
@@ -67,11 +89,11 @@ angular.module('service.downloadFormService',['service.databaseInterface','servi
                             }())
                 ));
 
-            }else{
+            }else if(dlForm.formBehaviour.updateDatabase){
 
                 scope.$apply(dBInt.addToDataBaseFromFileNew(   
                             results,
-                            'acc',
+                            'SAVER',
                             (function(){
                             var log = dlForm.log;
                             return function(msg){

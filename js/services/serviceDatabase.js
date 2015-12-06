@@ -29,8 +29,6 @@ angular.module('service.database',[]).service('dB',function(dBElement){
                         description:2,
                         balance:3
     };
-
-
     
     return dB;
 });
