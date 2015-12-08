@@ -3,9 +3,13 @@
  * make use of or modify the database. Note that this
  * module will inject the database module
  * Functions included are :
+ *  - tranformRawdataRow
  *  - addToDataBaseFromFileNew
  *  - addToDataBaseFromfileExisting
- *  - tranformRawdataRow
+ *  - addElementToDatabase
+ *  - getLastDataAdded
+ *  - findMatching
+ *  - checkDatabaseBalance
  *
  */
 angular.module('service.databaseInterface',['service.database','service.databaseElement','service.CSVFormat','service.customDateParser']).service('dBInt',
@@ -121,30 +125,8 @@ angular.module('service.databaseInterface',['service.database','service.database
 
                 tempDatabaseElement = new dBElement.createDatabaseElement(tempRow,true);
 
-                if (dB.dMap.hasOwnProperty(tempRow.acc) === false)
-                {
-                    dB.dMap[tempRow.acc] = {};
-                    addLog("Created account : "+ tempRow.acc + " in database.")
-                }
-
-                if (dB.dMap[tempRow.acc].hasOwnProperty(tempRow.date.getFullYear()) === false)
-                {
-                    // Add the year
-                    dB.dMap[tempRow.acc][tempRow.date.getFullYear()] = {};            
-                }
-
-                if (dB.dMap[tempRow.acc][tempRow.date.getFullYear()].hasOwnProperty(tempRow.date.getMonth()) === false)
-                {
-                    // add the month
-                    dB.dMap[tempRow.acc][tempRow.date.getFullYear()][tempRow.date.getMonth()] = {data:[]};            
-                }
-
-                //  Add the new row to the date map
-                dB.dMap[tempRow.acc][tempRow.date.getFullYear()][tempRow.date.getMonth()].data.push(tempDatabaseElement);
+                dBInt.addElementToDatabase(tempDatabaseElement);
                 
-                // Add the new row to the vector storage
-                dB.allData.push(tempDatabaseElement);
-
                 dataCount++;
 
             }
@@ -155,6 +137,38 @@ angular.module('service.databaseInterface',['service.database','service.database
         addLog(dataCount + " entries added to database.");
 
     };
+
+    /**
+     * Adds a fully formed databaseElement object into the database
+     * @param   toAdd   The databaseElement to add to the database
+     */
+    dBInt.addElementToDatabase = function(toAdd){
+
+            if (dB.dMap.hasOwnProperty(toAdd.acc) === false)
+            {
+                dB.dMap[toAdd.acc] = {};
+            }
+
+            if (dB.dMap[toAdd.acc].hasOwnProperty(toAdd.date.getFullYear()) === false)
+            {
+                // Add the year
+                dB.dMap[toAdd.acc][toAdd.date.getFullYear()] = {};            
+            }
+
+            if (dB.dMap[toAdd.acc][toAdd.date.getFullYear()].hasOwnProperty(toAdd.date.getMonth()) === false)
+            {
+                // add the month
+                dB.dMap[toAdd.acc][toAdd.date.getFullYear()][toAdd.date.getMonth()] = {data:[]};            
+            }
+
+            //  Add the new row to the date map
+            dB.dMap[toAdd.acc][toAdd.date.getFullYear()][toAdd.date.getMonth()].data.push(toAdd);
+            
+            // Add the new row to the vector storage
+            dB.allData.push(toAdd);
+
+    };
+
 
     /**
      * @param   data        This is the result return from the papaparse
@@ -168,8 +182,6 @@ angular.module('service.databaseInterface',['service.database','service.database
         var data = dataWrapper.data;
 
         var tempDataVec = [];
-
-        console.log("Hello");
 
         for(var fileRow of data){
 
@@ -277,13 +289,24 @@ angular.module('service.databaseInterface',['service.database','service.database
         }
 
         var firstValRef = tempDataVec[startOfInput];
-
         if(lastAddedData.ref.balance.compareTo(firstValRef.balance.subtract(firstValRef.value))){
             addLog("Data to be added did not balance in database");
             return;
         }else{
             addLog("Data balanced correctly in database");
         }
+
+        // Now add the data to the database
+        var count = 0;
+        for(var i = startOfInput; i < tempDataVec.length; i ++){
+
+            dBInt.addElementToDatabase(tempDataVec[i]);
+            count ++;
+
+        }
+
+        addLog("Added " + count + " of " + tempDataVec.length + " to the database.");
+        addLog("Database is balanced ? " + dBInt.checkDatabaseBalance(account));
 
     };
 
@@ -375,6 +398,214 @@ angular.module('service.databaseInterface',['service.database','service.database
      */
     dBInt.checkDatabaseBalance = function(acc){
 
+        if( dB.dMap.hasOwnProperty(acc) == false ){
+            return null;
+        }
+
+
+        // Build a list of all the transactions in chronological order
+        var tLe = [];
+
+        var years = Object.keys(dB.dMap[acc]).map(function(x){ return parseInt(x);})
+        years.sort(function(a,b){return a - b;});
+
+        for(var year of years){
+
+            var months = Object.keys(dB.dMap[acc][year]).map(function(x){ return parseInt(x);})
+            months.sort(function(a,b){return a - b;});
+
+            for(var month of months){
+
+                var dBElref = dB.dMap[acc][year][month].data;
+
+                for(var el of dBElref){
+
+                    tLe.push(el);
+                }
+
+            }
+
+        }
+
+        var balance = true;
+
+        for (var i = 1; i < tLe.length; i ++){
+
+            // if non zero then not equal
+            if(tLe[i-1].balance.compareTo(tLe[i].balance.subtract(tLe[i].value))){
+                console.log(i);
+                console.log(tLe);
+                balance = false;
+                break;
+            }
+        }
+                
+        return balance;
+    };
+
+    /**
+     * Returns Database elements based on a number of filters
+     * 
+     * @param {type} param is a struct with structure
+     * {
+     *  acc:        the type of account
+     *  deb_cred:   sum for debits("deb") or credits("cred")
+     *  notinc:     an array of string with words not to be included in descrip. If emptry ignored.
+     *  notinccat:  an array of category strings which cannot match the category of the data.
+     *  notinctag:  an array of one tag as string. Any data with category with specified tag is not included (only 1 can be specified)
+     *  inc:        an array of string with words that must be in the descript. If empty ignored.
+     *  inccat :    an array of category strings, only 1 must match to be included
+     *  yrs:        An array of yrs to lookup
+     *  mo:         An array of months to lookup.
+     *  @return {array}
+     *              format is [[str type yr-mnt,BigDecimal,float value],...,]
+     *              Only the existing data is returned.
+     *  
+     */
+    dBInt.filterData = function(param)
+    {
+        var yrs = param.yrs;
+        var mn = param.mo;
+        var acc = param.acc;
+        var inc = param.inc;
+        var inccat = param.inccat;
+        var ninc = param.notinc;
+        var ninccat = param.notinccat;
+        var notinccattag = param.notinccattag;
+        var tdb = 0;
+        var data = [];
+        var bigz = new BigDecimal("0.0");
+
+        
+        
+        
+        // The months to filter
+        if(mn.length > 0)
+        {
+            if(mn[0] === "all")
+            {
+                mn = ["01","02","03","04","05","06","07","08","09","10","11","12"];
+            }
+        }
+        
+        // Are we looking for debits only or credits
+        if(param.deb_cred === "deb")
+        {
+            // In the big decimal library a value -1 is returned in compareTo if val is less than object 
+            var bigdcomp = -1;
+        }
+        else if(param.deb_cred === "cred")
+        {
+            var bigdcomp = 1;
+        }
+
+        var tdb = {};
+        if (dB.dMap.hasOwnProperty(acc))
+        {
+            tdb = dB.dMap[acc]; 
+
+            if(yrs.length > 0)
+            {
+                if(yrs[0] === "all"){
+                    yrs = Object.keys(dB.dMap[acc])
+                            .map(function(x){ return parseInt(x);})
+                            .sort(function(a,b){return a - b;});
+                }
+            }
+
+            for (var i in yrs)
+            {
+                if (tdb.hasOwnProperty(yrs[i]))
+                {
+                    for( var m in mn)
+                    {
+                        // include the month only if the month is present in the data.
+                        if( tdb[yrs[i]].hasOwnProperty(mn[m]))
+                        {
+                            
+                            for( var x in tdb[yrs[i]][mn[m]].data)
+                            {
+                                // look for must includes
+                                /*
+                                var inc_cnt = 0;
+                                for (var a in inc)
+                                {
+                                    if(tdb[yrs[i]][mn[m]].data[x][_glbl.dbs.desc].indexOf(inc[a]) !== -1 )
+                                    {
+                                        inc_cnt ++;
+                                    }
+                                }
+                                
+                                // look not includes
+                                var ninc_cnt = 0;
+                                for (var a in ninc)
+                                {
+                                    if(tdb[yrs[i]][mn[m]].data[x][_glbl.dbs.desc].indexOf(ninc[a]) !== -1 )
+                                    {
+                                        ninc_cnt ++;
+                                    }
+                                }
+                                
+                                // look for must include categories only one has to match
+                                if(inccat.length > 0)
+                                {
+                                    var inccat_cnt = 0;
+                                    for(var a in inccat)
+                                    {
+                                        if(tdb[yrs[i]][mn[m]].data[x][_glbl.dbs.cat] === inccat[a])
+                                        {
+                                            inccat_cnt ++;
+                                            break;
+                                        }
+
+                                    }
+                                }
+                                else
+                                {
+                                    var inccat_cnt = 1;
+                                }
+                                
+                                // look for must not include cats
+                                var ninccat_cnt = 0;
+                                for (var a in ninccat)
+                                {
+                                    if(tdb[yrs[i]][mn[m]].data[x][_glbl.dbs.cat] === ninccat[a])
+                                    {
+                                        ninccat_cnt ++;
+                                    }
+                                    
+                                }
+                                
+                                // Ensure the category doesn't have the included tag
+                                var notincattest = true;
+                                javascript sort number arrayif (notinccattag.length > 0){
+                                    // the "NA" category  doesnt have a tag
+                                    var  dataCategory = tdb[yrs[i]][mn[m]].data[x][_glbl.dbs.cat];
+                                    if( dataCategory !== "NA"){
+                                        if( _glbl.cat_db[dataCategory]["tag"] === notinccattag[0]){
+                                            notincattest = false;
+                                        }
+                                        
+                                    }
+                                }
+                                */
+                                
+                                
+                                    
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        for( var d in data)
+        {
+            data[d].push(data[d][1].floatValue());
+        }
+        
+        return data;
+        
     };
 
 
