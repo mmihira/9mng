@@ -12,8 +12,11 @@
  *  - checkDatabaseBalance
  *
  */
-angular.module('service.databaseInterface',['service.database','service.databaseElement','service.CSVFormat','service.customDateParser']).service('dBInt',
-        ['dB','dBElement','CSVFormat','customDateParser',function(dB,dBElement,csvF,cDate){
+angular.module('service.databaseInterface',
+        ['service.database','service.databaseElement','service.CSVFormat',
+        'service.customDateParser','service.categoryClass','service.categoryInterface']).service('dBInt',
+        ['dB','dBElement','CSVFormat','customDateParser','categoryClass','catInt',
+        function(dB,dBElement,csvF,cDate,catClass,catInt){
 
     var dBInt = {};
 
@@ -48,21 +51,27 @@ angular.module('service.databaseInterface',['service.database','service.database
         var catendreached = false;
         var catcounter = 0;
         var z = 0;
+        var tempCatClass = {};
         
         while(catendreached === false){
+
+            z++;
 
             if (data[z][0] === "%catend")
             {
                 catendreached = true;
+                z++;
             }
             else
             {
-                //_glbl.cat_db[data[z][0]] = _glbl.catg.createNewCat(data[z][0],data[z][1]);
+                // Add the new category to the database
+                catInt.addNewCategory(data[z][csvF.catOutFormat.catName],
+                                      data[z][csvF.catOutFormat.catTag]);
                 catcounter++;
                 
             }
-            z++;
         }
+
 
         /**************************************************************/
         /* Process the category Value Data*/
@@ -71,6 +80,8 @@ angular.module('service.databaseInterface',['service.database','service.database
         //Ignore the %catvalstart 
         z++;
         var catvalendreached = false;
+        var catIdent = "";
+        var catIdentName = "";
 
         // While not reached the end of category data, add any user categories.
         while(catvalendreached === false)
@@ -85,9 +96,10 @@ angular.module('service.databaseInterface',['service.database','service.database
             else
             // Add to the user category to the database.
             {
-                //_glbl.cat[data[z][0]] = _glbl.cat_db[data[z][1]];
-                //catvalcounter++;
-                z++;
+                 catIdent = data[z][csvF.catOutFormat.catIdent];
+                 catIdentName = data[z][csvF.catOutFormat.catIdentName];
+                 catInt.addNewCategoryIdentifier(catIdentName,catIdent);
+                 z++;
             }
             // Remove when debugging not required.
         }
@@ -121,7 +133,7 @@ angular.module('service.databaseInterface',['service.database','service.database
                 tempRow.description = data[z][csvF.dataOutFormat.description];
                 tempRow.value = new BigDecimal(data[z][csvF.dataOutFormat.value]);
                 tempRow.balance = new BigDecimal(data[z][csvF.dataOutFormat.balance]);
-                tempRow.category = data[z][csvF.dataOutFormat.category];
+                tempRow.category = catInt.getCategoryReference(data[z][csvF.dataOutFormat.category]);
 
                 tempDatabaseElement = new dBElement.createDatabaseElement(tempRow,true);
 
@@ -135,6 +147,7 @@ angular.module('service.databaseInterface',['service.database','service.database
         }
 
         addLog(dataCount + " entries added to database.");
+        console.log(dB.dMap);
 
     };
 

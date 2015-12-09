@@ -5,14 +5,28 @@ angular.module('service.categoryDatabase',['service.categoryClass']).service('ca
 
     var catDB = {};
 
+
     /**
-     *
+     * The known tags in the program
+     */
+    catDB.tags = ['Internal','Expenditure','Income'];
+
+    /**
+     * Holds categoryClass objects which reperesent unique categories
+     * used to identify transactions. catDb.dB is a map where the key
+     * is the name of the category and the value is the categoryClass
+     * object.
      */
     catDB.dB = {};
 
     /**
-     *
+     * dBIdentifiers is map where the keys are unqiue strings and the value 
+     * is the associated categoryClass object. That is the presense of the
+     * string in a description indicates the transaction belongs to the
+     * associated category.
      */
     catDB.dBIdentifiers = {};
+
+    return catDB;
 
 }]);

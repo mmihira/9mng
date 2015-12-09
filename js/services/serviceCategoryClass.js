@@ -8,11 +8,11 @@ angular.module('service.categoryClass',[]).service('categoryClass',function(){
 
     var catClass = {};
 
-    catClass.createNewCategory = function(name){
+    catClass.createNewCategory = function(name,tag,idents = []){
 
         this.name = name;
-        this.tags = [];
-        this.identifiers = [];
+        this.tag = tag;
+        this.identifiers = idents;
 
     };
 

@@ -8,6 +8,14 @@ angular.module('service.CSVFormat',[]).service('CSVFormat',function(){
     csvF.catValStart = "%catvatstart";
     csvF.catValEnd = "%catvalend";
 
+    csvF.catOutFormat = {
+        catName : 0,
+        catTag : 1,
+        catIdent : 0,
+        catIdentName : 1
+
+    };
+
     csvF.dataOutFormat = {
         acc:0,
         id:1,

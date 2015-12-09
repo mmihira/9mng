@@ -8,7 +8,7 @@
  *  - tranformRawdataRow
  *
  */
-angular.module('service.database',[]).service('dB',function(dBElement){
+angular.module('service.database',[]).service('dB',function(){
 
     var dB =  {};
 
