@@ -1,4 +1,10 @@
-
+/**
+ * Functions included :
+ * categorise
+ * getCategoryReference
+ * addNewCategory
+ * addNewCategoryIdentifier
+ */
 angular.module('service.categoryInterface',['service.categoryClass','service.categoryDatabase']).service('catInt',
         ['categoryClass','catDB',function(catClass,catDB){
 
@@ -39,6 +45,15 @@ angular.module('service.categoryInterface',['service.categoryClass','service.cat
             return catDB.dB[catName];
 
             };
+
+    /**
+     * Returns all the category names currently in the database
+     * @return      An Array of string containing the names of the
+     *              categories currently in the database.
+     */
+    catInt.getExistingCategoryNames = function(){
+
+    }
 
     /**
      * Adds a new category object into the database
