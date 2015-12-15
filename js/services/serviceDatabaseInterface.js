@@ -310,6 +310,7 @@ angular.module('service.databaseInterface',
         }
 
         // Now add the data to the database
+        
         var count = 0;
         for(var i = startOfInput; i < tempDataVec.length; i ++){
 

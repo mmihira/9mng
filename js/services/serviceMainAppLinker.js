@@ -10,6 +10,9 @@ angular.module('service.mainAppLinker',[]).service('mainAppLinker',function(dB){
     self.hideDownLoadFormAcc = {value:true};
     self.hideDashboard = {value:false};
 
+    // For the category
+    self.hideCategoryEditInterface = {value:false};
+
 
 
 

@@ -53,6 +53,8 @@ angular.module('service.categoryInterface',['service.categoryClass','service.cat
      */
     catInt.getExistingCategoryNames = function(){
 
+        return Object.keys(catDB.dB);
+
     }
 
     /**
