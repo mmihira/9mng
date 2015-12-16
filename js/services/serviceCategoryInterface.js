@@ -1,4 +1,8 @@
 /**
+ * This service includes all functions which interface directly with the 
+ * categoryDatabase service. The categoryDatabase service should not be
+ * injected into any other places except here. 
+ *
  * Functions included :
  * categorise
  * getCategoryReference
@@ -42,6 +46,10 @@ angular.module('service.categoryInterface',['service.categoryClass','service.cat
     /**
      * Returns a *new* array containing category identifiers
      * as strings.
+     * @param       catName     the name of the category to 
+     *              retrieve the identifiers for.
+     * @return      An array of string containing the identifiers
+     *              for the category specified.
      */
     catInt.getCategoryIdentifiers = function(catName){
 
