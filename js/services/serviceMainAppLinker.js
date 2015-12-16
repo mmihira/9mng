@@ -11,7 +11,7 @@ angular.module('service.mainAppLinker',[]).service('mainAppLinker',function(dB){
     self.hideDashboard = {value:false};
 
     // For the category
-    self.hideCategoryEditInterface = {value:false};
+    self.hideCategoryEditInterface = {value:true};
 
 
 
