@@ -2,6 +2,8 @@
  * Functions included :
  * categorise
  * getCategoryReference
+ * getExistingCategoryNames
+ * getCategoryIdentifiers
  * addNewCategory
  * addNewCategoryIdentifier
  */
@@ -15,7 +17,9 @@ angular.module('service.categoryInterface',['service.categoryClass','service.cat
      * @param   toCat   The element to categorise
      */
     catInt.categorise = function(toCat){
+
         var foundmatch = false;
+
         for ( var k in catDB.dBIdentifiers)
         {
             if( toCat.description.toLowerCase().search(k.toLowerCase()) !== -1)
@@ -32,6 +36,16 @@ angular.module('service.categoryInterface',['service.categoryClass','service.cat
             toCat.category = null;
             return false;
         }
+
+    };
+
+    /**
+     * Returns a *new* array containing category identifiers
+     * as strings.
+     */
+    catInt.getCategoryIdentifiers = function(catName){
+
+        return catDB.dB[catName].identifiers.map(function(e){return e;});
 
     };
 

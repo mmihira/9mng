@@ -142,33 +142,43 @@
          <!-- The dashboard -->
          <div class="row" ng-controller="categoryEditController as cEC">
              <div ng-hide="cEC.hide.value">
-                 <div class="col-xs-2">
-                     <div class="panel-group" id="categoryNames" aria-multiselectable="true">
-                         <div ng-repeat="n in cEC.catNames">
+                 <div class="col-xs-3">
 
-                             <div class="panel panel-default">
-                                 <div class="panel-heading" role="tab" id={{n}}>
-                                  <h4 class="panel-title">
-                                      <a name={{n}} category-name categoryNameAttribute role="button" data-toggle="collapse" data-parent="#categoryNames" href="#collapse{{n}}"
-                                          area-expanded="true" aria-controls={{n}}>
-                                      {{ n }}
-                                    </a>
-                                  </h4>
+                     <div class="panel panel-default">
+                        <div class="panel-body">                    
+                             <div class="panel-group" id="categoryNames" aria-multiselectable="true">
+                                 <div ng-repeat="n in cEC.catNames">
 
-                                </div>
-                                <div id="collapse{{n}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby={{n}}>
-                                  <div class="panel-body">
-                                      sdfsdfsdfsddf
-                                  </div>
-                                </div>
-                              </div>
+                                     <div class="panel panel-default">
+                                         <div class="panel-heading" role="tab" id={{n}}>
+                                          <h4 class="panel-title">
+                                              <a name={{n}} category-name categoryNameAttribute role="button" data-toggle="collapse" data-parent="#categoryNames" href="#collapse{{n}}"
+                                                  area-expanded="true" aria-controls={{n}}>
+                                              {{ n }}
+                                            </a>
+                                          </h4>
 
-                         </div>
+                                        </div>
+                                        <div id="collapse{{n}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby={{n}}>
+                                          <div class="panel-body">
+                                              <p>Tag : {{cEC.returnCatTag(n)}} </p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div style="padding:5px"></div>
 
-                     </div>
+                                 </div>
+
+                            </div>
+                        </div>
+                    </div>
+
                  </div>
-                 <div class="col-xs-10">
-                     sdfd
+
+                 <div class="col-xs-9">
+                     <div ng-repeat="i in cEC.catIdentifiers">
+                         {{ i }}
+                     </div>
                  </div>
              </div>
 

@@ -40,6 +40,9 @@ angular.module("directive.categoryNameAttribute",['service.categoryEdit']).direc
                                     $("#collapse"+e).collapse('hide');
                                 
                             });
+
+                            // Update the identifiers shown
+                            _catES.updateIdentifiers(_thisName);
                             
                         });
 
