@@ -26,6 +26,7 @@
     <script type="text/javascript" src="js/controllers/controllerMenu.js"></script>
     <script type="text/javascript" src="js/controllers/controllerMainChoice.js"></script>
     <script type="text/javascript" src="js/controllers/controllerCategoryEdit.js"></script>
+    <script type="text/javascript" src="js/controllers/controllerDashboard.js"></script>
 
     <script type="text/javascript" src="js/directives/directiveDownloadFormInput.js"></script>
     <script type="text/javascript" src="js/directives/directiveCategoryNamePanel.js"></script>
@@ -139,24 +140,32 @@
 
          </div>
 
-         <!-- The dashboard -->
+         <!-- Dasboard -->
+         <div class="row" ng-controller="dashBoardController as dSC">
+            <div ng-hide="dSC.hideDashBoard.value">
+                <button type="button" class="btn-primary" ng-click="dSC.testFilter()">click</btn>
+
+            </div>
+         </div>
+
+         <!-- The Category File -->
          <div class="row" ng-controller="categoryEditController as cEC">
              <div ng-hide="cEC.hide.value">
                  <div class="col-xs-3">
 
                      <div class="panel panel-default">
-                        <div class="panel-body">                    
+                        <div class="panel-body" style="max-height:500px;overflow-y:scroll">                    
                              <div class="panel-group" id="categoryNames" aria-multiselectable="true">
                                  <div ng-repeat="n in cEC.catNames">
 
                                      <div class="panel panel-default">
                                          <div class="panel-heading" role="tab" id={{n}}>
-                                          <h4 class="panel-title">
+                                          <h6 class="panel-title">
                                               <a name={{n}} category-name categoryNameAttribute role="button" data-toggle="collapse" data-parent="#categoryNames" href="#collapse{{n}}"
                                                   area-expanded="true" aria-controls={{n}}>
                                               {{ n }}
                                             </a>
-                                          </h4>
+                                          </h6>
 
                                         </div>
                                         <div id="collapse{{n}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby={{n}}>

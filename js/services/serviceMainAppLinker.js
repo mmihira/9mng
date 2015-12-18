@@ -14,6 +14,7 @@ angular.module('service.mainAppLinker',[]).service('mainAppLinker',function(dB){
     self.hideCategoryEditInterface = {value:true};
 
 
+    self.hideDashBoard = {value:false};
 
 
 });

@@ -10,6 +10,8 @@
  *  - getLastDataAdded
  *  - findMatching
  *  - checkDatabaseBalance
+ *  - filterData
+ *  - getCategoryOfEl
  *
  */
 angular.module('service.databaseInterface',
@@ -460,60 +462,49 @@ angular.module('service.databaseInterface',
     /**
      * Returns Database elements based on a number of filters
      * 
+     * @param yrs   The years to include as an array. To include
+     *              all possible years use ['all'] 
+     * @param mn    The months to include. To include all
+     *              possible months ['all']
+     * @param acc   The account only one can be specified
+     *
      * @param {type} param is a struct with structure
      * {
-     *  acc:        the type of account
-     *  deb_cred:   sum for debits("deb") or credits("cred")
-     *  notinc:     an array of string with words not to be included in descrip. If emptry ignored.
-     *  notinccat:  an array of category strings which cannot match the category of the data.
-     *  notinctag:  an array of one tag as string. Any data with category with specified tag is not included (only 1 can be specified)
-     *  inc:        an array of string with words that must be in the descript. If empty ignored.
-     *  inccat :    an array of category strings, only 1 must match to be included
-     *  yrs:        An array of yrs to lookup
-     *  mo:         An array of months to lookup.
-     *  @return {array}
+     *  nIncCat:    an array of category strings which cannot match the category of the data.
+     *  incTag:     an array of one tag as string. The element must include the tag.
+     *  incCat :    an array of category strings, only 1 must match to be included
+     * }
+     *
+     * @return {array}
      *              format is [[str type yr-mnt,BigDecimal,float value],...,]
      *              Only the existing data is returned.
      *  
      */
-    dBInt.filterData = function(param)
+    dBInt.filterData = function(yrs,mn,acc,param)
     {
-        var yrs = param.yrs;
-        var mn = param.mo;
-        var acc = param.acc;
-        var inc = param.inc;
-        var inccat = param.inccat;
-        var ninc = param.notinc;
-        var ninccat = param.notinccat;
-        var notinccattag = param.notinccattag;
-        var tdb = 0;
-        var data = [];
-        var bigz = new BigDecimal("0.0");
 
-        
-        
+        var filters = { 
+                        'incCat' : (param.hasOwnProperty('incCat')) ? param.incCat : null,
+                        'nIncCat' : (param.hasOwnProperty('nIncCat')) ? param.nIncCat : null,
+                        'incTag' : (param.hasOwnProperty('incTag')) ? param.incTag : null
+        };
+
+        var data = [];
         
         // The months to filter
         if(mn.length > 0)
         {
             if(mn[0] === "all")
             {
-                mn = ["01","02","03","04","05","06","07","08","09","10","11","12"];
+                // The months in the index start from 0 not from 1
+                mn = [0,1,2,3,4,5,6,7,8,9,10,11];
             }
         }
-        
-        // Are we looking for debits only or credits
-        if(param.deb_cred === "deb")
-        {
-            // In the big decimal library a value -1 is returned in compareTo if val is less than object 
-            var bigdcomp = -1;
-        }
-        else if(param.deb_cred === "cred")
-        {
-            var bigdcomp = 1;
-        }
 
+        // A variable to hold a temporary reference to the
+        // database
         var tdb = {};
+
         if (dB.dMap.hasOwnProperty(acc))
         {
             tdb = dB.dMap[acc]; 
@@ -527,8 +518,18 @@ angular.module('service.databaseInterface',
                 }
             }
 
+            // This object stores relevant check parameters
+            // If all the values associated with the keys in this
+            // object are true then that entry is returned
+            var     checkArray = []; 
+            var     check = false;
+            var     currEl = {};
+            var     catRef = {};
+
+
             for (var i in yrs)
             {
+
                 if (tdb.hasOwnProperty(yrs[i]))
                 {
                     for( var m in mn)
@@ -536,75 +537,72 @@ angular.module('service.databaseInterface',
                         // include the month only if the month is present in the data.
                         if( tdb[yrs[i]].hasOwnProperty(mn[m]))
                         {
-                            
+                                                        
                             for( var x in tdb[yrs[i]][mn[m]].data)
                             {
-                                // look for must includes
-                                /*
-                                var inc_cnt = 0;
-                                for (var a in inc)
-                                {
-                                    if(tdb[yrs[i]][mn[m]].data[x][_glbl.dbs.desc].indexOf(inc[a]) !== -1 )
-                                    {
-                                        inc_cnt ++;
-                                    }
-                                }
-                                
-                                // look not includes
-                                var ninc_cnt = 0;
-                                for (var a in ninc)
-                                {
-                                    if(tdb[yrs[i]][mn[m]].data[x][_glbl.dbs.desc].indexOf(ninc[a]) !== -1 )
-                                    {
-                                        ninc_cnt ++;
-                                    }
-                                }
-                                
-                                // look for must include categories only one has to match
-                                if(inccat.length > 0)
-                                {
-                                    var inccat_cnt = 0;
-                                    for(var a in inccat)
-                                    {
-                                        if(tdb[yrs[i]][mn[m]].data[x][_glbl.dbs.cat] === inccat[a])
-                                        {
-                                            inccat_cnt ++;
-                                            break;
-                                        }
+                                checkArray = [];
+                                check = false;
 
+                                currEl = tdb[yrs[i]][mn[m]].data[x];
+                                catRef =  dBInt.getCategoryOfEl(currEl);
+
+                                // Look for the tags which must be included
+                                if(filters['incTag'] != null){
+
+                                    if( catRef == null){
+
+                                        checkArray.push(false);
+
+                                    }else{
+
+                                        checkArray.push( (catRef.tag == filters['incTag']) ? true : false );
                                     }
+
                                 }
-                                else
-                                {
-                                    var inccat_cnt = 1;
-                                }
-                                
-                                // look for must not include cats
-                                var ninccat_cnt = 0;
-                                for (var a in ninccat)
-                                {
-                                    if(tdb[yrs[i]][mn[m]].data[x][_glbl.dbs.cat] === ninccat[a])
-                                    {
-                                        ninccat_cnt ++;
-                                    }
+
+
+                                // Look for elements where a must include
+                                // category is present
+                                if(filters['incCat'] != null){
                                     
-                                }
-                                
-                                // Ensure the category doesn't have the included tag
-                                var notincattest = true;
-                                javascript sort number arrayif (notinccattag.length > 0){
-                                    // the "NA" category  doesnt have a tag
-                                    var  dataCategory = tdb[yrs[i]][mn[m]].data[x][_glbl.dbs.cat];
-                                    if( dataCategory !== "NA"){
-                                        if( _glbl.cat_db[dataCategory]["tag"] === notinccattag[0]){
-                                            notincattest = false;
-                                        }
-                                        
+
+                                    if( catRef == null){
+
+                                        checkArray.push(false);
+
+                                    }else{
+
+                                        checkArray.push( (filters['incCat'].indexOf(catRef.name) != -1 ) ? true : false );
                                     }
+
                                 }
-                                */
-                                
-                                
+
+                                // Ensure elements doesn't contain
+                                // the following categories
+                                if(filters['nIncCat'] != null){
+                                    
+
+                                    if( catRef == null){
+
+                                        checkArray.push(false);
+
+                                    }else{
+
+                                        checkArray.push( (filters['nIncCat'].indexOf(catRef.name) == -1 ) ? true : false );
+                                    }
+
+                                }
+
+
+
+                                check = checkArray.every(function(e){return e == true;});
+
+                                // If the check value is true then add the element to the
+                                // array to return
+                                if(check == true){
+                                    data.push( currEl);
+
+                                }
                                     
                             }
                         }
@@ -612,15 +610,32 @@ angular.module('service.databaseInterface',
                 }
             }
         }
-        
-        for( var d in data)
-        {
-            data[d].push(data[d][1].floatValue());
-        }
+
         
         return data;
         
     };
+
+    /**
+     * @param   el      The element to look up
+     *
+     * @return          Returns the category object associated 
+     *                  with a particular element. If the element 
+     *                  is not categorised then null is  returned.
+     */
+    dBInt.getCategoryOfEl = function(el){
+
+        if( el.category == null){
+            return null;
+        }else{
+
+            return el.category; 
+
+        }
+
+    };
+
+
 
 
     return dBInt;

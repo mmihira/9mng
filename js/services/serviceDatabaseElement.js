@@ -25,6 +25,8 @@ angular.module('service.databaseElement',[]).service('dBElement',function(){
      *                    description of the transaction.
      *                    balance: A BigDecimal object representing
      *                    the balance following the transaction.
+     *                    category: A category Object reference
+     *
      *
      *                    -- The following values are only copied if
      *                    the fullInstatiation arugment is true.
