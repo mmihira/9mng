@@ -21,12 +21,14 @@
     <script type="text/javascript" src="js/services/serviceDatabase.js"></script>
     <script type="text/javascript" src="js/services/serviceDatabaseInterface.js"></script>
     <script type="text/javascript" src="js/services/serviceCategoryEdit.js"></script>
+    <script type="text/javascript" src="js/services/serviceCSVWriter.js"></script>
 
     <script type="text/javascript" src="js/controllers/controllerDownloadForm.js"></script>
     <script type="text/javascript" src="js/controllers/controllerMenu.js"></script>
     <script type="text/javascript" src="js/controllers/controllerMainChoice.js"></script>
     <script type="text/javascript" src="js/controllers/controllerCategoryEdit.js"></script>
     <script type="text/javascript" src="js/controllers/controllerDashboard.js"></script>
+    <script type="text/javascript" src="js/controllers/controllerSave.js"></script>
 
     <script type="text/javascript" src="js/directives/directiveDownloadFormInput.js"></script>
     <script type="text/javascript" src="js/directives/directiveCategoryNamePanel.js"></script>
@@ -66,7 +68,8 @@
                        <li ng-class="menC.menActive.update" ng-click="menC.clickUpdate()"><a href="#"><span>Update</span></a></li>
                        <li><a href='#'><span>Dashboard</span></a></li>
                        <li ng-click="menC.clickCategories()"><a href='#'><span>Categories</span></a></li>
-                       <li class='last'><a href='#'><span>Config</span></a></li>
+                       <li ><a href='#'><span>Config</span></a></li>
+                       <li class='last'><a href='#'><span>Save</span></a></li>
                     </ul>
             </div>
         </div>
@@ -148,7 +151,7 @@
             </div>
          </div>
 
-         <!-- The Category File -->
+         <!-- The Category View-->
          <div class="row" ng-controller="categoryEditController as cEC">
              <div ng-hide="cEC.hide.value">
                  <div class="col-xs-3">
@@ -173,6 +176,7 @@
                                               <p>Tag : {{cEC.returnCatTag(n)}} </p>
                                           </div>
                                         </div>
+
                                       </div>
                                       <div style="padding:5px"></div>
 
@@ -191,7 +195,17 @@
                  </div>
              </div>
 
-         </div>
+        </div>
+
+        <div class='row' ng-controller='controllerSave as sv'>
+
+            <div ng-hide="sv.hideSave">
+                sdfsd
+
+            </div>
+
+        </div>
+
 
     </div>
     

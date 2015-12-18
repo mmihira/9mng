@@ -16,5 +16,7 @@ angular.module('service.mainAppLinker',[]).service('mainAppLinker',function(dB){
 
     self.hideDashBoard = {value:false};
 
+    self.hideSave = {value:false};
+
 
 });

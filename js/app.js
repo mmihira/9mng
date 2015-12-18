@@ -4,11 +4,13 @@ angular.module('app',[  'directive.input.label',
                         'service.downloadFormService',
                         'service.database',
                         'service.mainAppLinker',
+                        'service.CSVWriter',
                         'controller.downloadForm',
                         'controller.menuController',
                         'controller.mainChoice',
                         'controller.categoryEdit',
-                        'controller.dashBoard'
+                        'controller.dashBoard',
+                        'controller.save'
                          ]);
 
 
