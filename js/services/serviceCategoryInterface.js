@@ -143,6 +143,8 @@ angular.module('service.categoryInterface',['service.categoryClass','service.cat
 
     };
 
+    
+
     return catInt;
 
 

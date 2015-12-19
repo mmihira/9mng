@@ -12,6 +12,7 @@
  *  - checkDatabaseBalance
  *  - filterData
  *  - getCategoryOfEl
+ *  - getUncategorised
  *
  */
 angular.module('service.databaseInterface',
@@ -636,6 +637,18 @@ angular.module('service.databaseInterface',
         }
 
     };
+
+    /**
+     * Returns an array of references to objects which have no category
+     * @return  An array of reference to database objects which have no category
+     */
+    dBInt.getUncategorised = function(){
+
+        return dB.allData.map(function(e){ 
+            if(e.category == null){return e;}else{return null};
+                        }).filter(function(e){ return e != null;});
+
+    }
 
 
 

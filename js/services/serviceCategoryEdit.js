@@ -1,8 +1,8 @@
 /**
  */
-angular.module('service.categoryEdit',['service.categoryInterface']).service('categoryEditService',[
-'catInt',
-function(catInt){
+angular.module('service.categoryEdit',['service.categoryInterface','service.databaseInterface']).service('categoryEditService',[
+'catInt','dBInt',
+function(catInt,dBInt){
 
     var catES = {};
 
@@ -14,6 +14,10 @@ function(catInt){
     catES.catIdentifiersShown = [];
 
     catES.currCatName = {value:""};
+
+    // These are the elements shown in the table
+    catES.catTableEls = {values:[]};
+
 
     /*
      * Update the identifiers shown.
@@ -49,6 +53,8 @@ function(catInt){
             catES.catNames.push(i);
 
         }
+
+        catES.catTableEls.values = dBInt.getUncategorised();
 
     };
 
