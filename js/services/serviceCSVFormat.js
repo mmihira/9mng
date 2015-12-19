@@ -1,4 +1,8 @@
-
+/**
+ * Holds the format in which data in the database will be output
+ * to a CSV file.
+ *
+ */
 angular.module('service.CSVFormat',[]).service('CSVFormat',function(){
 
     var csvF = {};
@@ -16,23 +20,9 @@ angular.module('service.CSVFormat',[]).service('CSVFormat',function(){
 
     };
 
-
-    /*
-
-    csvF.dataOutFormat = {
-        acc:0,
-        id:1,
-        day:2,
-        month:3,
-        year:4,
-        description:5,
-        value:6,
-        balance:7,
-        category:9
-    };
-
-    //*/
-
+    // Chaiging csvF will only change how the data is read.
+    // The data is written by the CSVWriter and dataOutFormat
+    // is actuallly not consulted in the writing process.
     csvF.dataOutFormat = {
         acc:0,
         day:1,
@@ -45,6 +35,11 @@ angular.module('service.CSVFormat',[]).service('CSVFormat',function(){
     };
 
 
+    /**
+     * Returns the no of columsn required when writing
+     * a database element to file. Not currently used in
+     * any other functions.
+     */
     csvF.getNoColsReqForElementCSV = function(){
 
         var sorted = Object.keys(csvF.dataOutFormat)
