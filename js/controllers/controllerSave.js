@@ -6,4 +6,6 @@ function(mAppLn,csvW){
 
     self.hideSave = mAppLn.hideSave.value;
 
+    self.save = csvW.save;
+
 }]);
