@@ -64,9 +64,16 @@ angular.module('service.categoryInterface',['service.categoryClass','service.cat
      */
     catInt.getCategoryReference = function(catName){
 
-            return catDB.dB[catName];
+            if( catDB.dB.hasOwnProperty(catName) ){
 
-            };
+                return catDB.dB[catName];
+
+            }else{
+
+                return null;
+            }
+    };
+
 
     /**
      * Returns all the category names currently in the database
@@ -87,7 +94,11 @@ angular.module('service.categoryInterface',['service.categoryClass','service.cat
      * @return              A reference to the newly created
      *                      category
      */
-    catInt.addNewCategory = function(catName,catTag,catIdents=[]){
+    catInt.addNewCategory = function(catName,catTag,catIdents){
+
+        if (typeof catIdents == 'undefined') {
+                catIdents = [];
+        }
 
         if( ! catDB.dB.hasOwnProperty(catName)){
             

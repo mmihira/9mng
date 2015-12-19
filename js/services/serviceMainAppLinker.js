@@ -13,10 +13,10 @@ angular.module('service.mainAppLinker',[]).service('mainAppLinker',function(dB){
     // For the category
     self.hideCategoryEditInterface = {value:true};
 
-
-    self.hideDashBoard = {value:false};
+    self.hideDashBoard = {value:true};
 
     self.hideSave = {value:false};
+
 
 
 });

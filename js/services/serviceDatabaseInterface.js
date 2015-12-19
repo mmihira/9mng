@@ -126,7 +126,8 @@ angular.module('service.databaseInterface',
                 
 
                 tempRow.date = new Date(data[z][csvF.dataOutFormat.year],
-                                       data[z][csvF.dataOutFormat.month],
+                                       // Date months start from 0 not from 1
+                                       parseInt(data[z][csvF.dataOutFormat.month])-1,
                                        data[z][csvF.dataOutFormat.day],
                                        0,0,0);
 
@@ -135,6 +136,7 @@ angular.module('service.databaseInterface',
                 tempRow.description = data[z][csvF.dataOutFormat.description];
                 tempRow.value = new BigDecimal(data[z][csvF.dataOutFormat.value]);
                 tempRow.balance = new BigDecimal(data[z][csvF.dataOutFormat.balance]);
+                // If category does not exist then a null reference is returned
                 tempRow.category = catInt.getCategoryReference(data[z][csvF.dataOutFormat.category]);
 
                 tempDatabaseElement = new dBElement.createDatabaseElement(tempRow,true);

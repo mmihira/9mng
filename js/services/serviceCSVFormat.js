@@ -16,6 +16,9 @@ angular.module('service.CSVFormat',[]).service('CSVFormat',function(){
 
     };
 
+
+    /*
+
     csvF.dataOutFormat = {
         acc:0,
         id:1,
@@ -26,6 +29,30 @@ angular.module('service.CSVFormat',[]).service('CSVFormat',function(){
         value:6,
         balance:7,
         category:9
+    };
+
+    //*/
+
+    csvF.dataOutFormat = {
+        acc:0,
+        day:1,
+        month:2,
+        year:3,
+        description:4,
+        value:5,
+        balance:6,
+        category:7
+    };
+
+
+    csvF.getNoColsReqForElementCSV = function(){
+
+        var sorted = Object.keys(csvF.dataOutFormat)
+                            .map(function(e){return csvF.dataOutFormat[e];})
+                            .sort(function(a,b){return a -b;});
+
+        return sorted[sorted.length -1];
+
     };
 
     return csvF;

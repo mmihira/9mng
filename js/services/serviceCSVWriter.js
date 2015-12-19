@@ -9,34 +9,48 @@ angular.module('service.CSVWriter',['service.CSVFormat','service.database','serv
 
         // create the text;
         var o = "";
-        var x = dB.allData;
+        var allData = dB.allData;
         
         o += "%catstart\n";
         
-        for( i in _glbl.cat_db){
-            o += _glbl.cat_db[i]["name"] +"," + _glbl.cat_db[i]["tag"] + "\n";
+        for( i in catDB.dB){
+            o += catDB.dB[i]["name"] +"," + catDB.dB[i]["tag"] + "\n";
         }
         
         o += "%catend\n" ;
         o += "%catvalstart\n";
 
-        for(i in _glbl.cat){
-            o += i +"," + _glbl.cat[i]["name"] + "\n";
+        for(i in catDB.dBIdentifiers){
+            o += i +"," + catDB.dBIdentifiers[i]["name"] + "\n";
         }
         
         o += "%catvalend\n";
-        for( var i in _glbl.db.all_data)
+
+
+        // variable to hold the catString
+        var catString = "";
+
+
+        for( var i in allData)
         {
-            o += x[i][s.acc] 
-                    + "," + x[i][s.uid] 
-                    + "," + x[i][s.day]  
-                    + "," + x[i][s.month]
-                    + "," + x[i][s.year]
-                    + "," + "\""+x[i][s.desc]+"\""
-                    + "," + x[i][s.val].toPlainString()
-                    + "," + x[i][s.bal].toPlainString()
-                    + "," + "\""+x[i][s.cid]+"\""
-                    + "," + "\""+x[i][s.cat]+"\""
+
+            // The category may not be defined so
+            // determine that initially
+            if( allData[i]['category'] == null){
+                catString = "";
+            }else{
+                catString = allData[i]['category'].name;
+            }
+            
+            o += allData[i]['acc'] 
+                    + "," + allData[i]['date'].getDate()  
+                    // Note we add 1 to month
+                    + "," + (allData[i]['date'].getMonth()+1)
+                    + "," + allData[i]['date'].getFullYear()
+                    + "," + "\""+allData[i]['description']+"\""
+                    + "," + allData[i]['value'].toPlainString()
+                    + "," + allData[i]['balance'].toPlainString()
+                    + "," + "\""+catString+"\""
                     +"\n";
         }
         
@@ -54,6 +68,12 @@ angular.module('service.CSVWriter',['service.CSVFormat','service.database','serv
             mm='0'+mm;
         } 
 
+        var clickEvent = new MouseEvent("click", {
+            "view": window,
+            "bubbles": true,
+            "cancelable": false
+        });
+
         today = yyyy+'_'+mm+'_'+dd;
         var filename = today+"_"+"finance_db.txt";
         var contentType = "text/plain";
@@ -61,7 +81,7 @@ angular.module('service.CSVWriter',['service.CSVFormat','service.database','serv
         var blob = new Blob([content], {'type':contentType});
         a.href = window.URL.createObjectURL(blob);
         a.download = filename;
-        a.click();
+        a.dispatchEvent(clickEvent);
 
     };
 

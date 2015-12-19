@@ -8,7 +8,13 @@ angular.module('service.categoryClass',[]).service('categoryClass',function(){
 
     var catClass = {};
 
-    catClass.createNewCategory = function(name,tag,idents = []){
+    catClass.createNewCategory = function(name,tag,idents){
+
+        if (typeof idents == 'undefined') {
+                idents = [];
+        }
+
+
 
         this.name = name;
         this.tag = tag;
