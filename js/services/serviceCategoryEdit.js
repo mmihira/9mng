@@ -13,6 +13,8 @@ function(catInt){
     // category
     catES.catIdentifiersShown = [];
 
+    catES.currCatName = {value:""};
+
     /*
      * Update the identifiers shown.
      * @param   catName     The category to update
@@ -23,6 +25,8 @@ function(catInt){
 
         catES.catIdentifiersShown.length = 0;
         identifiers.forEach(function(e){catES.catIdentifiersShown.push(e);});
+
+        catES.currCatName.value = catName;
 
 
     };

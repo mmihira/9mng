@@ -40,6 +40,8 @@
     <link href="css/menuStyle.css" rel="stylesheet"></script>
     <link href="css/jumbo.css" rel="stylesheet"></script>
     <link href="css/mainChoiceBtn.css" rel="stylesheet"></script>
+    <link href="css/panelStyles.css" rel="stylesheet"></script>
+    <link href="css/categoryPage.css" rel="stylesheet"></script>
 
     <title></title>
 </head>
@@ -154,21 +156,36 @@
          <!-- The Category View-->
          <div class="row" ng-controller="categoryEditController as cEC">
              <div ng-hide="cEC.hide.value">
-                 <div class="col-xs-3">
+                 <div class="col-xs-4">
+
+                    <div class="panel panel-default">
+                        <div class="panel-body reducePadding">                    
+                             <form class="form-inline">
+                                 <div class="form-group">
+                                     <div class="form-group">
+                                        <label for="newCat">NewCat</label>
+                                        <input type="text" class="form-control" id="newCat" placeholder="Name">
+                                      </div>
+                                      <button type="submit" class="btn btn-default">Add new</button>
+                                </div>
+                             </form>
+                        </div>
+                     </div>
+
 
                      <div class="panel panel-default">
-                        <div class="panel-body" style="max-height:500px;overflow-y:scroll">                    
+                        <div class="panel-body catView">                    
                              <div class="panel-group" id="categoryNames" aria-multiselectable="true">
-                                 <div ng-repeat="n in cEC.catNames">
+                                 <div ng-repeat="n in cEC.catNames | orderBy:'toString()'">
 
                                      <div class="panel panel-default">
                                          <div class="panel-heading" role="tab" id={{n}}>
-                                          <h6 class="panel-title">
-                                              <a name={{n}} category-name categoryNameAttribute role="button" data-toggle="collapse" data-parent="#categoryNames" href="#collapse{{n}}"
+                                            <div class="panel-title catName">
+                                                <a name={{n}} category-name categoryNameAttribute role="button" data-toggle="collapse" data-parent="#categoryNames" href="#collapse{{n}}"
                                                   area-expanded="true" aria-controls={{n}}>
-                                              {{ n }}
-                                            </a>
-                                          </h6>
+                                                {{ n }}
+                                                </a>
+                                            </div>
 
                                         </div>
                                         <div id="collapse{{n}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby={{n}}>
@@ -188,10 +205,35 @@
 
                  </div>
 
-                 <div class="col-xs-9">
-                     <div ng-repeat="i in cEC.catIdentifiers">
-                         {{ i }}
+                 <div class="col-xs-8">
+
+                    <div class="panel panel-default">
+                        <div class="panel-body reducePadding">                    
+                             <form class="form-inline">
+                                 <div class="form-group">
+                                     <div class="form-group">
+                                         <label for="newIdent">New identifier for {{cEC.currCatName.value}}:</label>
+                                        <input type="text" class="form-control" id="newIdent" placeholder="Name">
+                                      </div>
+                                      <button type="submit" class="btn btn-default">Add new</button>
+                                </div>
+                             </form>
+                        </div>
                      </div>
+
+
+                     <div class="catView">
+                         <table class="table table-hover table-condensed">
+                             <tr>
+                                 <th>Category Identifiers</td>
+                             </tr>
+                             <tr ng-repeat="i in cEC.catIdentifiers | orderBy:'toString()'">
+                                <td>
+                                    {{ i }}
+                                </td>
+                            </tr>
+                         </table>
+                    </div>
                  </div>
              </div>
 

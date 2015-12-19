@@ -7,6 +7,9 @@ function(catInt,mAppLn,catES,$scope){
     
     self.hide = mAppLn.hideCategoryEditInterface;
 
+    // The current category clicked by the user
+    self.currCatName = catES.currCatName;
+
     /*
      * A function which returns the tag associated with a category
      */
