@@ -1,4 +1,7 @@
 /**
+ * The category edit service is injected by the categoryEdit controller
+ * and the categoryName derective. It contains functions necessary on
+ * the category edit page.
  */
 angular.module('service.categoryEdit',['service.categoryInterface','service.databaseInterface']).service('categoryEditService',[
 'catInt','dBInt',
