@@ -11,7 +11,34 @@ function(catInt,mAppLn,catES,dBInt,$scope){
     // The current category clicked by the user
     self.currCatName = catES.currCatName;
 
+    
+    self.newCategory = "";
+    self.selectedTag = "";
+
+    // The allowed tags to display in the drop down.
+    self.allowedTags = catInt.returnTags();
+
+    // The elements in the category display
     self.catTableEls = catES.catTableEls;
+
+
+    // Add the newly labeled category to the
+    // database
+    self.addNewCategory = function(){
+
+        var newCat = catInt.addNewCategory(self.newCategory,"");
+
+        if( newCat == null){
+
+            alert("Not inserted");
+
+        }
+
+        catES.update();
+
+
+
+    };
 
     /*
      * A function which returns the tag associated with a category

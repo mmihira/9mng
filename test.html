@@ -156,17 +156,28 @@
          <!-- The Category View-->
          <div class="row" ng-controller="categoryEditController as cEC">
              <div ng-hide="cEC.hide.value">
-                 <div class="col-xs-4">
+                 <div class="col-xs-5">
 
                     <div class="panel panel-default">
                         <div class="panel-body reducePadding">                    
-                             <form class="form-inline">
-                                 <div class="form-group">
-                                     <div class="form-group">
-                                        <label for="newCat">NewCat</label>
-                                        <input type="text" class="form-control" id="newCat" placeholder="Name">
-                                      </div>
-                                      <button type="submit" class="btn btn-default">Add new</button>
+                            <p><h4> New Category </h4> </p>
+                             <form class="form">
+                                 <div class="form-group row">
+
+                                    <div class="col-xs-5 reducePaddingForm">
+                                        <input type="text" class="form-control" id="newCat" placeholder="Name" ng-model="cEC.newCategory">
+                                    </div>
+
+                                    <div class="col-xs-3 reducePaddingForm">
+                                        <select class="form-control" ng-model="selectedTag">
+                                          <option ng-repeat="sel in cEC.allowedTags" value={{sel}}>{{sel}}</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-xs-1 reducePaddingForm">
+                                      <button type="submit" class="btn btn-default" ng-click="cEC.addNewCategory()">Add new</button>
+                                    </div>
+
                                 </div>
                              </form>
                         </div>
@@ -205,17 +216,21 @@
 
                  </div>
 
-                 <div class="col-xs-8">
+                 <div class="col-xs-7">
 
                     <div class="panel panel-default">
                         <div class="panel-body reducePadding">                    
-                             <form class="form-inline">
-                                 <div class="form-group">
-                                     <div class="form-group">
-                                         <label for="newIdent">New identifier for {{cEC.currCatName.value}}:</label>
-                                        <input type="text" class="form-control" id="newIdent" placeholder="Name">
-                                      </div>
+                            <p><h4>New identifier for {{cEC.currCatName.value}}:</h4></p>
+                             <form class="form">
+                                 <div class="form-group row">
+
+                                    <div class="col-xs-4 reducePaddingForm">
+                                      <input type="text" class="form-control" id="newIdent" placeholder="Name">
+                                  </div>
+
+                                    <div class="col-xs-4 reducePaddingForm">
                                       <button type="submit" class="btn btn-default">Add new</button>
+                                  </div>
                                 </div>
                              </form>
                         </div>

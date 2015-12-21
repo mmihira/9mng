@@ -10,6 +10,7 @@
  * getCategoryIdentifiers
  * addNewCategory
  * addNewCategoryIdentifier
+ * returnTags
  */
 angular.module('service.categoryInterface',['service.categoryClass','service.categoryDatabase']).service('catInt',
         ['categoryClass','catDB',function(catClass,catDB){
@@ -115,6 +116,8 @@ angular.module('service.categoryInterface',['service.categoryClass','service.cat
                 catInt.addNewCategoryIdentifier(catname,i);
             }
 
+            return catRef;
+
         }else{
             return null;
         }
@@ -142,6 +145,16 @@ angular.module('service.categoryInterface',['service.categoryClass','service.cat
         }
 
     };
+
+    /**
+     * Returns the allowed category tags as an
+     * array of strings.
+     */
+    catInt.returnTags = function(){
+
+        return catDB.tags.map(function(e){return e;});
+
+    }
 
     
 

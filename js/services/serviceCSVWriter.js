@@ -1,4 +1,6 @@
-
+/**
+ * CVSVWriter service is used to write data to files.
+ */
 angular.module('service.CSVWriter',['service.CSVFormat','service.database','service.categoryDatabase']).service('CSVWriter',
         ['CSVFormat','dB','catDB',function(csvF,dB,catDB){
 
