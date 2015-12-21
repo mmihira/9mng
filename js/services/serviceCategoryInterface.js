@@ -101,22 +101,30 @@ angular.module('service.categoryInterface',['service.categoryClass','service.cat
                 catIdents = [];
         }
 
+        // Make sure the category doesn't exist.
         if( ! catDB.dB.hasOwnProperty(catName)){
+
+            // Make sure the tag is correct and known
+            if( catDB.tags.indexOf(catTag) != -1 ){
             
-            // Create the new category object
-            var catRef = new catClass.createNewCategory(
-                                        catName,
-                                        catTag,
-                                        catIdents);
-            // Add the new category object into the database
-            catDB.dB[catName] = catRef;
+                // Create the new category object
+                var catRef = new catClass.createNewCategory(
+                                            catName,
+                                            catTag,
+                                            catIdents);
+                // Add the new category object into the database
+                catDB.dB[catName] = catRef;
 
-            // Also add the indentifiers into the database
-            for(var i of catIdents){
-                catInt.addNewCategoryIdentifier(catname,i);
+                // Also add the indentifiers into the database
+                for(var i of catIdents){
+                    catInt.addNewCategoryIdentifier(catname,i);
+                }
+
+                return catRef;
+
+            }else{
+                return null;
             }
-
-            return catRef;
 
         }else{
             return null;
@@ -136,9 +144,18 @@ angular.module('service.categoryInterface',['service.categoryClass','service.cat
     catInt.addNewCategoryIdentifier = function(catName,catIdent){
 
         if( ! catDB.dBIdentifiers.hasOwnProperty(catIdent) ){
-            catDB.dBIdentifiers[catIdent] = catDB.dB[catName];
 
-            catDB.dB[catName].identifiers.push(catIdent); 
+            if( ! catDB.dB.hasOwnProperty(catName)){
+
+                console.log("Error: " + catName + " doesn't exist");
+
+            }
+            else{
+
+                catDB.dBIdentifiers[catIdent] = catDB.dB[catName];
+                catDB.dB[catName].identifiers.push(catIdent); 
+
+            }
 
         }else{
             console.log("Error: Tried to add an allready existing category Identifier : " + catIdent);

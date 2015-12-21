@@ -4,16 +4,19 @@ angular.module('controller.categoryEdit',['service.categoryInterface','service.m
 function(catInt,mAppLn,catES,dBInt,$scope){
 
     var self = this;
-
     
     self.hide = mAppLn.hideCategoryEditInterface;
 
     // The current category clicked by the user
     self.currCatName = catES.currCatName;
-
     
+    // The name typed in for the new category
     self.newCategory = "";
+    // The category identifier selected for the new category
     self.selectedTag = "";
+    // The new identifier for the category
+    self.newIdentifier = "";
+
 
     // The allowed tags to display in the drop down.
     self.allowedTags = catInt.returnTags();
@@ -26,7 +29,8 @@ function(catInt,mAppLn,catES,dBInt,$scope){
     // database
     self.addNewCategory = function(){
 
-        var newCat = catInt.addNewCategory(self.newCategory,"");
+
+        var newCat = catInt.addNewCategory(self.newCategory,self.selectedTag);
 
         if( newCat == null){
 
@@ -36,9 +40,26 @@ function(catInt,mAppLn,catES,dBInt,$scope){
 
         catES.update();
 
-
-
     };
+
+    // Adds the new identifier to the databse
+    // This will also recategorise the data
+    // and update the category view down the bottom
+    self.addNewIdentifier = function(){
+
+        console.log(self.currCatName);
+        console.log(self.newIdentifier);
+
+        // Add the new identifier
+        catInt.addNewCategoryIdentifier(self.currCatName.value,self.newIdentifier);
+
+        //
+        catES.updateIdentifiers(self.currCatName.value);
+
+        self.newIdentifier = "";
+
+    }
+
 
     /*
      * A function which returns the tag associated with a category

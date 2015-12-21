@@ -169,7 +169,7 @@
                                     </div>
 
                                     <div class="col-xs-3 reducePaddingForm">
-                                        <select class="form-control" ng-model="selectedTag">
+                                        <select class="form-control" ng-model="cEC.selectedTag">
                                           <option ng-repeat="sel in cEC.allowedTags" value={{sel}}>{{sel}}</option>
                                         </select>
                                     </div>
@@ -225,11 +225,11 @@
                                  <div class="form-group row">
 
                                     <div class="col-xs-4 reducePaddingForm">
-                                      <input type="text" class="form-control" id="newIdent" placeholder="Name">
+                                      <input type="text" class="form-control" id="newIdent" placeholder="Identifier" ng-model ="cEC.newIdentifier">
                                   </div>
 
                                     <div class="col-xs-4 reducePaddingForm">
-                                      <button type="submit" class="btn btn-default">Add new</button>
+                                      <button type="submit" class="btn btn-default" ng-click="cEC.addNewIdentifier()">Add new</button>
                                   </div>
                                 </div>
                              </form>
