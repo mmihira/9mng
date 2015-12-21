@@ -13,6 +13,7 @@
  *  - filterData
  *  - getCategoryOfEl
  *  - getUncategorised
+ *  - getAvailableYears
  *
  */
 angular.module('service.databaseInterface',
@@ -647,6 +648,29 @@ angular.module('service.databaseInterface',
         return dB.allData.map(function(e){ 
             if(e.category == null){return e;}else{return null};
                         }).filter(function(e){ return e != null;});
+
+    }
+
+    /**
+     * Returns the years known by the database.
+     * That is in what years does the database hold
+     * records of a transaction
+     * @return  An array of integers representing the years
+     */
+    dBInt.getAvailableYears = function(){
+
+        var Years = {};
+
+        Object.keys(dB.dMap).forEach(
+                function(e){ 
+                    Object.keys(dB.dMap[e]).forEach(
+                        function(x){if(!Years.hasOwnProperty(x)){Years[x]=[];}
+                                    }
+                        );
+                }
+            );
+
+        return Object.keys(Years)
 
     }
 

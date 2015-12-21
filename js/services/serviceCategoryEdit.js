@@ -21,6 +21,36 @@ function(catInt,dBInt){
     // These are the elements shown in the table
     catES.catTableEls = {values:[]};
 
+    catES.yearsInFilter = [];
+
+
+    catES.filterParam = {
+            minString:"",
+            maxString:"",
+            minValue:"5",
+            maxValue:"100",
+            id:"test"};
+
+    // Setup the filter
+    catES.setupFilter = function(){
+
+        var unCategorised = dBInt.getUncategorised();
+
+        // sort the data
+        unCategorised.sort(function(a,b){ return a.date.getTime() - b.date.getTime();})
+
+        catES.filterParam.minValue = unCategorised[0].date.getTime();
+        catES.filterParam.maxValue = unCategorised[unCategorised.length-1].date.getTime();
+
+        catES.filterParam.minString = unCategorised[0].date.toLocaleDateString();
+        catES.filterParam.maxString = unCategorised[unCategorised.length-1].date.toLocaleDateString();
+
+       
+
+    };
+
+
+
 
     /*
      * Update the identifiers shown.
@@ -37,6 +67,22 @@ function(catInt,dBInt){
 
 
     };
+
+    catES.refreshCatTable = function(min,max){
+
+        if (typeof min == 'undefined' || typeof max == 'undefined') {
+
+            return dBInt.getUncategorised();
+
+        }else{
+
+            var temp = dBInt.getUncategorised();
+
+            return temp.filter(function(el){ return (el.date.getTime() <= max) && (el.date.getTime() >= min);});
+
+        }
+
+    }
 
 
     /*
@@ -57,7 +103,14 @@ function(catInt,dBInt){
 
         }
 
-        catES.catTableEls.values = dBInt.getUncategorised();
+        catES.catTableEls.values = catES.refreshCatTable();
+
+        // Clear the  year array
+        catES.yearsInFilter.length = 0;
+        // Repopulate the year array
+        dBInt.getAvailableYears().forEach(function(e){catES.yearsInFilter.push(e);});
+
+        catES.setupFilter();
 
     };
 

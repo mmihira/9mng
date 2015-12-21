@@ -24,7 +24,19 @@ function(catInt,mAppLn,catES,dBInt,$scope){
     // The elements in the category display
     self.catTableEls = catES.catTableEls;
 
+    self.yearsInFilter = catES.yearsInFilter;
 
+    self.filterParam = catES.filterParam; 
+
+    // Called when the slider value changes
+    self.refreshTable = function(value){
+
+        catES.catTableEls.values = catES.refreshCatTable(value.value[0],value.value[1]);
+        console.log("here2");
+
+    }
+
+    
     // Add the newly labeled category to the
     // database
     self.addNewCategory = function(){
