@@ -17,6 +17,8 @@ angular.module('service.mainAppLinker',[]).service('mainAppLinker',function(dB){
 
     self.hideSave = {value:false};
 
+    self.categoryPageActive = false;
+
 
 
 });

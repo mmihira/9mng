@@ -68,17 +68,35 @@ function(catInt,dBInt){
 
     };
 
+    /**
+     * Called when the category page is exited.
+     * Clears up watches so we don't slow down the
+     * rest of the application
+     */
+    catES.onExit = function(){
+
+
+        catES.catTableEls.values.length = 0;
+
+    }
+
+    /**
+     * Refreshes the category table to include
+     * only those that fit inbetween the arguments.
+     * 
+     */
     catES.refreshCatTable = function(min,max){
 
         if (typeof min == 'undefined' || typeof max == 'undefined') {
 
-            return dBInt.getUncategorised();
+            return dBInt.getUncategorised().sort(function(a,b){return a.date.getTime() - b.date.getTime();});
 
         }else{
 
             var temp = dBInt.getUncategorised();
 
-            return temp.filter(function(el){ return (el.date.getTime() <= max) && (el.date.getTime() >= min);});
+            return temp.filter(function(el){ return (el.date.getTime() <= max) && (el.date.getTime() >= min);})
+                       .sort(function(a,b){return a.date.getTime() - b.date.getTime();});
 
         }
 

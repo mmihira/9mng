@@ -30,7 +30,22 @@ angular.module('controller.menuController',['service.mainAppLinker','service.dow
 
     };
 
+    /**
+     * Global cleanup and intialisation function
+     */
+    self.cleanUp = function(){
+
+        if( mAppLn.categoryPageActive){
+            catES.onExit();
+            mAppLn.categoryPageActive = false;
+        }
+
+    }
+
     self.clickCategories = function(){
+
+        mAppLn.categoryPageActive = true;
+
         mAppLn.hideMainChoice.value = true;
         mAppLn.hideDownLoadForm.value = true;
         mAppLn.hideDownLoadFormAcc.value = true;
@@ -43,6 +58,8 @@ angular.module('controller.menuController',['service.mainAppLinker','service.dow
 
 
     self.clickUpdate = function(){
+
+        self.cleanUp();
 
         mAppLn.hideMainChoice.value = true;
         mAppLn.hideDownLoadForm.value = false;
@@ -60,6 +77,8 @@ angular.module('controller.menuController',['service.mainAppLinker','service.dow
     };
 
     self.clickDownload = function(){
+
+        self.cleanUp();
 
         mAppLn.hideMainChoice.value = false;
         mAppLn.hideDownLoadForm.value = true ;

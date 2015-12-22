@@ -274,7 +274,7 @@
                                  <th>Date</th>
                                  <th>Description</th>
                              </tr>
-                             <tr ng-repeat="k in cEC.catTableEls.values | orderBy:'date.now()'">
+                             <tr ng-repeat="k in cEC.catTableEls.values track by $index">
                                  <td>
                                      {{ k.date.toLocaleDateString() }}
                                  </td>

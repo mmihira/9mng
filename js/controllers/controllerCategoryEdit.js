@@ -32,7 +32,6 @@ function(catInt,mAppLn,catES,dBInt,$scope){
     self.refreshTable = function(value){
 
         catES.catTableEls.values = catES.refreshCatTable(value.value[0],value.value[1]);
-        console.log("here2");
 
     }
 
