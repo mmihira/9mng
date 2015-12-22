@@ -27,6 +27,7 @@ angular.module("directive.categoryNameAttribute",['service.categoryEdit']).direc
                     var _thisName = scope.name;
 
                     return function(){
+
                         _scope.$apply(function(){
                             
                             // Get a reference to all other categoryName panels

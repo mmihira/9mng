@@ -19,7 +19,7 @@ function(catInt,dBInt){
     catES.currCatName = {value:""};
 
     // These are the elements shown in the table
-    catES.catTableEls = {values:[]};
+    catES.tableData = {change:false, data:[]};
 
     catES.yearsInFilter = [];
 
@@ -76,7 +76,6 @@ function(catInt,dBInt){
     catES.onExit = function(){
 
 
-        catES.catTableEls.values.length = 0;
 
     }
 
@@ -121,7 +120,8 @@ function(catInt,dBInt){
 
         }
 
-        catES.catTableEls.values = catES.refreshCatTable();
+        catES.tableData.data = catES.refreshCatTable();
+        catES.tableData.change = !catES.tableData.change;
 
         // Clear the  year array
         catES.yearsInFilter.length = 0;

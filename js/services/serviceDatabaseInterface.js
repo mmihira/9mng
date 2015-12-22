@@ -14,6 +14,7 @@
  *  - getCategoryOfEl
  *  - getUncategorised
  *  - getAvailableYears
+ *  - reCategorise
  *
  */
 angular.module('service.databaseInterface',
@@ -673,6 +674,20 @@ angular.module('service.databaseInterface',
         return Object.keys(Years)
 
     }
+
+     /**
+     * Recategorises the data overwriting any
+     * exisitng categories
+     */
+    dBInt.reCategorise = function(){
+
+        for( var el in dB.allData ){
+
+            catInt.categorise(el);
+        }
+
+    };
+
 
 
 

@@ -34,6 +34,7 @@
     <script type="text/javascript" src="js/directives/directiveDownloadFormInput.js"></script>
     <script type="text/javascript" src="js/directives/directiveCategoryNamePanel.js"></script>
     <script type="text/javascript" src="js/directives/directiveFilterSlider.js"></script>
+    <script type="text/javascript" src="js/directives/directiveTransactionDisplayTable.js"></script>
 
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"></script>
     <link href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet"></script>
@@ -249,6 +250,9 @@
                                 <td>
                                     {{ i }}
                                 </td>
+                                <td>
+                                    <button class="btn btn-default btn-xs" ng-click="cEC.removeIdentifier(i)">x</button>
+                                </td>
                             </tr>
                          </table>
                     </div>
@@ -269,20 +273,7 @@
 
                     <div class="catView">
 
-                         <table class="table table-hover table-condensed">
-                             <tr>
-                                 <th>Date</th>
-                                 <th>Description</th>
-                             </tr>
-                             <tr ng-repeat="k in cEC.catTableEls.values track by $index">
-                                 <td>
-                                     {{ k.date.toLocaleDateString() }}
-                                 </td>
-                                <td>
-                                    {{ k.description }}
-                                </td>
-                            </tr>
-                         </table>
+                        <transaction-table table-data=cEC.tableData></transaction-table>
                     </div>
 
 

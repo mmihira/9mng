@@ -2,6 +2,7 @@
 angular.module('app',[  'directive.input.label',
                         'directive.categoryNameAttribute',
                         'directive.date.filter',
+                        'directive.transaction.table',
                         'service.downloadFormService',
                         'service.database',
                         'service.mainAppLinker',

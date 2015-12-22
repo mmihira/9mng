@@ -9,6 +9,7 @@ angular.module('service.databaseElement',[]).service('dBElement',function(){
 
     var dbEl = {};
 
+    
     /**
      * createDatabaseElement is the constructor function to create
      * objects of type DataBaseElement.
@@ -49,9 +50,10 @@ angular.module('service.databaseElement',[]).service('dBElement',function(){
                             balance: ,
                          }
      */
-    dbEl.createDatabaseElement = function DataBaseElement(
-                                                    i, 
-                                                    fullInstatiation){
+
+    dbEl.createDatabaseElement =  function DataBaseElement(
+                        i, 
+                        fullInstatiation){
         if( fullInstatiation ){
 
             // The database rows have allready been created so just copy 
@@ -75,9 +77,35 @@ angular.module('service.databaseElement',[]).service('dBElement',function(){
 
         }
 
+        /**
+         * Returns the name of the category assigned
+         * to this element. If no category is assigned
+         * then return null
+         */
+
+        this.returnCategoryName = function(){
+
+            if( this.category == null){
+                return "null";
+            }else{
+                return this.category.name;
+            }
+
+        };
+
+        /**
+         * Returns the date of this element as a string
+         */
+        this.getDateAsString = function(){
+            return this.date.toLocaleDateString();
+        }
+
     };
+
+    
 
     return dbEl;
 
 });
+
 

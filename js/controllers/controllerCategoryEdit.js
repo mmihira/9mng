@@ -21,19 +21,31 @@ function(catInt,mAppLn,catES,dBInt,$scope){
     // The allowed tags to display in the drop down.
     self.allowedTags = catInt.returnTags();
 
-    // The elements in the category display
-    self.catTableEls = catES.catTableEls;
-
     self.yearsInFilter = catES.yearsInFilter;
 
     self.filterParam = catES.filterParam; 
 
+    self.tableData = catES.tableData;
+
     // Called when the slider value changes
     self.refreshTable = function(value){
 
-        catES.catTableEls.values = catES.refreshCatTable(value.value[0],value.value[1]);
+        self.tableData.change = !self.tableData.change;
+        self.tableData.data = catES.refreshCatTable(value.value[0],value.value[1]);
 
     }
+
+    /**
+     * Removes an identifier from the 
+     * database
+     */
+    self.removeIdentifier = function(ident){
+
+        catInt.removeIdentifier(ident); 
+
+        catES.updateIdentifiers(self.currCatName.value);
+
+    };
 
     
     // Add the newly labeled category to the

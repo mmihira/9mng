@@ -11,6 +11,7 @@
  * addNewCategory
  * addNewCategoryIdentifier
  * returnTags
+ * removeIdentifier
  */
 angular.module('service.categoryInterface',['service.categoryClass','service.categoryDatabase']).service('catInt',
         ['categoryClass','catDB',function(catClass,catDB){
@@ -20,6 +21,7 @@ angular.module('service.categoryInterface',['service.categoryClass','service.cat
     /**
      * correctly categorise a service databaseElement
      * @param   toCat   The element to categorise
+     * @return          true if category found, false otherwise
      */
     catInt.categorise = function(toCat){
 
@@ -173,6 +175,28 @@ angular.module('service.categoryInterface',['service.categoryClass','service.cat
 
     }
 
+    /**
+     * Removes an identifier from the database
+     * @param the identifier to remove
+     */
+    catInt.removeIdentifier = function(identifier){
+
+        if( catDB.dBIdentifiers.hasOwnProperty(identifier) ){
+
+            // Remove the identifier from the catDB.categorname.identifiers
+            var catName = catDB.dBIdentifiers[identifier];
+            var index = catName.identifiers.indexOf(identifier);
+            catName.identifiers.splice(index,1);
+
+            // Delete it from catDB.dBIdentifiers
+            delete catDB.dBIdentifiers[identifier];
+        }else{
+            console.log(identifier + " not found in database");
+        }
+
+    };
+
+    
     
 
     return catInt;

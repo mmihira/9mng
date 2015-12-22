@@ -46,7 +46,7 @@ angular.module("directive.date.filter",['service.downloadFormService']).directiv
 
 
                     // Call the supplied function when the 
-                    $("#" + scope.id+"filter").slider().on('slide',function(){
+                    $("#" + scope.id+"filter").slider().on('slideStop',function(){
                         var _onChange = scope.onChange;
                         var _scope = scope;
                         return function(val){
