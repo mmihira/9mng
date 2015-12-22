@@ -22,16 +22,37 @@ function(catInt,mAppLn,catES,dBInt,$scope){
     self.allowedTags = catInt.returnTags();
 
     self.yearsInFilter = catES.yearsInFilter;
-
     self.filterParam = catES.filterParam; 
+    self.showOnlyCategorised = catES.showOnlyCategorised;
 
     self.tableData = catES.tableData;
 
     // Called when the slider value changes
     self.refreshTable = function(value){
 
+        self.tableData.data = catES.getNewCatTable(self.showOnlyCategorised.value,value.value[0],value.value[1]);
+
+        catES.currentRangeValue.min = value.value[0];
+        catES.currentRangeValue.max = value.value[1];
+
         self.tableData.change = !self.tableData.change;
-        self.tableData.data = catES.refreshCatTable(value.value[0],value.value[1]);
+
+    }
+
+    self.toggleShowCategorised = function(){
+
+        // Call this instead of the local function to reset the min and max
+        catES.refreshCatTable();
+
+    }
+
+    self.reCategoriseAndShow = function(){
+
+        // Recategorise all the data
+        dBInt.reCategorise();
+
+        // Refresh the table
+        catES.refreshCatTable();
 
     }
 
@@ -61,7 +82,7 @@ function(catInt,mAppLn,catES,dBInt,$scope){
 
         }
 
-        catES.update();
+        catES.updateCatNames();
 
     };
 
@@ -70,8 +91,6 @@ function(catInt,mAppLn,catES,dBInt,$scope){
     // and update the category view down the bottom
     self.addNewIdentifier = function(){
 
-        console.log(self.currCatName);
-        console.log(self.newIdentifier);
 
         // Add the new identifier
         catInt.addNewCategoryIdentifier(self.currCatName.value,self.newIdentifier);
@@ -80,6 +99,8 @@ function(catInt,mAppLn,catES,dBInt,$scope){
         catES.updateIdentifiers(self.currCatName.value);
 
         self.newIdentifier = "";
+
+        self.reCategoriseAndShow();
 
     }
 

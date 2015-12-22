@@ -20,9 +20,9 @@ function(catInt,dBInt){
 
     // These are the elements shown in the table
     catES.tableData = {change:false, data:[]};
-
     catES.yearsInFilter = [];
-
+    catES.hideCategorised = {value:true};
+    catES.currentRangeValue = {min:0,max:0};
 
     catES.filterParam = {
             minString:"",
@@ -32,24 +32,30 @@ function(catInt,dBInt){
             id:"test"};
 
     // Setup the filter
-    catES.setupFilter = function(){
+    catES.setupFilter = function(hideCategorised){
 
-        var unCategorised = dBInt.getUncategorised();
+        var data = [];
+
+        if(hideCategorised){
+
+            data = dBInt.getUncategorised();
+
+        }else{
+
+            data = dBInt.getAllData();
+
+        }
 
         // sort the data
-        unCategorised.sort(function(a,b){ return a.date.getTime() - b.date.getTime();})
+        data.sort(function(a,b){ return a.date.getTime() - b.date.getTime();})
 
-        catES.filterParam.minValue = unCategorised[0].date.getTime();
-        catES.filterParam.maxValue = unCategorised[unCategorised.length-1].date.getTime();
+        catES.filterParam.minValue = data[0].date.getTime();
+        catES.filterParam.maxValue = data[data.length-1].date.getTime();
 
-        catES.filterParam.minString = unCategorised[0].date.toLocaleDateString();
-        catES.filterParam.maxString = unCategorised[unCategorised.length-1].date.toLocaleDateString();
-
-       
+        catES.filterParam.minString = data[0].date.toLocaleDateString();
+        catES.filterParam.maxString = data[data.length-1].date.toLocaleDateString();
 
     };
-
-
 
 
     /*
@@ -84,29 +90,58 @@ function(catInt,dBInt){
      * only those that fit inbetween the arguments.
      * 
      */
-    catES.refreshCatTable = function(min,max){
+    catES.getNewCatTable = function(hideCategorised,min,max){
 
-        if (typeof min == 'undefined' || typeof max == 'undefined') {
+        var data = [];
 
-            return dBInt.getUncategorised().sort(function(a,b){return a.date.getTime() - b.date.getTime();});
+        if( hideCategorised){
+
+
+            data = dBInt.getUncategorised();
+
 
         }else{
 
-            var temp = dBInt.getUncategorised();
 
-            return temp.filter(function(el){ return (el.date.getTime() <= max) && (el.date.getTime() >= min);})
+            data = dBInt.getAllData();
+
+
+        }
+
+        if (typeof min == 'undefined' || typeof max == 'undefined') {
+
+            return data.sort(function(a,b){return a.date.getTime() - b.date.getTime();});
+
+        }else{
+
+            return data.filter(function(el){ return (el.date.getTime() <= max) && (el.date.getTime() >= min);})
                        .sort(function(a,b){return a.date.getTime() - b.date.getTime();});
 
         }
 
-    }
+    };
 
-
-    /*
-     * Called each time the category menu items is clicked.
-     * It will update the categor name array
+    /**
+     * Run when the user clicks the
+     * showOnlyCategorised Tickbox 
      */
-    catES.update = function(){
+    catES.refreshCatTable = function(){
+
+
+        // Reset the min and max
+        catES.setupFilter(catES.hideCategorised.value);
+
+        // Reset the table data
+        catES.tableData.data = catES.getNewCatTable(catES.hideCategorised.value,
+                                                    (catES.currentRangeValue.min == 0 ) ? undefined : catES.currentRangeValue.min,
+                                                    (catES.currentRangeValue.max == 0 ) ? undefined : catES.currentRangeValue.max);
+
+        // Tell the directive to reload the table
+        catES.tableData.change = !catES.tableData.change;
+
+    };
+
+    catES.updateCatNames = function(){
 
         catES.catNames.length = 0;
 
@@ -120,7 +155,19 @@ function(catInt,dBInt){
 
         }
 
-        catES.tableData.data = catES.refreshCatTable();
+    }
+
+
+    /*
+     * Called each time the category menu items is clicked.
+     * It will update the categor name array
+     */
+    catES.initialise = function(){
+
+        catES.updateCatNames();
+
+        // Setup the table data
+        catES.tableData.data = catES.getNewCatTable(false);
         catES.tableData.change = !catES.tableData.change;
 
         // Clear the  year array
@@ -128,9 +175,10 @@ function(catInt,dBInt){
         // Repopulate the year array
         dBInt.getAvailableYears().forEach(function(e){catES.yearsInFilter.push(e);});
 
-        catES.setupFilter();
+        catES.setupFilter(true);
 
     };
+
 
 
 

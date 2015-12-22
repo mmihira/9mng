@@ -653,6 +653,21 @@ angular.module('service.databaseInterface',
     }
 
     /**
+     * Return an array of all the data
+     */
+    dBInt.getAllData = function(){
+
+        return dB.allData.map(function(e){return e;});
+
+    };
+
+
+
+
+
+
+
+    /**
      * Returns the years known by the database.
      * That is in what years does the database hold
      * records of a transaction
@@ -681,7 +696,7 @@ angular.module('service.databaseInterface',
      */
     dBInt.reCategorise = function(){
 
-        for( var el in dB.allData ){
+        for( var el of dB.allData ){
 
             catInt.categorise(el);
         }

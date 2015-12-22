@@ -57,6 +57,9 @@ angular.module("directive.transaction.table",[]).directive("transactionTable", [
                     for( var el of _scope.tableData.data ){
 
                         var tempRow = document.createElement("tr");
+
+                        if(el.category == null){tempRow.className += "danger";}
+
                         tempRow.innerHTML = "<td>" + el.getDateAsString()+ '</td>' +
                                             '<td>' + el.description + '</td>' +
                                             '<td>' + el.returnCategoryName() + '</td>';

@@ -262,8 +262,17 @@
 
                     <div class="panel panel-default">
                         <div class="panel-body reducePadding">
-                            <date-filter id="test" on-change=cEC.refreshTable filter-param=cEC.filterParam></date-filter>
-
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <date-filter id="test" on-change=cEC.refreshTable filter-param=cEC.filterParam></date-filter>
+                                </div>
+                                <div class="col-xs-3">
+                                    <label class="checkbox-inline">
+                                    <input type="checkbox" id="showOnlyCat" ng-model="cEC.showOnlyCategorised.value" ng-change="cEC.toggleShowCategorised()">
+                                    Hide Categorised
+                                    <label>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

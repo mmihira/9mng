@@ -13,7 +13,7 @@
  * object the min and max values are also changed.
  *
  */
-angular.module("directive.date.filter",['service.downloadFormService']).directive("dateFilter", [ 'downloadFormService', function(dlFormServ){
+angular.module("directive.date.filter",[]).directive("dateFilter", [function(){
     return {
 
         restrict: "E",

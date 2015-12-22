@@ -52,7 +52,9 @@ angular.module('controller.menuController',['service.mainAppLinker','service.dow
         mAppLn.downLoadFromFile = true;
         mAppLn.hideCategoryEditInterface.value = false;
         self.activateMen('categories');
-        catES.update();
+
+
+        catES.initialise();
 
     }
 

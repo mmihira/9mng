@@ -2,3 +2,9 @@
     max-height:300px;
     overflow:auto;
 };
+
+.tableUncatRow {
+
+    background-color : #ffd6cc;
+
+};
