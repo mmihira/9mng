@@ -21,7 +21,7 @@ function(catInt,dBInt){
     // These are the elements shown in the table
     catES.tableData = {change:false, data:[]};
     catES.yearsInFilter = [];
-    catES.hideCategorised = {value:true};
+    catES.hideCategorised = {value:false};
     catES.currentRangeValue = {min:0,max:0};
 
     catES.filterParam = {

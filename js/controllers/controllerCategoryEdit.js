@@ -23,21 +23,27 @@ function(catInt,mAppLn,catES,dBInt,$scope){
 
     self.yearsInFilter = catES.yearsInFilter;
     self.filterParam = catES.filterParam; 
-    self.showOnlyCategorised = catES.showOnlyCategorised;
+    self.hideCategorised = catES.hideCategorised;
 
     self.tableData = catES.tableData;
 
     // Called when the slider value changes
     self.refreshTable = function(value){
 
-        self.tableData.data = catES.getNewCatTable(self.showOnlyCategorised.value,value.value[0],value.value[1]);
+        var _self = self;
 
-        catES.currentRangeValue.min = value.value[0];
-        catES.currentRangeValue.max = value.value[1];
+        return function(value){
 
-        self.tableData.change = !self.tableData.change;
+            _self.tableData.data = catES.getNewCatTable(_self.hideCategorised.value,value.value[0],value.value[1]);
 
-    }
+            catES.currentRangeValue.min = value.value[0];
+            catES.currentRangeValue.max = value.value[1];
+
+            _self.tableData.change = !_self.tableData.change;
+
+        };
+
+    }()
 
     self.toggleShowCategorised = function(){
 
