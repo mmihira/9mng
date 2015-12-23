@@ -13,9 +13,9 @@ angular.module('service.mainAppLinker',[]).service('mainAppLinker',function(dB){
     // For the category
     self.hideCategoryEditInterface = {value:true};
 
-    self.hideDashBoard = {value:true};
+    self.hideDashboard = {value:true};
 
-    self.hideSave = {value:false};
+    self.hideSave = {value:true};
 
     self.categoryPageActive = false;
 

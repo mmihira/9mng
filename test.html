@@ -7,6 +7,7 @@
     <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
     <script type="text/javascript" src="bower_components/papaparse/papaparse.min.js"></script>
     <script type="text/javascript" src="bower_components/seiyria-bootstrap-slider/js/bootstrap-slider.js"></script>
+    <script type="text/javascript" src="bower_components/d3/d3.min.js"></script>
 
     <script type="text/javascript" src="js/bigdecimal.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
@@ -23,6 +24,7 @@
     <script type="text/javascript" src="js/services/serviceDatabaseInterface.js"></script>
     <script type="text/javascript" src="js/services/serviceCategoryEdit.js"></script>
     <script type="text/javascript" src="js/services/serviceCSVWriter.js"></script>
+    <script type="text/javascript" src="js/services/serviceNetPosition.js"></script>
 
     <script type="text/javascript" src="js/controllers/controllerDownloadForm.js"></script>
     <script type="text/javascript" src="js/controllers/controllerMenu.js"></script>
@@ -46,6 +48,7 @@
     <link href="css/mainChoiceBtn.css" rel="stylesheet"></script>
     <link href="css/panelStyles.css" rel="stylesheet"></script>
     <link href="css/categoryPage.css" rel="stylesheet"></script>
+    <link href="css/dashboard.css" rel="stylesheet"></script>
 
     <title></title>
 </head>
@@ -72,10 +75,10 @@
                     <ul ng-hide="menC.hideMenu.value">
                        <li ng-class="menC.menActive.download" ng-click="menC.clickDownload()"><a href='#'><span>Download</span></a></li>
                        <li ng-class="menC.menActive.update" ng-click="menC.clickUpdate()"><a href="#"><span>Update</span></a></li>
-                       <li><a href='#'><span>Dashboard</span></a></li>
+                       <li ng-class="menC.menActive.dashboard" ng-click="menC.clickDashboard()"><a href='#'><span>Dashboard</span></a></li>
                        <li ng-click="menC.clickCategories()"><a href='#'><span>Categories</span></a></li>
                        <li ><a href='#'><span>Config</span></a></li>
-                       <li class='last'><a href='#'><span>Save</span></a></li>
+                       <li class="last ng-class:menC.menActive.save;" ng-click="menC.clickSave()" ><a href='#'><span>Save</span></a></li>
                     </ul>
             </div>
         </div>
@@ -149,14 +152,7 @@
 
          </div>
 
-         <!-- Dasboard -->
-         <div class="row" ng-controller="dashBoardController as dSC">
-            <div ng-hide="dSC.hideDashBoard.value">
-                <button type="button" class="btn-primary" ng-click="dSC.testFilter()">click</btn>
-
-            </div>
-         </div>
-
+         
          <!-- The Category View-->
          <div class="row" ng-controller="categoryEditController as cEC">
              <div ng-hide="cEC.hide.value">
@@ -294,13 +290,30 @@
 
         <div class='row' ng-controller='controllerSave as sv'>
 
-            <div ng-hide="sv.hideSave">
+            <div ng-hide="sv.hideSave.value">
 
-                <button type="button" class="btn-primary" ng-click="sv.save()">click</btn>
-
+                <button type="button" class="btn-primary" ng-click="sv.save()">click</button>
             </div>
 
         </div>
+
+         <!-- Dashboard -->
+         <div class="row" ng-controller="dashBoardController as dSC">
+            <div ng-hide="dSC.hideDashboard.value">
+                <div class="col-xs-6">
+                    <div class="panel panel-default">
+                        <div class="panel-body reducePadding netBalancePanel">                    
+                            <div id="netPosition"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="btn-primary" ng-click="dSC.testFilter()">click</button>
+
+
+            </div>
+         </div>
+
 
 
     </div>

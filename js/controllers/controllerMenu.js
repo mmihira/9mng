@@ -12,7 +12,34 @@ angular.module('controller.menuController',['service.mainAppLinker','service.dow
                       update : "",
                       dashboard : "",
                       categories : "",
-                      config : ""};
+                      config : "",
+                      save: ""};
+
+    self.menHide = { download: mAppLn.hideDownLoadForm,
+                     dashboard: mAppLn.hideDashboard,
+                     categories: mAppLn.hideCategoryEditInterface,
+                     save : mAppLn.hideSave,
+                     downLoadFormAcc: mAppLn.hideDownLoadFormAcc,
+                     mainChoice : mAppLn.hideMainChoice,
+                     all : {value:false}
+
+                     };
+
+    /**
+     * Hides all the sections except that
+     * which is specied in the parameter
+     * except.
+     */ 
+    self.hideAllExcept = function(except){
+
+        Object.keys(self.menHide).forEach(function(k){
+            self.menHide[k].value = true;
+        });
+
+        self.menHide[except].value = false;
+
+    };
+
     
     /*
      * This function set the one menue item to "active" and the rest
@@ -46,13 +73,8 @@ angular.module('controller.menuController',['service.mainAppLinker','service.dow
 
         mAppLn.categoryPageActive = true;
 
-        mAppLn.hideMainChoice.value = true;
-        mAppLn.hideDownLoadForm.value = true;
-        mAppLn.hideDownLoadFormAcc.value = true;
-        mAppLn.downLoadFromFile = true;
-        mAppLn.hideCategoryEditInterface.value = false;
+        self.hideAllExcept('categories');
         self.activateMen('categories');
-
 
         catES.initialise();
 
@@ -63,12 +85,12 @@ angular.module('controller.menuController',['service.mainAppLinker','service.dow
 
         self.cleanUp();
 
-        mAppLn.hideMainChoice.value = true;
-        mAppLn.hideDownLoadForm.value = false;
+
+        self.hideAllExcept('download');
 
         // This two variables show how the 
+        mAppLn.hideMainChoice.value = true;
         mAppLn.hideDownLoadFormAcc.value = false;
-        mAppLn.downLoadFromFile = true;
 
         self.activateMen('update');
 
@@ -82,14 +104,32 @@ angular.module('controller.menuController',['service.mainAppLinker','service.dow
 
         self.cleanUp();
 
+        self.hideAllExcept('all');
         mAppLn.hideMainChoice.value = false;
-        mAppLn.hideDownLoadForm.value = true ;
-        mAppLn.hideCategoryEditInterface.value = true;
 
         self.activateMen('download');
 
 
     };
+
+    self.clickSave = function(){
+
+        self.hideAllExcept('save');
+
+        self.activateMen('save');
+
+
+    }
+
+    self.clickDashboard = function(){
+
+        self.hideAllExcept('dashboard');
+
+        self.activateMen('dashboard');
+
+
+
+    }
 
 
 }]);

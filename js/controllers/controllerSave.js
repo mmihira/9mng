@@ -4,7 +4,7 @@ function(mAppLn,csvW){
 
     var self = this;
 
-    self.hideSave = mAppLn.hideSave.value;
+    self.hideSave = mAppLn.hideSave;
 
     self.save = csvW.save;
 

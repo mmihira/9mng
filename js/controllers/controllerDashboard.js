@@ -4,7 +4,7 @@ function(mAppLn,dBInt){
 
     var self = this;
 
-    self.hideDashBoard = mAppLn.hideDashBoard;
+    self.hideDashboard = mAppLn.hideDashboard;
 
 
     self.testFilter = function(){
