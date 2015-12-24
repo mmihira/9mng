@@ -16,7 +16,7 @@ angular.module('service.downloadFormService',['service.databaseInterface']).serv
     // The name of the file which has been selected
     dlForm.fileName = "None";
     // The account which has been selected
-    dlForm.accountSelected = "None";
+    dlForm.accountSelected = {value:""};
     // The messages in the  log
     dlForm.log = [];
     // Used by papaParse 
@@ -73,6 +73,7 @@ angular.module('service.downloadFormService',['service.databaseInterface']).serv
      */ 
     dlForm.papaComplete = function(_scope){
         var scope = _scope;
+        var _accSelected = dlForm.accountSelected;
         
         return function(results){
 
@@ -90,10 +91,14 @@ angular.module('service.downloadFormService',['service.databaseInterface']).serv
                 ));
 
             }else if(dlForm.formBehaviour.updateDatabase){
+                if( _accSelected.value == "" ){
 
-                scope.$apply(dBInt.addToDataBaseFromFileNew(   
+                    alert("Select a valid account");
+
+                }else{
+                    scope.$apply(dBInt.addToDataBaseFromFileNew(   
                             results,
-                            'SAVER',
+                            _accSelected.value,
                             (function(){
                             var log = dlForm.log;
                             return function(msg){
@@ -101,10 +106,11 @@ angular.module('service.downloadFormService',['service.databaseInterface']).serv
                                 };
 
                             }())
-                ));
+                    ));
+                }
             }
         };
-    };
+    }
 
     return dlForm;
 

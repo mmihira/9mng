@@ -201,7 +201,7 @@ angular.module('service.databaseInterface',
 
         var data = dataWrapper.data;
 
-        var tempDataVec = [];
+        var tempElementVec = [];
 
         for(var fileRow of data){
 
@@ -232,7 +232,7 @@ angular.module('service.databaseInterface',
             // Transform the raw value into database types
             dBInt.tranformRawDataRow(tempRow);
 
-            tempDataVec.push(tempRow);
+            tempElementVec.push(tempRow);
 
         }
 
@@ -241,9 +241,9 @@ angular.module('service.databaseInterface',
         var balance = true;
 
         var reverse = false;
-        for(var i = 1; i < tempDataVec.length; i ++){
+        for(var i = 1; i < tempElementVec.length; i ++){
             // compareTo returns 0 if equal
-            if(tempDataVec[i-1].balance.compareTo(tempDataVec[i].balance.subtract(tempDataVec[i].value))){
+            if(tempElementVec[i-1].balance.compareTo(tempElementVec[i].balance.subtract(tempElementVec[i].value))){
                 balance = false;
             }
         }
@@ -251,9 +251,9 @@ angular.module('service.databaseInterface',
         if(!balance){
             // Try finding balance in reverse order
             balance = true;
-            for(var i = 0; i < (tempDataVec.length-1); i ++){
+            for(var i = 0; i < (tempElementVec.length-1); i ++){
                 // compareTo returns 0 if equal
-                if(tempDataVec[i].balance.compareTo(tempDataVec[i+1].balance.add(tempDataVec[i].value))){
+                if(tempElementVec[i].balance.compareTo(tempElementVec[i+1].balance.add(tempElementVec[i].value))){
                     balance = false;
                 }
             }
@@ -263,7 +263,7 @@ angular.module('service.databaseInterface',
 
         // Reverse the data if the balance was found in revese order
         // This is because we need the data in ascending order by date
-        if(reverse){ tempDataVec.reverse();}
+        if(reverse){ tempElementVec.reverse();}
 
         if(!balance){
             addLog("Data uploaded was not a balanced ledger");
@@ -278,22 +278,22 @@ angular.module('service.databaseInterface',
         // If the first entry is not in the database then
         // then none of the following entries can overlap
         var startOfInput = 0;
-        if(dBInt.findMatching(tempDataVec[0]) == null){
+        if(dBInt.findMatching(tempElementVec[0]) == null){
 
             // None of the data to be input is allready in the database
 
         }else{
 
             // Find the extent of the overlap
-            for (var i = 0 ; i < tempDataVec.length; i++){
-                if(dBInt.findMatching(tempDataVec[i]) != null ){
+            for (var i = 0 ; i < tempElementVec.length; i++){
+                if(dBInt.findMatching(tempElementVec[i]) != null ){
                     // Not null means that the data allready exists
                     startOfInput++;
                 }
             }
         }
 
-        if(startOfInput == tempDataVec.length){
+        if(startOfInput == tempElementVec.length){
             addLog("All data currently exists in database");
             return;
         }
@@ -308,7 +308,7 @@ angular.module('service.databaseInterface',
             return;
         }
 
-        var firstValRef = tempDataVec[startOfInput];
+        var firstValRef = tempElementVec[startOfInput];
         if(lastAddedData.ref.balance.compareTo(firstValRef.balance.subtract(firstValRef.value))){
             addLog("Data to be added did not balance in database");
             return;
@@ -319,14 +319,15 @@ angular.module('service.databaseInterface',
         // Now add the data to the database
         
         var count = 0;
-        for(var i = startOfInput; i < tempDataVec.length; i ++){
+        for(var i = startOfInput; i < tempElementVec.length; i ++){
 
-            dBInt.addElementToDatabase(tempDataVec[i]);
+            catInt.categorise(tempElementVec[i]);
+            dBInt.addElementToDatabase(tempElementVec[i]);
             count ++;
 
         }
 
-        addLog("Added " + count + " of " + tempDataVec.length + " to the database.");
+        addLog("Added " + count + " of " + tempElementVec.length + " to the database.");
         addLog("Database is balanced ? " + dBInt.checkDatabaseBalance(account));
 
     };

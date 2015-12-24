@@ -25,6 +25,7 @@
     <script type="text/javascript" src="js/services/serviceCategoryEdit.js"></script>
     <script type="text/javascript" src="js/services/serviceCSVWriter.js"></script>
     <script type="text/javascript" src="js/services/serviceNetPosition.js"></script>
+    <script type="text/javascript" src="js/services/serviceConfig.js"></script>
 
     <script type="text/javascript" src="js/controllers/controllerDownloadForm.js"></script>
     <script type="text/javascript" src="js/controllers/controllerMenu.js"></script>
@@ -114,11 +115,8 @@
                             <div class="form-group row " ng-hide="dFc.hideDownLoadFormAcc.value">
                                     <label class="col-sm-2 form-control-label" for="accountTypeSelection">Account Type</label>
                                     <div class="col-lg-7">
-                                        <select class=" form-control c-select">
-                                          <option selected>Open this select menu</option>
-                                          <option value="1">One</option>
-                                          <option value="2">Two</option>
-                                          <option value="3">Three</option>
+                                        <select class=" form-control c-select" ng-model="dFc.selectedAccountName.value">
+                                            <option ng-repeat="acc in dFc.accountNames.value" value={{acc}}>{{acc}}</option>
                                         </select>
                                     </div>
 

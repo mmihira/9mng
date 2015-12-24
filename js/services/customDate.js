@@ -18,7 +18,7 @@ angular.module('service.customDateParser',[]).service('customDateParser',functio
         var month = dateString.slice(3,5);
         var year = dateString.slice(6,10);
 
-        var ret = new Date(year,month,day,0,0,0);
+        var ret = new Date(year,month-1,day,0,0,0);
 
         return ret;
     };
