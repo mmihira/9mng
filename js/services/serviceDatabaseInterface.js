@@ -15,7 +15,7 @@
  *  - getUncategorised
  *  - getAvailableYears
  *  - reCategorise
- *
+ *  - getLastTransaction
  */
 angular.module('service.databaseInterface',
         ['service.database','service.databaseElement','service.CSVFormat',
@@ -703,8 +703,46 @@ angular.module('service.databaseInterface',
 
     };
 
+    /**
+     * For a given year, month and account
+     * return the last transaction in the order
+     * of the ledger. Used for determining
+     * the net position.
+     * @return  The element if it exists, and null
+     *          otherwise
+     */
+    dBInt.getLastTransaction = function(year,month,acc){
 
+        var tmp = {};
 
+        if( dB.dMap.hasOwnProperty(acc) ){
+            if( dB.dMap[acc].hasOwnProperty(year) ){
+                if(dB.dMap[acc][year].hasOwnProperty(month)){
+
+                    tmp = dB.dMap[acc][year][month].data;
+                    return tmp[tmp.length -1];
+
+                }else{
+                    return null;
+                }
+            }else{
+                return null;
+            }
+        }else{
+            return null;
+        }
+
+    };
+
+    /**
+     * Return true if the database has been intialised
+     * That is if data has been input into the database
+     */
+    dBInt.hasBeenInit = function(){
+
+        return (dB.allData.length > 0 ) ? true : false ;
+
+    };
 
 
     return dBInt;
