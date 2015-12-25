@@ -2,9 +2,9 @@
 
 angular.module('controller.menuController',
         ['service.databaseInterface','service.mainAppLinker','service.downloadFormService',
-        'service.categoryEdit','service.netPosition']).controller('menuController',
-        ['dBInt','mainAppLinker','downloadFormService','categoryEditService','netPosChart','$rootScope',
-        function(dBInt,mAppLn,dlFs,catES,netPosChart,$rootScope){
+        'service.categoryEdit','service.netPosition','service.netCashFlow']).controller('menuController',
+        ['dBInt','mainAppLinker','downloadFormService','categoryEditService','netPosChart','netCashFlow','$rootScope',
+        function(dBInt,mAppLn,dlFs,catES,netPosChart,netCashFlow,$rootScope){
 
     var self = this;
 
@@ -132,8 +132,12 @@ angular.module('controller.menuController',
 
         // Create the net position data
         netPosChart.createNetPosData();
+        netCashFlow.createNetCashFlow();
 
-        if( dBInt.hasBeenInit() ){ netPosChart.updateChart.value = !netPosChart.updateChart.value;}
+        if( dBInt.hasBeenInit() ){ 
+            netPosChart.updateChart.value = !netPosChart.updateChart.value;
+            netCashFlow.updateChart.value = !netCashFlow.updateChart.value;
+        }
 
     }
 

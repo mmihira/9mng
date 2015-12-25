@@ -25,6 +25,7 @@
     <script type="text/javascript" src="js/services/serviceCategoryEdit.js"></script>
     <script type="text/javascript" src="js/services/serviceCSVWriter.js"></script>
     <script type="text/javascript" src="js/services/serviceNetPosition.js"></script>
+    <script type="text/javascript" src="js/services/serviceNetCashFlow.js"></script>
     <script type="text/javascript" src="js/services/serviceConfig.js"></script>
 
     <script type="text/javascript" src="js/controllers/controllerDownloadForm.js"></script>
@@ -39,6 +40,7 @@
     <script type="text/javascript" src="js/directives/directiveFilterSlider.js"></script>
     <script type="text/javascript" src="js/directives/directiveTransactionDisplayTable.js"></script>
     <script type="text/javascript" src="js/directives/directiveNetPosChart.js"></script>
+    <script type="text/javascript" src="js/directives/directiveNetCashFlowChart.js"></script>
 
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"></script>
     <link href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet"></script>
@@ -303,11 +305,21 @@
                     <div class="panel panel-default">
                         <div class="panel-body reducePadding netBalancePanel">                    
                             <div id="netPosition">
-                                <net-position data=dSC.data update=dSC.updateChart dimensions=dSC.dimensions ></net-position>
+                                <net-position data=dSC.netPosData update=dSC.updateNP dimensions=dSC.dimensions ></net-position>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="col-xs-8">
+                    <div class="panel panel-default">
+                        <div class="panel-body reducePadding netBalancePanel">                    
+                            <div id="netCashFlow">
+                                <net-cash-flow data=dSC.netCashFlowData update=dSC.updateNCF dimensions=dSC.dimensions ></net-cash-flow>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
                 <button type="button" class="btn-primary" ng-click="dSC.testFilter()">click</button>
 

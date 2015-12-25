@@ -474,10 +474,12 @@ angular.module('service.databaseInterface',
      *              possible months ['all']
      * @param acc   The account only one can be specified
      *
+     * @param dNCat The default behaviour if data has been uncategorised
+     *              true to add and false otherwise
      * @param {type} param is a struct with structure
      * {
      *  nIncCat:    an array of category strings which cannot match the category of the data.
-     *  incTag:     an array of one tag as string. The element must include the tag.
+     *  incTag:     an array of tags. One of which must match 
      *  incCat :    an array of category strings, only 1 must match to be included
      * }
      *
@@ -486,7 +488,7 @@ angular.module('service.databaseInterface',
      *              Only the existing data is returned.
      *  
      */
-    dBInt.filterData = function(yrs,mn,acc,param)
+    dBInt.filterData = function(yrs,mn,acc,dNCat,param)
     {
 
         var filters = { 
@@ -552,16 +554,16 @@ angular.module('service.databaseInterface',
                                 currEl = tdb[yrs[i]][mn[m]].data[x];
                                 catRef =  dBInt.getCategoryOfEl(currEl);
 
-                                // Look for the tags which must be included
+                                // If incTag is present at least one tag must match
                                 if(filters['incTag'] != null){
 
                                     if( catRef == null){
 
-                                        checkArray.push(false);
+                                        checkArray.push( dNCat);
 
                                     }else{
 
-                                        checkArray.push( (catRef.tag == filters['incTag']) ? true : false );
+                                        checkArray.push( ( filters['incTag'].indexOf(catRef.tag) != -1 ) ? true : false );
                                     }
 
                                 }
@@ -574,7 +576,7 @@ angular.module('service.databaseInterface',
 
                                     if( catRef == null){
 
-                                        checkArray.push(false);
+                                        checkArray.push( dNCat );
 
                                     }else{
 
@@ -590,7 +592,7 @@ angular.module('service.databaseInterface',
 
                                     if( catRef == null){
 
-                                        checkArray.push(false);
+                                        checkArray.push( dNCat );
 
                                     }else{
 
