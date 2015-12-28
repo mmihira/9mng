@@ -8,8 +8,8 @@
  * papaComplete: The callback function executed by papaparse on behalf of
  *               the parseData function.
  */
-angular.module('service.downloadFormService',['service.databaseInterface']).service('downloadFormService',
-        ['dBInt',function(dBInt){
+angular.module('service.downloadFormService',['service.databaseInterface','service.mainAppLinker']).service('downloadFormService',
+        ['dBInt','mainAppLinker',function(dBInt,mAppLn){
 
     var dlForm = {};
     
@@ -78,7 +78,7 @@ angular.module('service.downloadFormService',['service.databaseInterface']).serv
         return function(results){
 
             if(dlForm.formBehaviour.downloadFromExistingFile){
-
+                mAppLn.inSetup.value = false;
                 scope.$apply(dBInt.addToDataBaseFromfileExisting(   
                             results,
                             (function(){
@@ -90,12 +90,15 @@ angular.module('service.downloadFormService',['service.databaseInterface']).serv
                             }())
                 ));
 
+
             }else if(dlForm.formBehaviour.updateDatabase){
                 if( _accSelected.value == "" ){
 
                     alert("Select a valid account");
 
                 }else{
+
+                    mAppLn.inSetup.value = false;
                     scope.$apply(dBInt.addToDataBaseFromFileNew(   
                             results,
                             _accSelected.value,
@@ -107,7 +110,10 @@ angular.module('service.downloadFormService',['service.databaseInterface']).serv
 
                             }())
                     ));
+
                 }
+
+
             }
         };
     }

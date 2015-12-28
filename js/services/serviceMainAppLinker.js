@@ -1,23 +1,30 @@
 angular.module('service.mainAppLinker',[]).service('mainAppLinker',function(dB){
 
-    var self = this;
+    mApp = {};
 
-    self.hideMenu = {value:false};
-    self.hideMainChoice = {value:false};
-    self.hideDownLoadForm = {value:true};
+    mApp.hideMenu = {value:false};
+    mApp.hideMainChoice = {value:true};
+    mApp.hideDownLoadForm = {value:true};
 
     // This two variables show how the 
-    self.hideDownLoadFormAcc = {value:true};
-    self.hideDashboard = {value:false};
+    mApp.hideDownLoadFormAcc = {value:true};
+    mApp.hideDashboard = {value:false};
+
 
     // For the category
-    self.hideCategoryEditInterface = {value:true};
+    mApp.hideCategoryEditInterface = {value:true};
 
-    self.hideDashboard = {value:true};
+    mApp.hideDashboard = {value:true};
 
-    self.hideSave = {value:true};
+    mApp.hideSave = {value:true};
 
-    self.categoryPageActive = false;
+    mApp.categoryPageActive = false;
+
+    mApp.hideSetup = {value:false};
+    
+    mApp.inSetup = {value:true};
+
+    return mApp;
 
 
 

@@ -2,21 +2,25 @@
 
 angular.module('controller.menuController',
         ['service.databaseInterface','service.mainAppLinker','service.downloadFormService',
-        'service.categoryEdit','service.netPosition','service.netCashFlow']).controller('menuController',
-        ['dBInt','mainAppLinker','downloadFormService','categoryEditService','netPosChart','netCashFlow','$rootScope',
-        function(dBInt,mAppLn,dlFs,catES,netPosChart,netCashFlow,$rootScope){
+        'service.categoryEdit','service.netPosition','service.netCashFlow','service.Setup']).controller('menuController',
+        ['dBInt','mainAppLinker','downloadFormService','categoryEditService','netPosChart','netCashFlow',
+        'setup','$rootScope',
+        function(dBInt,mAppLn,dlFs,catES,netPosChart,netCashFlow,setup,$rootScope){
 
     var self = this;
 
     self.hideMenu = mAppLn.hideMenu;
 
+    self.inSetup = mAppLn.inSetup;
+
     // These variables controll the styling for which menue is currently active
-    self.menActive = {download : "active",
+    self.menActive = {download : "",
                       update : "",
                       dashboard : "",
                       categories : "",
                       config : "",
-                      save: ""};
+                      save: "",
+                      setup:"active"};
 
     self.menHide = { download: mAppLn.hideDownLoadForm,
                      dashboard: mAppLn.hideDashboard,
@@ -24,6 +28,7 @@ angular.module('controller.menuController',
                      save : mAppLn.hideSave,
                      downLoadFormAcc: mAppLn.hideDownLoadFormAcc,
                      mainChoice : mAppLn.hideMainChoice,
+                     setup : mAppLn.hideSetup,
                      all : {value:false}
 
                      };
@@ -108,7 +113,10 @@ angular.module('controller.menuController',
         self.cleanUp();
 
         self.hideAllExcept('all');
-        mAppLn.hideMainChoice.value = false;
+        mAppLn.hideDownLoadForm.value = false;
+        mAppLn.hideDownLoadFormAcc.value = true;
+        dlFs.setFormBehaviour('downloadFromExistingFile');
+
 
         self.activateMen('download');
 
@@ -140,6 +148,16 @@ angular.module('controller.menuController',
         }
 
     }
+
+    self.clickSetup = function(){
+
+        self.hideAllExcept('setup');
+
+        setup.initialise();
+
+        self.activateMen('setup');
+
+    };
 
 
 }]);

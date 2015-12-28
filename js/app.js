@@ -12,12 +12,14 @@ angular.module('app',[  'directive.input.label',
                         'service.netPosition',
                         'service.netCashFlow',
                         'service.Config',
+                        'service.Setup',
                         'controller.downloadForm',
                         'controller.menuController',
                         'controller.mainChoice',
                         'controller.categoryEdit',
                         'controller.dashBoard',
-                        'controller.save'
+                        'controller.save',
+                        'controller.setup'
                          ]);
 
 

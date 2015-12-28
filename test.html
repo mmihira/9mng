@@ -27,6 +27,7 @@
     <script type="text/javascript" src="js/services/serviceNetPosition.js"></script>
     <script type="text/javascript" src="js/services/serviceNetCashFlow.js"></script>
     <script type="text/javascript" src="js/services/serviceConfig.js"></script>
+    <script type="text/javascript" src="js/services/serviceSetup.js"></script>
 
     <script type="text/javascript" src="js/controllers/controllerDownloadForm.js"></script>
     <script type="text/javascript" src="js/controllers/controllerMenu.js"></script>
@@ -34,6 +35,7 @@
     <script type="text/javascript" src="js/controllers/controllerCategoryEdit.js"></script>
     <script type="text/javascript" src="js/controllers/controllerDashboard.js"></script>
     <script type="text/javascript" src="js/controllers/controllerSave.js"></script>
+    <script type="text/javascript" src="js/controllers/controllerSetup.js"></script>
 
     <script type="text/javascript" src="js/directives/directiveDownloadFormInput.js"></script>
     <script type="text/javascript" src="js/directives/directiveCategoryNamePanel.js"></script>
@@ -77,12 +79,22 @@
         <div class="row">
             <div id='cssmenu' ng-controller="menuController as menC"  >
                     <ul ng-hide="menC.hideMenu.value">
-                       <li ng-class="menC.menActive.download" ng-click="menC.clickDownload()"><a href='#'><span>Download</span></a></li>
-                       <li ng-class="menC.menActive.update" ng-click="menC.clickUpdate()"><a href="#"><span>Update</span></a></li>
-                       <li ng-class="menC.menActive.dashboard" ng-click="menC.clickDashboard()"><a href='#'><span>Dashboard</span></a></li>
-                       <li ng-click="menC.clickCategories()"><a href='#'><span>Categories</span></a></li>
-                       <li ><a href='#'><span>Config</span></a></li>
-                       <li class="last ng-class:menC.menActive.save;" ng-click="menC.clickSave()" ><a href='#'><span>Save</span></a></li>
+                       <li ng-hide="!menC.inSetup.value" ng-class="menC.menActive.setup" ng-click="menC.clickSetup()">
+                        <a href='#'><span>Setup</span></a></li>
+
+                       <li ng-hide="!menC.inSetup.value" ng-class="menC.menActive.download" ng-click="menC.clickDownload()">
+                        <a href='#'><span>Download</span></a></li>
+
+                       <li ng-hide="menC.inSetup.value" ng-class="menC.menActive.update" ng-click="menC.clickUpdate()">
+                         <a href="#"><span>Update</span></a></li>
+
+                       <li ng-hide="menC.inSetup.value" ng-class="menC.menActive.dashboard" ng-click="menC.clickDashboard()">
+                        <a href='#'><span>Dashboard</span></a></li>
+
+                       <li ng-hide="menC.inSetup.value" ng-click="menC.clickCategories()"><a href='#'><span>Categories</span></a></li>
+                       <li ng-hide="menC.inSetup.value" ><a href='#'><span>Config</span></a></li>
+                       <li ng-hide="menC.inSetup.value" class="last ng-class:menC.menActive.save;" ng-click="menC.clickSave()" >
+                       <a href='#'><span>Save</span></a></li>
                     </ul>
             </div>
         </div>
@@ -324,6 +336,67 @@
                 <button type="button" class="btn-primary" ng-click="dSC.testFilter()">click</button>
 
 
+            </div>
+         </div>
+
+         <div class="row" ng-controller="setupControl as sCn" ng-hide="sCn.hide.value">
+            <div class="panel panel-default">
+                <div class="panel-body">                    
+
+                    <div class="row">
+                        <div class="col-sm-12">
+
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <div class="col-sm-2">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        Use this form to create a new database.
+                                        <br>
+                                        Click the download button in the menu 
+                                        to download an existing file
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="UserName" class="col-sm-2 control-label">User name:</label>
+                                    <div class="col-sm-4">
+                                        <input type="text"  class="form-control" id="UserName"></input>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="AccName" class="col-sm-2 control-label">
+                                        Add new account:</label>
+                                    <div class="col-sm-4">
+                                        <input type="text"  class="form-control" id="AccName" ng-model="sCn.accountName.value"></input>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class="btn btn-default" ng-click="sCn.clickAddAccount()">Add</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-4">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">                    
+                                                <div ng-repeat="newacc in sCn.newAccountNames.values">{{newacc}}<br></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-4">
+                                        <button class="btn btn-default">Create</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
             </div>
          </div>
 
