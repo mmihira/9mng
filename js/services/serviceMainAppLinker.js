@@ -1,30 +1,83 @@
 angular.module('service.mainAppLinker',[]).service('mainAppLinker',function(dB){
 
-    mApp = {};
+    mAppLn = {};
 
-    mApp.hideMenu = {value:false};
-    mApp.hideMainChoice = {value:true};
-    mApp.hideDownLoadForm = {value:true};
+    mAppLn.hideMenu = {value:false};
+    mAppLn.hideMainChoice = {value:true};
+    mAppLn.hideDownLoadForm = {value:true};
 
     // This two variables show how the 
-    mApp.hideDownLoadFormAcc = {value:true};
-    mApp.hideDashboard = {value:false};
+    mAppLn.hideDownLoadFormAcc = {value:true};
+    mAppLn.hideDashboard = {value:false};
 
 
     // For the category
-    mApp.hideCategoryEditInterface = {value:true};
+    mAppLn.hideCategoryEditInterface = {value:true};
 
-    mApp.hideDashboard = {value:true};
+    mAppLn.hideDashboard = {value:true};
 
-    mApp.hideSave = {value:true};
+    mAppLn.hideSave = {value:true};
 
-    mApp.categoryPageActive = false;
+    mAppLn.categoryPageActive = false;
 
-    mApp.hideSetup = {value:false};
+    mAppLn.hideSetup = {value:false};
     
-    mApp.inSetup = {value:true};
+    mAppLn.inSetup = {value:true};
 
-    return mApp;
+// These variables controll the styling for which menue is currently active
+    mAppLn.menActive = {download : "",
+                      update : "",
+                      dashboard : "",
+                      categories : "",
+                      config : "",
+                      save: "",
+                      setup:"active"};
+
+    mAppLn.menHide = { download: mAppLn.hideDownLoadForm,
+                     dashboard: mAppLn.hideDashboard,
+                     categories: mAppLn.hideCategoryEditInterface,
+                     save : mAppLn.hideSave,
+                     downLoadFormAcc: mAppLn.hideDownLoadFormAcc,
+                     mainChoice : mAppLn.hideMainChoice,
+                     setup : mAppLn.hideSetup,
+                     all : {value:false}
+
+                     };
+
+    /**
+     * Hides all the sections except that
+     * which is specied in the parameter
+     * except.
+     */ 
+    mAppLn.hideAllExcept = function(except){
+
+        Object.keys(mAppLn.menHide).forEach(function(k){
+            mAppLn.menHide[k].value = true;
+        });
+
+        mAppLn.menHide[except].value = false;
+
+    };
+
+    
+    /*
+     * This function set the one menue item to "active" and the rest
+     * to empty.
+     * @param   menItem     The specific menue item to set as active.
+     *                      menItem must be a key in the map menActive
+     */
+    mAppLn.activateMen = function(menItem){
+
+        for(var item in mAppLn.menActive){
+            mAppLn.menActive[item] = "";
+        }
+
+        mAppLn.menActive[menItem] = "active";
+
+    };
+
+
+    return mAppLn;
 
 
 

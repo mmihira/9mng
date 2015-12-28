@@ -8,6 +8,7 @@ angular.module('controller.setup',['service.mainAppLinker','service.Setup']).con
     self.accountName = setup.accountName;
     self.clickAddAccount = setup.addNewAccount;
     self.newAccountNames = setup.newAccountNames;
+    self.createNewDatabase = setup.createNewDatabase;
 
 
 }]);

@@ -1,8 +1,8 @@
 /**
  * CVSVWriter service is used to write data to files.
  */
-angular.module('service.CSVWriter',['service.CSVFormat','service.database','service.categoryDatabase']).service('CSVWriter',
-        ['CSVFormat','dB','catDB',function(csvF,dB,catDB){
+angular.module('service.CSVWriter',['service.CSVFormat','service.database','service.categoryDatabase','service.Config']).service('CSVWriter',
+        ['CSVFormat','dB','catDB','config',function(csvF,dB,catDB,config){
 
     var csvW = {};
 
@@ -12,17 +12,25 @@ angular.module('service.CSVWriter',['service.CSVFormat','service.database','serv
         // create the text;
         var o = "";
         var allData = dB.allData;
+
+        o+= "%accStart\n";
+
+        for( var i of config.accountNames.value ){
+            o+= i + "\n";
+        }
+
+        o+="%accEnd\n";
         
         o += "%catstart\n";
         
-        for( i in catDB.dB){
+        for( var i in catDB.dB){
             o += catDB.dB[i]["name"] +"," + catDB.dB[i]["tag"] + "\n";
         }
         
         o += "%catend\n" ;
         o += "%catvalstart\n";
 
-        for(i in catDB.dBIdentifiers){
+        for(var i in catDB.dBIdentifiers){
             o += i +"," + catDB.dBIdentifiers[i]["name"] + "\n";
         }
         

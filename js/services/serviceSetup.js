@@ -1,7 +1,8 @@
 /**
  */
-angular.module('service.Setup',['service.Config','service.mainAppLinker','service.downloadFormService']).service('setup',
-        ['config','mainAppLinker','downloadFormService',function(config,mAppLn,dlFs){
+angular.module('service.Setup',
+        ['service.Config','service.mainAppLinker','service.downloadFormService','service.databaseInterface']).service('setup',
+        ['config','mainAppLinker','downloadFormService','dBInt',function(config,mAppLn,dlFs,dBInt){
 
     var setup = {};
 
@@ -25,6 +26,21 @@ angular.module('service.Setup',['service.Config','service.mainAppLinker','servic
         setup.newAccountNames.values.push(setup.accountName.value);
 
     };
+
+
+    setup.createNewDatabase = function(){
+
+        for( var acc of setup.newAccountNames.values ){
+
+            config.accountNames.value.push(acc);
+            dBInt.createNewAccount(acc);
+
+        }
+
+        mAppLn.inSetup.value = false;
+        mAppLn.hideSetup.value = true;
+
+    }
 
 
     return setup;

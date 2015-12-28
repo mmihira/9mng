@@ -16,12 +16,13 @@
  *  - getAvailableYears
  *  - reCategorise
  *  - getLastTransaction
+ *  - createNewAccount
  */
 angular.module('service.databaseInterface',
         ['service.database','service.databaseElement','service.CSVFormat',
-        'service.customDateParser','service.categoryClass','service.categoryInterface']).service('dBInt',
-        ['dB','dBElement','CSVFormat','customDateParser','categoryClass','catInt',
-        function(dB,dBElement,csvF,cDate,catClass,catInt){
+        'service.customDateParser','service.categoryClass','service.categoryInterface','service.Config']).service('dBInt',
+        ['dB','dBElement','CSVFormat','customDateParser','categoryClass','catInt','config',
+        function(dB,dBElement,csvF,cDate,catClass,catInt,config){
 
     var dBInt = {};
 
@@ -53,10 +54,60 @@ angular.module('service.databaseInterface',
         /* Process the category type Data */
         /**************************************************************/
 
+
+        var accStart = false;
+        var accEnd = false;
         var catendreached = false;
+        var catStart = false;
         var catcounter = 0;
         var z = 0;
         var tempCatClass = {};
+
+
+        // Find the account names first
+        while(accStart == false){
+            if(data[z][0] == "%accStart"){
+
+                accStart = true;
+
+            }else{
+
+                z++;
+
+            }
+        }
+
+        while(accEnd === false){
+
+            if (data[z][0] == "%accEnd")
+            {
+                accEnd = true;
+                z++;
+            }
+            else
+            {
+                // Add the acc to the config file
+                config.accountNames.value.push(data[z][0]);
+                z++;
+                
+            }
+        }
+
+
+
+
+        // find catstart first
+        while(catStart == false){
+            if(data[z][0] == "%catstart"){
+
+                catStart = true;
+
+            }else{
+
+                z++;
+
+            }
+        }
         
         while(catendreached === false){
 
@@ -302,22 +353,30 @@ angular.module('service.databaseInterface',
         // in the database then we can add all the data. This is because
         // the data interally allready balances
         var lastAddedData = dBInt.getLastDataAdded(account);
-        if(lastAddedData == null)
+        if(lastAddedData != null)
         {
-            addLog("Specified account does not exist in database.");
-            return;
-        }
 
-        var firstValRef = tempElementVec[startOfInput];
-        if(lastAddedData.ref.balance.compareTo(firstValRef.balance.subtract(firstValRef.value))){
-            addLog("Data to be added did not balance in database");
-            return;
+            var firstValRef = tempElementVec[startOfInput];
+            if(lastAddedData.ref.balance.compareTo(firstValRef.balance.subtract(firstValRef.value))){
+                addLog("Data to be added did not balance in database");
+                return;
+            }else{
+                addLog("Data balanced correctly in database");
+            }
         }else{
-            addLog("Data balanced correctly in database");
+
+            // Check if the account exists or not
+            if( dB.dMap.hasOwnProperty(account) == false ){
+
+                addLog("The specified account did not exist !");
+                return;
+            }else{
+
+                addLog("There was no data in this account. All data will be added.");
+            }
         }
 
         // Now add the data to the database
-        
         var count = 0;
         for(var i = startOfInput; i < tempElementVec.length; i ++){
 
@@ -351,6 +410,10 @@ angular.module('service.databaseInterface',
     dBInt.getLastDataAdded = function(acc){
 
         if( dB.dMap.hasOwnProperty(acc) == false ){
+            return null;
+        }
+
+        if( Object.keys(dB.dMap[acc]).length == 0 ){
             return null;
         }
 
@@ -746,6 +809,15 @@ angular.module('service.databaseInterface',
         return (dB.allData.length > 0 ) ? true : false ;
 
     };
+
+    /**
+     * Creates a newAccount in the database
+     */
+    dBInt.createNewAccount = function(acc){
+
+        dB.dMap[acc] = {};
+
+    }
 
 
     return dBInt;

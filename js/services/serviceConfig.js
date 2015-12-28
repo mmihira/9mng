@@ -6,8 +6,7 @@ angular.module('service.Config',[]).service('config',function(){
 
     var config = {};
 
-    config.accountNames = {value:['SAVER','NETBANK','GOAL']};
-
+    config.accountNames = {value:[]};
 
     return config;
 
