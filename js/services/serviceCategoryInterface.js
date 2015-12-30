@@ -10,7 +10,6 @@
  * getCategoryIdentifiers
  * addNewCategory
  * addNewCategoryIdentifier
- * returnTags
  * removeIdentifier
  */
 angular.module('service.categoryInterface',['service.categoryClass','service.categoryDatabase']).service('catInt',
@@ -165,15 +164,6 @@ angular.module('service.categoryInterface',['service.categoryClass','service.cat
 
     };
 
-    /**
-     * Returns the allowed category tags as an
-     * array of strings.
-     */
-    catInt.returnTags = function(){
-
-        return catDB.tags.map(function(e){return e;});
-
-    }
 
     /**
      * Removes an identifier from the database

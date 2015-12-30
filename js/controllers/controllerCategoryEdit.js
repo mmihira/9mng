@@ -1,7 +1,7 @@
 angular.module('controller.categoryEdit',['service.categoryInterface','service.mainAppLinker','service.categoryEdit',
-                'service.databaseInterface']).controller(
-'categoryEditController',['catInt','mainAppLinker' , 'categoryEditService','dBInt','$scope',
-function(catInt,mAppLn,catES,dBInt,$scope){
+                'service.databaseInterface','service.Config']).controller(
+'categoryEditController',['catInt','mainAppLinker' , 'categoryEditService','dBInt','config','$scope',
+function(catInt,mAppLn,catES,dBInt,config,$scope){
 
     var self = this;
     
@@ -19,7 +19,7 @@ function(catInt,mAppLn,catES,dBInt,$scope){
 
 
     // The allowed tags to display in the drop down.
-    self.allowedTags = catInt.returnTags();
+    self.allowedTags = config.returnTags();
 
     self.yearsInFilter = catES.yearsInFilter;
     self.filterParam = catES.filterParam; 

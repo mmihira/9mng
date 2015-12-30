@@ -16,8 +16,6 @@ angular.module('service.database',[]).service('dB',function(){
 
     dB.dMap = {};
 
-    dB.typeOfAccounts = ['EveryDaySmart','GoalSaver','NetBankSaver'];
-
     /*
      * rawDataFormat holds key value pairs describing for each key
      * which column (the value) in the raw database which holds

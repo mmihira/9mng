@@ -66,6 +66,7 @@ angular.module('service.databaseInterface',
 
         // Find the account names first
         while(accStart == false){
+
             if(data[z][0] == "%accStart"){
 
                 accStart = true;
@@ -92,9 +93,6 @@ angular.module('service.databaseInterface',
                 
             }
         }
-
-
-
 
         // find catstart first
         while(catStart == false){

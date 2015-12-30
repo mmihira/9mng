@@ -8,6 +8,15 @@ angular.module('service.Config',[]).service('config',function(){
 
     config.accountNames = {value:[]};
 
+    /**
+     * The known category tags in the program
+     */
+    config.tags = ['Internal','Expenditure','Income'];
+
+    config.returnTags = function(){ return config.tags.map(function(e){return e;});};
+
+
+
     return config;
 
 });
