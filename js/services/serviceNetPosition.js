@@ -61,48 +61,6 @@ angular.module('service.netPosition',['service.databaseInterface']).service('net
 
    };
 
-    netPos.createCashFlow= function(){
-
-        var years = [];
-
-        var dataMap = {
-         svr : dBInt.filterData([2015],['all'],'SAVER',{}),
-         net : dBInt.filterData([2015],['all'],'NETBANK',{incTag:['Income']}),
-         goal:dBInt.filterData([2015],['all'],'GOAL',{incTag:['Income']})
-        }
-
-        console.log(dataMap);
-
-        var monthlySum = {};
-
-        for( var mn = 0; mn < 12 ; mn ++){
-            monthlySum[mn] = new BigDecimal("0.0");
-        }
-
-        dataMap['net'].forEach(function(e){
-
-
-            console.log(monthlySum[e.date.getMonth()]) ;
-            console.log( e.value);
-
-
-
-            monthlySum[e.date.getMonth()].add( e.value);
-
-        });
-
-        var data = [];
-
-        for(k in monthlySum){
-
-            data.push({name:k,value:monthlySum[k].floatValue()});
-        }
-
-        return data;
-
-    }
-    
-
     return netPos;
 
 }]);
