@@ -8,12 +8,13 @@
  * getCategoryReference
  * getExistingCategoryNames
  * getCategoryIdentifiers
+ * getCategoryNameByTag
  * addNewCategory
  * addNewCategoryIdentifier
  * removeIdentifier
  */
-angular.module('service.categoryInterface',['service.categoryClass','service.categoryDatabase']).service('catInt',
-        ['categoryClass','catDB',function(catClass,catDB){
+angular.module('service.categoryInterface',['service.categoryClass','service.categoryDatabase','service.Config']).service('catInt',
+        ['categoryClass','catDB','config',function(catClass,catDB,config){
 
     var catInt = {};
 
@@ -57,6 +58,32 @@ angular.module('service.categoryInterface',['service.categoryClass','service.cat
 
         return catDB.dB[catName].identifiers.map(function(e){return e;});
 
+    };
+
+    /**
+     * Returns category names belonging to the tag specified.
+     * @param       tag     The tag name to filter on
+     * @return              An array of string which are category names
+     *                      belonging to the tag specified or else
+     *                      an empty array. 
+     */
+    catInt.getCategoryNameByTag = function(tag){
+
+        var ret = [];
+
+        // If the tag is not valid return an empty array
+        if( config.returnTags().indexOf(tag) == -1 ){
+            return [];
+        }else{
+
+            for( var cat in catDB.dB){
+                if( catDB.dB[cat].tag == tag ){
+                    ret.push(cat);
+                }
+            }
+
+            return ret;
+        }
     };
 
     /*
