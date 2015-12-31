@@ -15,6 +15,8 @@ angular.module('service.Config',[]).service('config',function(){
 
     config.returnTags = function(){ return config.tags.map(function(e){return e;});};
 
+    config.returnAccountNames = function(){ return config.accountNames.value.map(function(e){return e;}); };
+
 
 
     return config;

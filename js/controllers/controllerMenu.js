@@ -2,10 +2,10 @@
 
 angular.module('controller.menuController',
         ['service.databaseInterface','service.mainAppLinker','service.downloadFormService',
-        'service.categoryEdit','service.netPosition','service.netCashFlow','service.Setup']).controller('menuController',
+        'service.categoryEdit','service.netPosition','service.netCashFlow','service.Setup','service.balanceSheet']).controller('menuController',
         ['dBInt','mainAppLinker','downloadFormService','categoryEditService','netPosChart','netCashFlow',
-        'setup','$rootScope',
-        function(dBInt,mAppLn,dlFs,catES,netPosChart,netCashFlow,setup,$rootScope){
+        'setup','balanceSheet','$rootScope',
+        function(dBInt,mAppLn,dlFs,catES,netPosChart,netCashFlow,setup,balanceSheet,$rootScope){
 
     var self = this;
 
@@ -122,13 +122,18 @@ angular.module('controller.menuController',
 
         self.activateMen('dashboard');
 
-        // Create the net position data
-        netPosChart.createNetPosData();
-        netCashFlow.createNetCashFlow();
-
+        
         if( dBInt.hasBeenInit() ){ 
+
+            // Create the net position data
+            netPosChart.createNetPosData();
+            netCashFlow.createNetCashFlow();
+            balanceSheet.updateData();
+
+            // Singal the charts to referesh
             netPosChart.updateChart.value = !netPosChart.updateChart.value;
             netCashFlow.updateChart.value = !netCashFlow.updateChart.value;
+            balanceSheet.updateTable.value = !balanceSheet.updateTable.value;
         }
 
     }

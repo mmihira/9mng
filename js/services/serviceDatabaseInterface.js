@@ -14,6 +14,7 @@
  *  - getCategoryOfEl
  *  - getUncategorised
  *  - getAvailableYears
+ *  - getLastNYearMonthsDates
  *  - reCategorise
  *  - getLastTransaction
  *  - createNewAccount
@@ -47,6 +48,12 @@ angular.module('service.databaseInterface',
      */
     dBInt.addToDataBaseFromfileExisting = function(dataWrapper,addLog){
 
+        // prevent click twice
+        if( dB.allData.length > 0 || Object.keys(dB.dMap).length > 0){
+            addLog("Data all ready existing in database");
+            return null;
+        }
+
 
         var data = dataWrapper.data;
 
@@ -70,6 +77,7 @@ angular.module('service.databaseInterface',
             if(data[z][0] == "%accStart"){
 
                 accStart = true;
+                z++;
 
             }else{
 
@@ -202,8 +210,10 @@ angular.module('service.databaseInterface',
             z++;
         }
 
-        addLog(dataCount + " entries added to database.");
         console.log(dB.dMap);
+        a = dB.dMap;
+
+        addLog(dataCount + " entries added to database.");
 
     };
 
@@ -247,6 +257,8 @@ angular.module('service.databaseInterface',
      *                      
      */
     dBInt.addToDataBaseFromFileNew = function(dataWrapper,account,addLog){
+
+        
 
         var data = dataWrapper.data;
 
@@ -384,6 +396,7 @@ angular.module('service.databaseInterface',
 
         }
 
+
         addLog("Added " + count + " of " + tempElementVec.length + " to the database.");
         addLog("Database is balanced ? " + dBInt.checkDatabaseBalance(account));
 
@@ -516,8 +529,6 @@ angular.module('service.databaseInterface',
 
             // if non zero then not equal
             if(tLe[i-1].balance.compareTo(tLe[i].balance.subtract(tLe[i].value))){
-                console.log(i);
-                console.log(tLe);
                 balance = false;
                 break;
             }
@@ -542,6 +553,8 @@ angular.module('service.databaseInterface',
      *  nIncCat:    an array of category strings which cannot match the category of the data.
      *  incTag:     an array of tags. One of which must match 
      *  incCat :    an array of category strings, only 1 must match to be included
+     *  sign:       Either positive of negative.  If positive only transaction with positive values
+     *              are included otherwise only negative values.
      * }
      *
      * @return {array}
@@ -555,7 +568,8 @@ angular.module('service.databaseInterface',
         var filters = { 
                         'incCat' : (param.hasOwnProperty('incCat')) ? param.incCat : null,
                         'nIncCat' : (param.hasOwnProperty('nIncCat')) ? param.nIncCat : null,
-                        'incTag' : (param.hasOwnProperty('incTag')) ? param.incTag : null
+                        'incTag' : (param.hasOwnProperty('incTag')) ? param.incTag : null,
+                        'sign'  : (param.hasOwnProperty('sign')) ? param.sign : null
         };
 
         var data = [];
@@ -662,6 +676,26 @@ angular.module('service.databaseInterface',
 
                                 }
 
+                                // Ensure the transaciton matches the sign if specified
+                                if(filters['sign'] != null){
+                                    
+                                    if( filters['sign'] == 'positive'){
+
+                                        if( currEl.value.floatValue() >= 0 ){
+                                            checkArray.push(true);
+                                        }else{
+                                            checkArray.push(false);
+                                        }
+
+                                    }else if ( filters['sign'] == 'negative'){
+                                        if( currEl.value.floatValue() < 0 ){
+                                            checkArray.push(true);
+                                        }else{
+                                            checkArray.push(false);
+                                        }
+
+                                    }
+                                }
 
 
                                 check = checkArray.every(function(e){return e == true;});
@@ -753,6 +787,52 @@ angular.module('service.databaseInterface',
         return Object.keys(Years)
 
     }
+
+    /**
+     * Get the last N Year/Month values which exist in the database
+     * @param   n   The number of year month combinations to return
+     * @param   acc Which accounts to consider. If anyone of the accounts
+     *              has data for that year-month, then that year-month is returned.
+     * @return      an array of dates objects
+     */
+    dBInt.getLastNYearMonthsDates = function(n, Accs){
+
+        var ret = [];
+        var count = 0;
+        var Years = dBInt.getAvailableYears(); 
+        var Months = [11,10,9,8,7,6,5,4,3,2,1,0];
+        var tempDate = {};
+
+        // sort in descending order
+        Years.sort(function(a,b){return b-a;});
+
+        for(var acc of Accs){
+
+            for(var year of Years){
+
+                for(var month of Months){
+
+                    if( dB.dMap[acc].hasOwnProperty(year)){
+
+                        if(dB.dMap[acc][year].hasOwnProperty(month) ){
+
+                            tempDate = new Date(year,month,2,0,0,0);
+                            if( ret.indexOf(tempDate.getTime()) == -1 && count < n){
+                                ret.push(tempDate.getTime());
+                                count ++;
+                            }
+
+                        }
+                    }
+
+                }
+            }
+
+        }
+
+        return ret.map(function(e){return new Date(e);});
+
+    };
 
      /**
      * Recategorises the data overwriting any
