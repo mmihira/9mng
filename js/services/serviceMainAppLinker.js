@@ -1,6 +1,6 @@
-angular.module('service.mainAppLinker',[]).service('mainAppLinker',function(dB){
+angular.module('service.mainAppLinker',[]).service('mainAppLinker',function(){
 
-    mAppLn = {};
+    var mAppLn = {};
 
     mAppLn.hideMenu = {value:false};
     mAppLn.hideMainChoice = {value:true};

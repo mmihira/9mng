@@ -59,7 +59,7 @@ angular.module('controller.menuController',
             mAppLn.categoryPageActive = false;
         }
 
-    }
+    };
 
     self.clickCategories = function(){
 
@@ -70,7 +70,7 @@ angular.module('controller.menuController',
 
         catES.initialise();
 
-    }
+    };
 
 
     self.clickUpdate = function(){
@@ -114,7 +114,7 @@ angular.module('controller.menuController',
         self.activateMen('save');
 
 
-    }
+    };
 
     self.clickDashboard = function(){
 
@@ -136,7 +136,7 @@ angular.module('controller.menuController',
             balanceSheet.updateTable.value = !balanceSheet.updateTable.value;
         }
 
-    }
+    };
 
     self.clickSetup = function(){
 

@@ -59,7 +59,7 @@ angular.module('controller.menuController',
             mAppLn.categoryPageActive = false;
         }
 
-    }
+    };
 
     self.clickCategories = function(){
 
@@ -70,7 +70,7 @@ angular.module('controller.menuController',
 
         catES.initialise();
 
-    }
+    };
 
 
     self.clickUpdate = function(){
@@ -114,7 +114,7 @@ angular.module('controller.menuController',
         self.activateMen('save');
 
 
-    }
+    };
 
     self.clickDashboard = function(){
 
@@ -131,7 +131,7 @@ angular.module('controller.menuController',
             netCashFlow.updateChart.value = !netCashFlow.updateChart.value;
         }
 
-    }
+    };
 
     self.clickSetup = function(){
 

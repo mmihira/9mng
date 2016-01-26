@@ -16,7 +16,6 @@ angular.module('service.netCashFlow',['service.databaseInterface']).service('net
         var dataDateMap = {};
         var dataFinal = [];
         var accs = ['SAVER','NETBANK','GOAL'];
-        var tmpVal = [];
 
         for( var acc of accs){
 

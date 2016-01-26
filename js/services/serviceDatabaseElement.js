@@ -64,7 +64,7 @@ angular.module('service.databaseElement',[]).service('dBElement',function(){
             this.value = i.value;
             this.balance = i.balance;
             this.description = i.description;
-            this.category = i.category
+            this.category = i.category;
 
         }else{ 
 
@@ -98,7 +98,7 @@ angular.module('service.databaseElement',[]).service('dBElement',function(){
          */
         this.getDateAsString = function(){
             return this.date.toLocaleDateString();
-        }
+        };
 
     };
 

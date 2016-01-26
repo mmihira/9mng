@@ -161,6 +161,6 @@ angular.module("directive.netCashFlowChart",[]).directive("netCashFlow", [functi
                 }());
 
             }
-        }
+        };
 }]);
 

@@ -43,14 +43,14 @@ function(catInt,mAppLn,catES,dBInt,config,$scope){
 
         };
 
-    }()
+    }();
 
     self.toggleShowCategorised = function(){
 
         // Call this instead of the local function to reset the min and max
         catES.refreshCatTable();
 
-    }
+    };
 
     self.reCategoriseAndShow = function(){
 
@@ -60,7 +60,7 @@ function(catInt,mAppLn,catES,dBInt,config,$scope){
         // Refresh the table
         catES.refreshCatTable();
 
-    }
+    };
 
     /**
      * Removes an identifier from the 
@@ -108,7 +108,7 @@ function(catInt,mAppLn,catES,dBInt,config,$scope){
 
         self.reCategoriseAndShow();
 
-    }
+    };
 
 
     /*

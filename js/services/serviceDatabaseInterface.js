@@ -68,13 +68,12 @@ angular.module('service.databaseInterface',
         var catStart = false;
         var catcounter = 0;
         var z = 0;
-        var tempCatClass = {};
 
 
         // Find the account names first
-        while(accStart == false){
+        while(accStart === false){
 
-            if(data[z][0] == "%accStart"){
+            if(data[z][0] === "%accStart"){
 
                 accStart = true;
                 z++;
@@ -88,7 +87,7 @@ angular.module('service.databaseInterface',
 
         while(accEnd === false){
 
-            if (data[z][0] == "%accEnd")
+            if (data[z][0] === "%accEnd")
             {
                 accEnd = true;
                 z++;
@@ -103,8 +102,8 @@ angular.module('service.databaseInterface',
         }
 
         // find catstart first
-        while(catStart == false){
-            if(data[z][0] == "%catstart"){
+        while(catStart === false){
+            if(data[z][0] === "%catstart"){
 
                 catStart = true;
 
@@ -177,7 +176,7 @@ angular.module('service.databaseInterface',
 
         while(!endOfFile){
 
-            if(data[z][0] == ""){
+            if(data[z][0] === ""){
 
                 endOfFile = true;
 
@@ -210,8 +209,7 @@ angular.module('service.databaseInterface',
             z++;
         }
 
-        console.log(dB.dMap);
-        a = dB.dMap;
+        var a = dB.dMap;
 
         addLog(dataCount + " entries added to database.");
 
@@ -270,10 +268,10 @@ angular.module('service.databaseInterface',
             // We will not raise an error and instead let
             // the ledger balance check to run
             if(
-                fileRow[dB.rawDataFormat.date] == "" |
-                fileRow[dB.rawDataFormat.value] == "" |
-                fileRow[dB.rawDataFormat.description] == "" |
-                fileRow[dB.rawDataFormat.balance] == "" )
+                fileRow[dB.rawDataFormat.date] === "" ||
+                fileRow[dB.rawDataFormat.value] === "" ||
+                fileRow[dB.rawDataFormat.description] === "" ||
+                fileRow[dB.rawDataFormat.balance] === "" )
             {
                 addLog("Empty row found and ignored");
                 continue;
@@ -339,7 +337,7 @@ angular.module('service.databaseInterface',
         // If the first entry is not in the database then
         // then none of the following entries can overlap
         var startOfInput = 0;
-        if(dBInt.findMatching(tempElementVec[0]) == null){
+        if(dBInt.findMatching(tempElementVec[0]) === null){
 
             // None of the data to be input is allready in the database
 
@@ -354,7 +352,7 @@ angular.module('service.databaseInterface',
             }
         }
 
-        if(startOfInput == tempElementVec.length){
+        if(startOfInput === tempElementVec.length){
             addLog("All data currently exists in database");
             return;
         }
@@ -376,7 +374,7 @@ angular.module('service.databaseInterface',
         }else{
 
             // Check if the account exists or not
-            if( dB.dMap.hasOwnProperty(account) == false ){
+            if( dB.dMap.hasOwnProperty(account) === false ){
 
                 addLog("The specified account did not exist !");
                 return;
@@ -420,18 +418,18 @@ angular.module('service.databaseInterface',
      */
     dBInt.getLastDataAdded = function(acc){
 
-        if( dB.dMap.hasOwnProperty(acc) == false ){
+        if( dB.dMap.hasOwnProperty(acc) === false ){
             return null;
         }
 
-        if( Object.keys(dB.dMap[acc]).length == 0 ){
+        if( Object.keys(dB.dMap[acc]).length === 0 ){
             return null;
         }
 
-        var years = Object.keys(dB.dMap[acc]).map(function(x){ return parseInt(x);})
+        var years = Object.keys(dB.dMap[acc]).map(function(x){ return parseInt(x);});
         var maxYear = Math.max(...years);
 
-        var months = Object.keys(dB.dMap[acc][maxYear]).map(function(x){ return parseInt(x);})
+        var months = Object.keys(dB.dMap[acc][maxYear]).map(function(x){ return parseInt(x);});
         var maxMonth = Math.max(...months);
 
         var dBElref = dB.dMap[acc][maxYear][maxMonth].data;
@@ -475,10 +473,10 @@ angular.module('service.databaseInterface',
         for( var i of dBref.data ){
 
 
-            if( i.description == toMatch.description  &&
+            if( i.description === toMatch.description  &&
                 (!i.value.compareTo(toMatch.value)) &&
                 (!i.balance.compareTo(toMatch.balance)) &&
-                i.date.getDay() == toMatch.date.getDay()
+                i.date.getDay() === toMatch.date.getDay()
               ){
                   return {ref:i};
               }
@@ -494,7 +492,7 @@ angular.module('service.databaseInterface',
      */
     dBInt.checkDatabaseBalance = function(acc){
 
-        if( dB.dMap.hasOwnProperty(acc) == false ){
+        if( dB.dMap.hasOwnProperty(acc) === false ){
             return null;
         }
 
@@ -502,12 +500,12 @@ angular.module('service.databaseInterface',
         // Build a list of all the transactions in chronological order
         var tLe = [];
 
-        var years = Object.keys(dB.dMap[acc]).map(function(x){ return parseInt(x);})
+        var years = Object.keys(dB.dMap[acc]).map(function(x){ return parseInt(x);});
         years.sort(function(a,b){return a - b;});
 
         for(var year of years){
 
-            var months = Object.keys(dB.dMap[acc][year]).map(function(x){ return parseInt(x);})
+            var months = Object.keys(dB.dMap[acc][year]).map(function(x){ return parseInt(x);});
             months.sort(function(a,b){return a - b;});
 
             for(var month of months){
@@ -632,7 +630,7 @@ angular.module('service.databaseInterface',
                                 // If incTag is present at least one tag must match
                                 if(filters['incTag'] != null){
 
-                                    if( catRef == null){
+                                    if( catRef === null){
 
                                         checkArray.push( dNCat);
 
@@ -649,7 +647,7 @@ angular.module('service.databaseInterface',
                                 if(filters['incCat'] != null){
                                     
 
-                                    if( catRef == null){
+                                    if( catRef === null){
 
                                         checkArray.push( dNCat );
 
@@ -665,13 +663,13 @@ angular.module('service.databaseInterface',
                                 if(filters['nIncCat'] != null){
                                     
 
-                                    if( catRef == null){
+                                    if( catRef === null){
 
                                         checkArray.push( dNCat );
 
                                     }else{
 
-                                        checkArray.push( (filters['nIncCat'].indexOf(catRef.name) == -1 ) ? true : false );
+                                        checkArray.push( (filters['nIncCat'].indexOf(catRef.name) === -1 ) ? true : false );
                                     }
 
                                 }
@@ -679,7 +677,7 @@ angular.module('service.databaseInterface',
                                 // Ensure the transaciton matches the sign if specified
                                 if(filters['sign'] != null){
                                     
-                                    if( filters['sign'] == 'positive'){
+                                    if( filters['sign'] === 'positive'){
 
                                         if( currEl.value.floatValue() >= 0 ){
                                             checkArray.push(true);
@@ -687,7 +685,7 @@ angular.module('service.databaseInterface',
                                             checkArray.push(false);
                                         }
 
-                                    }else if ( filters['sign'] == 'negative'){
+                                    }else if ( filters['sign'] === 'negative'){
                                         if( currEl.value.floatValue() < 0 ){
                                             checkArray.push(true);
                                         }else{
@@ -698,11 +696,11 @@ angular.module('service.databaseInterface',
                                 }
 
 
-                                check = checkArray.every(function(e){return e == true;});
+                                check = checkArray.every(function(e){return e === true;});
 
                                 // If the check value is true then add the element to the
                                 // array to return
-                                if(check == true){
+                                if(check === true){
                                     data.push( currEl);
 
                                 }
@@ -728,7 +726,7 @@ angular.module('service.databaseInterface',
      */
     dBInt.getCategoryOfEl = function(el){
 
-        if( el.category == null){
+        if( el.category === null){
             return null;
         }else{
 
@@ -745,10 +743,10 @@ angular.module('service.databaseInterface',
     dBInt.getUncategorised = function(){
 
         return dB.allData.map(function(e){ 
-            if(e.category == null){return e;}else{return null};
+            if(e.category === null){return e;}else{return null;}
                         }).filter(function(e){ return e != null;});
 
-    }
+    };
 
     /**
      * Return an array of all the data
@@ -784,9 +782,9 @@ angular.module('service.databaseInterface',
                 }
             );
 
-        return Object.keys(Years)
+        return Object.keys(Years);
 
-    }
+    };
 
     /**
      * Get the last N Year/Month values which exist in the database
@@ -817,7 +815,7 @@ angular.module('service.databaseInterface',
                         if(dB.dMap[acc][year].hasOwnProperty(month) ){
 
                             tempDate = new Date(year,month,2,0,0,0);
-                            if( ret.indexOf(tempDate.getTime()) == -1 && count < n){
+                            if( ret.indexOf(tempDate.getTime()) === -1 && count < n){
                                 ret.push(tempDate.getTime());
                                 count ++;
                             }
@@ -895,7 +893,7 @@ angular.module('service.databaseInterface',
 
         dB.dMap[acc] = {};
 
-    }
+    };
 
 
     return dBInt;

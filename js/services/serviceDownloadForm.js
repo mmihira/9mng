@@ -40,12 +40,12 @@ angular.module('service.downloadFormService',['service.databaseInterface','servi
         }
 
         dlForm.formBehaviour[behaviour] = true;
-    }
+    };
 
 
     dlForm.changeFileName = function(newFileName){
         dlForm.fileName = newFileName;
-    }
+    };
 
     /**
      * This function is called by th downloadForm controller when
@@ -92,7 +92,7 @@ angular.module('service.downloadFormService',['service.databaseInterface','servi
 
 
             }else if(dlForm.formBehaviour.updateDatabase){
-                if( _accSelected.value == "" ){
+                if( _accSelected.value === "" ){
 
                     alert("Select a valid account");
 
@@ -116,7 +116,7 @@ angular.module('service.downloadFormService',['service.databaseInterface','servi
 
             }
         };
-    }
+    };
 
     return dlForm;
 

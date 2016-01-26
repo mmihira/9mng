@@ -26,8 +26,6 @@ angular.module("directive.transaction.table",[]).directive("transactionTable", [
 
                 var tableEl = _element.find('table');
 
-                var tempRow = {};
-
                 var dateEl = document.createElement('th');
                 dateEl.innerHTML = "Date";
 

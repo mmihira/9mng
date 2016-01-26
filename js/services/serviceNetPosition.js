@@ -31,7 +31,7 @@ angular.module('service.netPosition',['service.databaseInterface']).service('net
                 }
 
 
-                if( tmpVal.every(function(e){ return  e != null; }) ){
+                if( tmpVal.every(function(e){ return  e !== null; }) ){
 
                     
                     dataMap[yr][mn] = tmpVal

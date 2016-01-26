@@ -40,7 +40,7 @@ angular.module('service.Setup',
         mAppLn.inSetup.value = false;
         mAppLn.hideSetup.value = true;
 
-    }
+    };
 
 
     return setup;

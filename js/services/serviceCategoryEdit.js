@@ -47,7 +47,7 @@ function(catInt,dBInt){
         }
 
         // sort the data
-        data.sort(function(a,b){ return a.date.getTime() - b.date.getTime();})
+        data.sort(function(a,b){ return a.date.getTime() - b.date.getTime();});
 
         catES.filterParam.minValue = data[0].date.getTime();
         catES.filterParam.maxValue = data[data.length-1].date.getTime();
@@ -83,7 +83,7 @@ function(catInt,dBInt){
 
 
 
-    }
+    };
 
     /**
      * Refreshes the category table to include
@@ -149,13 +149,13 @@ function(catInt,dBInt){
 
         var temp =  catInt.getExistingCategoryNames();
 
-        for( i of temp){
+        for( var i of temp){
 
             catES.catNames.push(i);
 
         }
 
-    }
+    };
 
 
     /*

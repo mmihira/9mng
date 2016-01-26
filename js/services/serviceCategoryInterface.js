@@ -113,7 +113,7 @@ angular.module('service.categoryInterface',['service.categoryClass','service.cat
 
         return Object.keys(catDB.dB);
 
-    }
+    };
 
     /**
      * Adds a new category object into the database
@@ -145,7 +145,7 @@ angular.module('service.categoryInterface',['service.categoryClass','service.cat
 
                 // Also add the indentifiers into the database
                 for(var i of catIdents){
-                    catInt.addNewCategoryIdentifier(catname,i);
+                    catInt.addNewCategoryIdentifier(catName,i);
                 }
 
                 return catRef;
@@ -159,7 +159,7 @@ angular.module('service.categoryInterface',['service.categoryClass','service.cat
         }
 
 
-    }
+    };
 
     /**
      * Adds a new category identifier

@@ -33,7 +33,7 @@ angular.module('controller.downloadForm',['service.Config','service.mainAppLinke
                     // Make sure that an option is selected
                     dlFormServ.parseData($scope);
 
-                }
+                };
 
                 // Let's other controllers clear the log when necessary
                 $rootScope.$on('clearLog',function(){ self.log.length = 0;});

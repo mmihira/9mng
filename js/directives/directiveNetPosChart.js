@@ -134,6 +134,6 @@ angular.module("directive.netPosChart",[]).directive("netPosition", [function(){
                 }());
 
             }
-        }
+        };
 }]);
 
