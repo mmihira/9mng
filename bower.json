@@ -1,0 +1,30 @@
+{
+  "name": "9mng",
+  "homepage": "https://github.com/mmihira/9mng",
+  "authors": [
+    "mmihira <mmihira.w@gmail.com>"
+  ],
+  "description": "Financial Manager",
+  "main": "index.html",
+  "moduleType": [],
+  "keywords": [
+    "finance",
+    "angular"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.8",
+    "bootstrap": "~3.3.6",
+    "seiyria-bootstrap-slider": "~5.3.3",
+    "papaparse": "~4.1.2",
+    "d3": "~3.5.12"
+  }
+}
