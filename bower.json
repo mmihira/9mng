@@ -25,6 +25,7 @@
     "bootstrap": "~3.3.6",
     "seiyria-bootstrap-slider": "~5.3.3",
     "papaparse": "~4.1.2",
-    "d3": "~3.5.12"
+    "d3": "~3.5.12",
+    "jquery": "~2.2.0"
   }
 }
