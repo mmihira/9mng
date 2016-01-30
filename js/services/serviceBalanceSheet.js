@@ -11,7 +11,19 @@ angular.module('service.balanceSheet',
 
 
     /**
-     * Returns the data structure which is assigned to bals.data
+     * This function updates the service variables  bals.updateTable and bals.data
+     * bals.data looks like {data:[Object,Object,..],dates[Date Object, Date Object,...]}
+     *
+     * The date objects in bals.data.dates are the months in the column, that is they are the
+     * last 4 months in which data is available.
+     *
+     * The  Objects in bals.data.data look like :
+     *  { tag:[{category1:[v11,..v1f]},...{category2:[v21,..v2f]}]
+     *  Here tag is one of the categorty tags. Each tag contains an array of objects which look like
+     *  {category1:[v11,..v1f]}. Here category belongs to tag. v is a float value. The ordering of
+     *  v corresponds in order extactly to the dates in bals.dates. That is v11 here is the sum of all
+     *  transactions of bals.data.dates[0] under category1 which belongs to the tag key.
+     *
      */
     balS.updateData = function(){
 
@@ -20,16 +32,15 @@ angular.module('service.balanceSheet',
         var dates = dBInt.getLastNYearMonthsDates(4,['SAVER','NETBANK']);
         var accounts = config.returnAccountNames();
 
-        // Returned data must be of format
-        //  [ { tag:[{category1:[v11,..v1f]},...{category2:[v21,..v2f]}] },
-        //  ....]
         var tempData = [];
         var tempObject = {};
         var currentRef = {};
         var currentCatRef = {};
         var tempValue = {};
+        // An array of database Elements
         var tempElArray = [];
         var sign = null;
+        // An array of strings which are category names belonging to a specific tag.
         var categoryArrays = [];
 
         for( var tagName of config.returnTags().filter(function(x){return x !='Internal';}) ){
@@ -38,6 +49,7 @@ angular.module('service.balanceSheet',
             tempObject[tagName] = [];
             tempData.push(tempObject);
 
+            // Get a reference to the data for this tag. Just for clode clarity
             currentRef = tempData[tempData.length -1][tagName];
 
             // We will look at all categories. Later on modify for specific selections.
@@ -58,6 +70,7 @@ angular.module('service.balanceSheet',
                     for(var acc of accounts){
 
                         if( catName == "No Category" ){
+                           // Handle the case where transactions have no categories
                            if(tagName == 'Expenditure'){
                                sign = 'negative';
                            }else if (tagName == "Income"){
@@ -70,8 +83,11 @@ angular.module('service.balanceSheet',
                             tempElArray = dBInt.filterData([date.getFullYear()],[date.getMonth()],acc,false,{incCat:[catName]});
                         }
 
+                        // Consider adding in check code to ensure transactions are of the same sign.
+
                         for(var el of tempElArray){
 
+                            // Sum up the transactions for each month.
                             tempValue = tempValue.add(el.value); 
                         }
 

@@ -555,9 +555,10 @@ angular.module('service.databaseInterface',
      *              are included otherwise only negative values.
      * }
      *
-     * @return {array}
-     *              format is [[str type yr-mnt,BigDecimal,float value],...,]
-     *              Only the existing data is returned.
+     * @return      An array of DatabaseElement Objects which match the filters specified.
+     *              No guarantee is given on the order of the elements. The user should 
+     *              sort the array.
+     *              
      *  
      */
     dBInt.filterData = function(yrs,mn,acc,dNCat,param)
@@ -806,23 +807,26 @@ angular.module('service.databaseInterface',
 
         for(var acc of Accs){
 
-            for(var year of Years){
+            if( dB.dMap.hasOwnProperty(acc) ){
 
-                for(var month of Months){
+                for(var year of Years){
 
                     if( dB.dMap[acc].hasOwnProperty(year)){
 
-                        if(dB.dMap[acc][year].hasOwnProperty(month) ){
+                        for(var month of Months){
 
-                            tempDate = new Date(year,month,2,0,0,0);
-                            if( ret.indexOf(tempDate.getTime()) === -1 && count < n){
-                                ret.push(tempDate.getTime());
-                                count ++;
+                            if(dB.dMap[acc][year].hasOwnProperty(month) ){
+
+                                tempDate = new Date(year,month,2,0,0,0);
+                                if( ret.indexOf(tempDate.getTime()) === -1 && count < n){
+                                    ret.push(tempDate.getTime());
+                                    count ++;
+                                }
+
                             }
 
                         }
                     }
-
                 }
             }
 
