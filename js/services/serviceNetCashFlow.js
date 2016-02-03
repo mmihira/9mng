@@ -10,7 +10,13 @@ angular.module('service.netCashFlow',['service.databaseInterface']).service('net
 
     netCF.createNetCashFlow = function(){
 
-        var years = [2015];
+        // Get the latest year
+        var yearsAvail = dBInt.getAvailableYears();
+        // Sort in ascending
+        yearsAvail.sort(function(a,b){return a - b;});
+        // Get latest year possible
+        var years = [yearsAvail[yearsAvail.length-1]];
+
         var months = [0,1,2,3,4,5,6,7,8,9,10,11];
         var dataMap = {};
         var dataDateMap = {};
