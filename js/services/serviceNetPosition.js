@@ -36,16 +36,14 @@ angular.module('service.netPosition',['service.databaseInterface']).service('net
                     tmpVal.push( dBInt.getLastTransaction(yr,mn,acc) );
                 }
 
-
-                if( tmpVal.every(function(e){ return  e !== null; }) ){
-
-                    
-                    dataMap[yr][mn] = tmpVal
-                        .map(function(el){ return el.balance;})
-                        .reduce(function(prev,curr){ return prev.add( curr );})
-                        .floatValue();
-
-                }
+                dataMap[yr][mn] = tmpVal
+                    .map(function(el){ if( el !== null)
+                                       {return el.balance;}
+                                       else
+                                       {return new BigDecimal("0.0");} 
+                                     })
+                    .reduce(function(prev,curr){ return prev.add( curr );})
+                    .floatValue();
 
             }
 
