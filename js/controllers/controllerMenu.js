@@ -148,5 +148,24 @@ angular.module('controller.menuController',
 
     };
 
+    self.clickExample = function(){
+
+        dBInt.addToDataBaseFromfileExisting(   
+                            {data:NmngExampleData},
+                            (function(){
+                                return function(msg){
+                                    console.log(msg);
+                                    };
+                            }())
+                );
+
+        dBInt.reCategorise()
+
+        mAppLn.inSetup.value = false;
+
+        self.clickDashboard();
+
+    };
+
 
 }]);
