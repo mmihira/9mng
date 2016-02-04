@@ -7,6 +7,7 @@
     <!-- build:js scripts/main.js -->
     <!-- endbuild -->
     <script type="text/javascript" src="js/bigdecimal.js"></script>
+    <script type="text/javascript" src="js/example.js"></script>
     <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
 
     <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -94,6 +95,10 @@
 
                        <li ng-hide="!menC.inSetup.value" ng-class="menC.menActive.download" ng-click="menC.clickDownload()">
                         <a href='#'><span>Download</span></a></li>
+
+                       <li ng-hide="!menC.inSetup.value" ng-class="menC.menActive.example" ng-click="menC.clickExample()">
+                        <a href='#'><span>Example</span></a></li>
+
 
                        <li ng-hide="menC.inSetup.value" ng-class="menC.menActive.update" ng-click="menC.clickUpdate()">
                          <a href="#"><span>Update</span></a></li>
