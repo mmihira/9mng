@@ -98,8 +98,6 @@ angular.module("directive.balance.sheet",[]).directive("balanceSheet", [function
 
             }();
 
-            console.log(scope);
-
             scope.$watch('updateTable.value',function(){ scope.refreshTable();});
             
         }
