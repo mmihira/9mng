@@ -21,19 +21,24 @@ angular.module('service.mainAppLinker',[]).service('mainAppLinker',function(){
     mAppLn.categoryPageActive = false;
 
     mAppLn.hideSetup = {value:false};
+
+    mAppLn.hideExample = {value:true};
     
     mAppLn.inSetup = {value:true};
+
 
 // These variables controll the styling for which menue is currently active
     mAppLn.menActive = {download : "",
                       update : "",
                       dashboard : "",
+                      example:"",
                       categories : "",
                       config : "",
                       save: "",
                       setup:"active"};
 
     mAppLn.menHide = { download: mAppLn.hideDownLoadForm,
+                     example: mAppLn.hideExample,
                      dashboard: mAppLn.hideDashboard,
                      categories: mAppLn.hideCategoryEditInterface,
                      save : mAppLn.hideSave,
