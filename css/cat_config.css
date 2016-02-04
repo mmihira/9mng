@@ -1,0 +1,210 @@
+.cnfparent{
+    display: block;
+    margin: 5px auto;
+}
+
+.cnfchoicemain{
+    margin: 2px auto;
+    width: 1200px;
+    height: 100px;
+    display:block;
+}
+
+.cnfchoicebtn{
+  -webkit-box-shadow: 0px 1px 3px #666666;
+  -moz-box-shadow: 0px 1px 3px #666666;
+  box-shadow: 0px 1px 3px #666666;
+  font: 18px Tahoma, Verdana, Segoe, sans-serif;
+  color: #000000;
+  background: #d6d6d6;
+  padding: 10px 20px 10px 19px;
+  border: solid #767e82 2px;
+  text-decoration: none;
+  width:180px;
+  text-align: center;
+  display:inline-block;
+}
+
+.cnfchoicebtn:hover {
+  background: #cfd0d1;
+  text-decoration: none;
+}
+
+.cnfbtnspacer{
+    width: 25px;
+    display:inline-block;
+    
+}
+
+.cnfcatviewmain{
+    margin: 0px 0px 0px 5px;
+    width: 1055px;
+    height: inherit;
+    display:inline-block;
+    overflow:scroll;
+    white-space: nowrap;
+}
+
+.cnfcatviewparent{
+    margin: 2px auto;
+    width: 1100px;
+    height: 400px;
+    display:block;    
+}
+
+.catpanelmain{
+    margin: 0px auto;
+    padding: 0px 10px 0px 10px;
+    width: 150px;
+    //height: 450px;
+    display:inline-block;    
+}
+
+.addbutton{
+    margin: 0px 5px 0px 0px;
+    background-color:#A1ED82;
+    opacity: 0.8;
+    width: 35px;
+    height: 400px;
+    display:inline-block;    
+}
+
+.addbutton:hover{
+
+    background-color:#A1ED82;
+    opacity: 0.6;
+   
+}
+
+.titlemain{
+    margin:0px auto;
+    display: block;
+    height : 32px;
+    width:inherit;
+    text-align: center;
+    
+}
+
+.catpaneltitle{
+    margin:0px auto;
+    display: inline-block;
+    height : 30px;
+    width:140px;
+    background-color: #99CCFF;
+    border:none; 
+    text-align: center;
+    float:left
+
+}
+
+.catdeletebutton{
+    width : 10px;
+    margin:0px auto;
+    height : 32px;
+    display: inline-block;
+    background-color: #99CCFF;
+    text-align: center;
+    float:right
+    
+}
+
+.catdeletebutton:hover{
+    background-color:#A1ED82;
+}
+.taginput{
+    
+    width: 120px;
+    display :block;
+    margin: 2px auto;
+    background: #F9FCFF;
+    border:none; 
+    text-align: center;
+    clear:both
+    //outline:solid 10px silver;
+}
+
+.taginput:hover{
+    //outline:solid 10px red;
+    background: #CCFFCC;
+}
+
+.titledivtable{
+    margin: 0px auto;
+    height:inherit;
+    width:inherit;
+    display:table;
+    
+}
+
+.titledivtablecell{
+    margin: 0px auto;
+    height:inherit;
+    width:inherit;
+    display: table-cell;
+    text-align:center; 
+    vertical-align:middle;
+    font-weight: bold;
+    
+}
+
+
+
+.catterms{
+    resize: none;
+    overflow:auto;
+    width:144px;
+    
+}
+
+.cnf_spacer1{
+    
+    margin:auto;
+    display:block;
+    width:inherit;
+    height:25px;    
+    
+}
+
+.cnf_cattabletitle{
+    
+    margin:auto;
+    display:block;
+    width:inherit;
+    height:25px;
+    text-align: center;
+    font: 18px Tahoma, Verdana, Segoe, sans-serif;
+    
+}
+
+.cnf_cateditpaneltitle{
+    
+    margin:auto;
+    display:block;
+    width:inherit;
+    height:50px;
+    text-align: center;
+    font: 18px Tahoma, Verdana, Segoe, sans-serif;
+}
+
+.cnfcattablemain{
+    margin : 0px auto;
+    display :block;
+    width : 1100px;
+    height : 600px;
+    overflow :auto;
+    
+}
+
+.cnfcattable{
+    margin:0px auto;
+    display:table;
+    width : inherit;
+}
+
+.cattablerow{
+    display:table-row;    
+}
+
+.cattablecell{
+    display:table-cell;
+}

@@ -1,0 +1,64 @@
+.save_db_exptxt {
+    display: inline;
+    margin: 0px auto;
+    width: 0px;
+    height: 0px;
+    background-color:azure;
+    text-align: left;
+    float:right;
+    font-family: Tahoma, Verdana, Segoe, sans-serif;
+}
+
+.save_dbmain{
+    display: block;
+    margin: 5px auto;
+    width: 0px;
+    height: 0px;
+    background-color:azure;
+    font-family: Tahoma, Verdana, Segoe, sans-serif;
+}
+
+.save_db_file_main{
+    display: inline;
+    margin: 0px auto;
+    width: 0px;
+    height: 0px;
+    background-color:azure;
+    float:left
+}
+
+.save_db_filediv{
+    display: inline;
+    margin: 0px auto;
+    width: 0px;
+    height: 0px;
+    background-color:azure;
+    
+}
+
+.save_db_file_btn_div{
+    display: block;
+    margin: 0px auto;
+    width: 0px;
+    height: 0px;
+    background-color:azure;
+}
+
+.save_consolemain{
+    display:block;
+    margin: 5px auto;
+    width: 0px;
+    height: 0px;
+    overflow: auto;
+    background-color:azure;
+    font-family: Tahoma, Verdana, Segoe, sans-serif;
+}
+
+.saveGotoDashboardDiv{
+    display: block;
+    margin: 5px auto;
+    width: 0px;
+    height: 0px;
+    //border: solid white 1px;
+    text-align: left
+}

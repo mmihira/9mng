@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+
+
+    <script type="text/javascript" src="js/bigdecimal.js"></script>
+    <script type="text/javascript" src="js/example.js"></script>
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
+
+    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="bower_components/papaparse/papaparse.min.js"></script>
+    <script type="text/javascript" src="bower_components/seiyria-bootstrap-slider/js/bootstrap-slider.js"></script>
+    <script type="text/javascript" src="bower_components/d3/d3.min.js"></script>
+
+    <script type="text/javascript" src="js/app.js"></script>
+
+    <script type="text/javascript" src="js/services/customDate.js"></script>
+    <script type="text/javascript" src="js/services/serviceMainAppLinker.js"></script>
+    <script type="text/javascript" src="js/services/serviceCategoryClass.js"></script>
+    <script type="text/javascript" src="js/services/serviceCategoryInterface.js"></script>
+    <script type="text/javascript" src="js/services/serviceCategoryDatabase.js"></script>
+    <script type="text/javascript" src="js/services/serviceDownloadForm.js"></script>
+    <script type="text/javascript" src="js/services/serviceDatabaseElement.js"></script>
+    <script type="text/javascript" src="js/services/serviceCSVFormat.js"></script>
+    <script type="text/javascript" src="js/services/serviceDatabase.js"></script>
+    <script type="text/javascript" src="js/services/serviceDatabaseInterface.js"></script>
+    <script type="text/javascript" src="js/services/serviceCategoryEdit.js"></script>
+    <script type="text/javascript" src="js/services/serviceCSVWriter.js"></script>
+    <script type="text/javascript" src="js/services/serviceNetPosition.js"></script>
+    <script type="text/javascript" src="js/services/serviceNetCashFlow.js"></script>
+    <script type="text/javascript" src="js/services/serviceConfig.js"></script>
+    <script type="text/javascript" src="js/services/serviceSetup.js"></script>
+    <script type="text/javascript" src="js/services/serviceBalanceSheet.js"></script>
+
+    <script type="text/javascript" src="js/controllers/controllerDownloadForm.js"></script>
+    <script type="text/javascript" src="js/controllers/controllerMenu.js"></script>
+    <script type="text/javascript" src="js/controllers/controllerMainChoice.js"></script>
+    <script type="text/javascript" src="js/controllers/controllerCategoryEdit.js"></script>
+    <script type="text/javascript" src="js/controllers/controllerDashboard.js"></script>
+    <script type="text/javascript" src="js/controllers/controllerSave.js"></script>
+    <script type="text/javascript" src="js/controllers/controllerSetup.js"></script>
+
+    <script type="text/javascript" src="js/directives/directiveDownloadFormInput.js"></script>
+    <script type="text/javascript" src="js/directives/directiveCategoryNamePanel.js"></script>
+    <script type="text/javascript" src="js/directives/directiveFilterSlider.js"></script>
+    <script type="text/javascript" src="js/directives/directiveTransactionDisplayTable.js"></script>
+    <script type="text/javascript" src="js/directives/directiveNetPosChart.js"></script>
+    <script type="text/javascript" src="js/directives/directiveNetCashFlowChart.js"></script>
+    <script type="text/javascript" src="js/directives/directiveBalanceSheet.js"></script>
+
+
+    <!-- Menu from http://cssmenumaker.com/menu/simple-responsive-menu -->
+
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="bower_components/seiyria-bootstrap-slider/css/bootstrap-slider.css" rel="stylesheet">
+    <link href="css/inputTypeCss.css" rel="stylesheet">
+    <link href="css/menuStyle.css" rel="stylesheet">
+    <link href="css/jumbo.css" rel="stylesheet">
+    <link href="css/mainChoiceBtn.css" rel="stylesheet">
+    <link href="css/panelStyles.css" rel="stylesheet">
+    <link href="css/categoryPage.css" rel="stylesheet">
+    <link href="css/dashboard.css" rel="stylesheet">
+
+    <title></title>
+</head>
+<body>
+    <header id="jumbo" class="jumbotron">
+        <!-- Main component for a primary marketing message or call to action -->
+
+        <div class="container">
+            <div class="row row-content">
+                <div class="col-xs-12 col-sm-8">
+                    <h1>9mng</h1>
+                </div>
+            </div>
+        </div>
+        
+    </header>
+    
+
+    <div class="container" ng-app="app">
+
+        <!-- MENU -->
+        <div class="row">
+            <div id='cssmenu' ng-controller="menuController as menC"  >
+                    <ul ng-hide="menC.hideMenu.value">
+                       <li ng-hide="!menC.inSetup.value" ng-class="menC.menActive.setup" ng-click="menC.clickSetup()">
+                        <a href='#'><span>Setup</span></a></li>
+
+                       <li ng-hide="!menC.inSetup.value" ng-class="menC.menActive.download" ng-click="menC.clickDownload()">
+                        <a href='#'><span>Download</span></a></li>
+
+                       <li ng-hide="!menC.inSetup.value" ng-class="menC.menActive.example" ng-click="menC.clickExample()">
+                        <a href='#'><span>Example</span></a></li>
+
+
+                       <li ng-hide="menC.inSetup.value" ng-class="menC.menActive.update" ng-click="menC.clickUpdate()">
+                         <a href="#"><span>Update</span></a></li>
+
+                       <li ng-hide="menC.inSetup.value" ng-class="menC.menActive.dashboard" ng-click="menC.clickDashboard()">
+                        <a href='#'><span>Dashboard</span></a></li>
+
+                       <li ng-hide="menC.inSetup.value" ng-click="menC.clickCategories()"><a href='#'><span>Categories</span></a></li>
+                       <li ng-hide="menC.inSetup.value" ><a href='#'><span>Config</span></a></li>
+                       <li ng-hide="menC.inSetup.value" class="last ng-class:menC.menActive.save;" ng-click="menC.clickSave()" >
+                       <a href='#'><span>Save</span></a></li>
+                    </ul>
+            </div>
+        </div>
+
+        <!-- MAINCHOICE -->
+        <div class="row" ng-controller="mainChoice as manC">
+            <div ng-hide="manC.hide.value">
+                <div style="padding:20px"></div>
+                <button class="btn btn-lg btn-mainChoice" ng-click="manC.clickLoadFromFile()">Load from file</button>
+                <button class="btn btn-lg btn-mainChoice" ng-click=>Create new</button>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div style="padding:20px"></div>
+        </div>
+
+
+        <!-- Download Form -->
+        <div ng-controller="downloadFormController as dFc">
+
+            <div ng-hide="dFc.hideDownLoadForm.value">
+
+                 <div class="row">
+                     <div class="col-sm-12" >
+                        <form ng-submit="dFc.onSubmitCallBack()">
+                            <div class="form-group row">
+                                        <update-label></update-label>
+                            </div>
+
+                            <div class="form-group row " ng-hide="dFc.hideDownLoadFormAcc.value">
+                                    <label class="col-sm-2 form-control-label" for="accountTypeSelection">Account Type</label>
+                                    <div class="col-lg-7">
+                                        <select class=" form-control c-select" ng-model="dFc.selectedAccountName.value">
+                                            <option ng-repeat="acc in dFc.accountNames.value" value={{acc}}>{{acc}}</option>
+                                        </select>
+                                    </div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                    <button type="submit" class="btn btn-primary">Download</button>
+                                </div>
+                            </div>
+                        </form>
+                     </div>
+                 </div>
+
+                 <br>
+
+                 <div class="row">
+                     <div class="col-sm-12">
+                         <div class="panel panel-default">
+                             <div class="panel-heading panel-title">
+                                 Log
+                             </div>
+                             <div class="panel-body" style="height:500px;overflow:auto" >
+                                     <div ng-repeat="i in dFc.log">
+                                         <p> - {{ i }} </p>
+                                     </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+
+             </div>
+
+         </div>
+
+         
+         <!-- The Category View-->
+         <div class="row" ng-controller="categoryEditController as cEC">
+             <div ng-hide="cEC.hide.value">
+                 <div class="col-xs-5">
+
+                    <div class="panel panel-default">
+                        <div class="panel-body reducePadding">                    
+                            <p><h4> New Category </h4> </p>
+                             <form class="form">
+                                 <div class="form-group row">
+
+                                    <div class="col-xs-5 reducePaddingForm">
+                                        <input type="text" class="form-control" id="newCat" placeholder="Name" ng-model="cEC.newCategory">
+                                    </div>
+
+                                    <div class="col-xs-3 reducePaddingForm">
+                                        <select class="form-control" ng-model="cEC.selectedTag">
+                                          <option ng-repeat="sel in cEC.allowedTags" value={{sel}}>{{sel}}</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-xs-1 reducePaddingForm">
+                                      <button type="submit" class="btn btn-default" ng-click="cEC.addNewCategory()">Add new</button>
+                                    </div>
+
+                                </div>
+                             </form>
+                        </div>
+                     </div>
+
+
+                     <div class="panel panel-default">
+                        <div class="panel-body catView">                    
+                             <div class="panel-group" id="categoryNames" aria-multiselectable="true">
+                                 <div ng-repeat="n in cEC.catNames | orderBy:'toString()'">
+
+                                     <div class="panel panel-default">
+                                         <div class="panel-heading" role="tab" id={{n}}>
+                                            <div class="panel-title catName">
+                                                <a name={{n}} category-name categoryNameAttribute role="button" data-toggle="collapse" data-parent="#categoryNames" href="#collapse{{n}}"
+                                                  area-expanded="true" aria-controls={{n}}>
+                                                {{ n }}
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                        <div id="collapse{{n}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby={{n}}>
+                                          <div class="panel-body">
+                                              <p>Tag : {{cEC.returnCatTag(n)}} </p>
+                                          </div>
+                                        </div>
+
+                                      </div>
+                                      <div style="padding:5px"></div>
+
+                                 </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                 </div>
+
+                 <div class="col-xs-7">
+
+                    <div class="panel panel-default">
+                        <div class="panel-body reducePadding">                    
+                            <p><h4>New identifier for {{cEC.currCatName.value}}:</h4></p>
+                             <form class="form">
+                                 <div class="form-group row">
+
+                                    <div class="col-xs-4 reducePaddingForm">
+                                      <input type="text" class="form-control" id="newIdent" placeholder="Identifier" ng-model ="cEC.newIdentifier">
+                                  </div>
+
+                                    <div class="col-xs-4 reducePaddingForm">
+                                      <button type="submit" class="btn btn-default" ng-click="cEC.addNewIdentifier()">Add new</button>
+                                  </div>
+                                </div>
+                             </form>
+                        </div>
+                     </div>
+
+
+                     <div class="catView">
+                         <table class="table table-hover table-condensed">
+                             <tr>
+                                 <th>Category Identifiers</th>
+                             </tr>
+                             <tr ng-repeat="i in cEC.catIdentifiers | orderBy:'toString()'">
+                                <td>
+                                    {{ i }}
+                                </td>
+                                <td>
+                                    <button class="btn btn-default btn-xs" ng-click="cEC.removeIdentifier(i)">x</button>
+                                </td>
+                            </tr>
+                         </table>
+                    </div>
+                 </div>
+
+                 <div class="col-xs-12">
+
+                    <div class="panel panel-default">
+                        <div class="panel-body reducePadding">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <date-filter id="test" on-change=cEC.refreshTable filter-param=cEC.filterParam></date-filter>
+                                </div>
+                                <div class="col-xs-3">
+                                    <label class="checkbox-inline">
+                                    <input type="checkbox" id="showOnlyCat" ng-model="cEC.hideCategorised.value" ng-change="cEC.toggleShowCategorised()">
+                                    Hide Categorised
+                                    <label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                 </div>
+
+                 <div class="col-xs-12">
+
+                    <div class="catView">
+
+                        <transaction-table table-data=cEC.tableData></transaction-table>
+                    </div>
+
+
+
+                 </div>
+             </div>
+
+        </div>
+
+        <div class='row' ng-controller='controllerSave as sv'>
+
+            <div ng-hide="sv.hideSave.value">
+
+                <button type="button" class="btn-primary" ng-click="sv.save()">click</button>
+            </div>
+
+        </div>
+
+         <!-- Dashboard -->
+         <div class="row" ng-controller="dashBoardController as dSC">
+            <div ng-hide="dSC.hideDashboard.value">
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body reducePadding netBalancePanel">                    
+                            <div id="netPosition">
+                                <net-position data=dSC.netPosData update=dSC.updateNP dimensions=dSC.dimensions ></net-position>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body reducePadding netBalancePanel">                    
+                            <div id="netCashFlow">
+                                <net-cash-flow data=dSC.netCashFlowData update=dSC.updateNCF dimensions=dSC.dimensions ></net-cash-flow>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <balance-sheet table-data='dSC.balanceData' update-table='dSC.updateBS'></balance-sheet>
+
+                </div>
+
+            </div>
+         </div>
+
+         <div class="row" ng-controller="setupControl as sCn" ng-hide="sCn.hide.value">
+            <div class="panel panel-default">
+                <div class="panel-body">                    
+
+                    <div class="row">
+                        <div class="col-sm-12">
+
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <div class="col-sm-2">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        Use this form to create a new database.
+                                        <br>
+                                        Click the download button in the menu 
+                                        to download an existing file
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="UserName" class="col-sm-2 control-label">User name:</label>
+                                    <div class="col-sm-4">
+                                        <input type="text"  class="form-control" id="UserName"></input>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="AccName" class="col-sm-2 control-label">
+                                        Add new account:</label>
+                                    <div class="col-sm-4">
+                                        <input type="text"  class="form-control" id="AccName" ng-model="sCn.accountName.value"></input>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button class="btn btn-default" ng-click="sCn.clickAddAccount()">Add</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-4">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">                    
+                                                <div ng-repeat="newacc in sCn.newAccountNames.values">{{newacc}}<br></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-4">
+                                        <button class="btn btn-default" ng-click="sCn.createNewDatabase()">Create</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+         </div>
+
+
+
+    </div>
+    
+</body>
+</html>

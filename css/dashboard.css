@@ -1,0 +1,110 @@
+/************************* NetBalance      ******************************/
+
+.netBalancePanel {
+
+    height: 400px;
+
+}
+
+
+
+
+
+
+/************************* D3 SVG CSS ELEMTENTS *************************/
+
+.bar {
+        fill: steelblue;
+    }
+
+.bar:hover {
+    fill: brown;
+}
+
+.axis {
+    font: 10px sans-serif;
+}
+
+.bartext{
+    font: 10px sans-serif;
+    font-weight: bold;
+    color: #FFFFFF;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.x.axis path {
+    display: none;
+}
+
+.netposline{
+    stroke:steelblue;
+    stroke-width:2;
+}
+
+
+/************************* CASH FLOW STATMENT *************************/
+
+
+.cftitle{
+    display:block;
+}
+
+.cftable{
+   // border:solid #767e82 2px;;
+    padding: 5px 10px;
+}
+
+.cfTableRow1{
+    background: WhiteSmoke;
+    
+}
+
+.cfTableColHeader{
+    //background: SteelBlue;
+    color: black;
+    font-weight: bold;
+    padding: 5px;
+    //border-bottom: 2px solid black;
+    text-align:center;
+}
+
+.netPositionStyle{
+    background: #FFA347;
+    color: black;
+    font-weight: bold;
+    padding: 5px;
+    text-align:center;
+    font-size:18px;
+    
+}
+
+.cfTableRow3cell{
+    background: SteelBlue;
+    color: white;
+    font-weight: bold;
+    padding: 5px;
+    border-bottom: 2px solid black;
+}
+
+.cftableleftspacecol{
+    width:25px;
+}
+.cftablevalel{
+    width:50px;
+    height:20px;
+    text-align:center;
+    padding: 5px 8px;
+    background: WhiteSmoke;
+}
+
+.cftableleftcol{
+    text-align: left;
+}
+
+

@@ -1,0 +1,45 @@
+.btn-mainChoice { 
+  color: #000000; 
+  background-color: #EEEEEE; 
+  border-color: #EEEEEE; 
+} 
+ 
+.btn-mainChoice:hover, 
+.btn-mainChoice:focus, 
+.btn-mainChoice:active, 
+.btn-mainChoice.active, 
+.open .dropdown-toggle.btn-mainChoice { 
+  color: #000000; 
+  background-color: #FCEFEF; 
+  border-color: #EEEEEE; 
+} 
+ 
+.btn-mainChoice:active, 
+.btn-mainChoice.active, 
+.open .dropdown-toggle.btn-mainChoice { 
+  background-image: none; 
+} 
+ 
+.btn-mainChoice.disabled, 
+.btn-mainChoice[disabled], 
+fieldset[disabled] .btn-mainChoice, 
+.btn-mainChoice.disabled:hover, 
+.btn-mainChoice[disabled]:hover, 
+fieldset[disabled] .btn-mainChoice:hover, 
+.btn-mainChoice.disabled:focus, 
+.btn-mainChoice[disabled]:focus, 
+fieldset[disabled] .btn-mainChoice:focus, 
+.btn-mainChoice.disabled:active, 
+.btn-mainChoice[disabled]:active, 
+fieldset[disabled] .btn-mainChoice:active, 
+.btn-mainChoice.disabled.active, 
+.btn-mainChoice[disabled].active, 
+fieldset[disabled] .btn-mainChoice.active { 
+  background-color: #EEEEEE; 
+  border-color: #EEEEEE; 
+} 
+ 
+.btn-mainChoice .badge { 
+  color: #EEEEEE; 
+  background-color: #000000; 
+}
