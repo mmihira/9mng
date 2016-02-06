@@ -1,6 +1,6 @@
 /**
  * The category edit service is injected by the categoryEdit controller
- * and the categoryName derective. It contains functions necessary on
+ * and the categoryName directive. It contains functions necessary for
  * the category edit page.
  */
 angular.module('service.categoryEdit',['service.categoryInterface','service.databaseInterface']).service('categoryEditService',[
@@ -12,7 +12,7 @@ function(catInt,dBInt){
     // The names of the categories on the left panel
     catES.catNames = [];
 
-    // The identyfying strings for the currently selected
+    // The identifying strings for the currently selected
     // category
     catES.catIdentifiersShown = [];
 
@@ -31,7 +31,11 @@ function(catInt,dBInt){
             maxValue:"100",
             id:"test"};
 
-    // Setup the filter
+    /**
+     * This function is called by catES.refreshCatTable
+     * and catES.initialise.
+     * @param   hideCategorised     Whether categorised transaction should be hidden or not.
+     */
     catES.setupFilter = function(hideCategorised){
 
         var data = [];
@@ -141,8 +145,14 @@ function(catInt,dBInt){
 
     };
 
+    /**
+     * Updates the category names.
+     * Called when the application is first intialised and when the user
+     * adds a new category.
+     */
     catES.updateCatNames = function(){
 
+        // By setting the length to 0 we ensure the reference to the array is retained.
         catES.catNames.length = 0;
 
         catES.catIdentifiersShown.length = 0;
@@ -178,10 +188,6 @@ function(catInt,dBInt){
         catES.setupFilter(true);
 
     };
-
-
-
-
 
     return catES;
 

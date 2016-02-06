@@ -1,3 +1,8 @@
+/**
+ * This service is used to determine which of the menues is currently active.
+ * State information about which elements in the application are hidden are included here.
+ * Functions for hiding particular parts of the app are also here.
+ */
 angular.module('service.mainAppLinker',[]).service('mainAppLinker',function(){
 
     var mAppLn = {};
@@ -6,12 +11,9 @@ angular.module('service.mainAppLinker',[]).service('mainAppLinker',function(){
     mAppLn.hideMainChoice = {value:true};
     mAppLn.hideDownLoadForm = {value:true};
 
-    // This two variables show how the 
     mAppLn.hideDownLoadFormAcc = {value:true};
     mAppLn.hideDashboard = {value:false};
 
-
-    // For the category
     mAppLn.hideCategoryEditInterface = {value:true};
 
     mAppLn.hideDashboard = {value:true};
@@ -27,7 +29,7 @@ angular.module('service.mainAppLinker',[]).service('mainAppLinker',function(){
     mAppLn.inSetup = {value:true};
 
 
-// These variables controll the styling for which menue is currently active
+    // These variables controll the styling for which menue is currently active.
     mAppLn.menActive = {download : "",
                       update : "",
                       dashboard : "",
@@ -37,6 +39,11 @@ angular.module('service.mainAppLinker',[]).service('mainAppLinker',function(){
                       save: "",
                       setup:"active"};
 
+    /**
+     * This objects is used to determine which part of the application
+     * is visible at any one time. The menue controller will call this
+     * function to hide or show a menue.
+     */
     mAppLn.menHide = { download: mAppLn.hideDownLoadForm,
                      example: mAppLn.hideExample,
                      dashboard: mAppLn.hideDashboard,
@@ -53,6 +60,7 @@ angular.module('service.mainAppLinker',[]).service('mainAppLinker',function(){
      * Hides all the sections except that
      * which is specied in the parameter
      * except.
+     * @param except  The menu item that won't be hidden.
      */ 
     mAppLn.hideAllExcept = function(except){
 
