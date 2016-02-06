@@ -1,19 +1,21 @@
 # 9mng
 
-An offline financial manager, found [here](https://mmihira.github.io/9mng).
-Made it to learn some javascript,html,css and frontend frameworks.
+An open source, single page, offline financial manager, found [here](https://mmihira.github.io/9mng). 
 
 Made using AngularJS, HTML5, D3, PapaParse, and Bootstrap.
 
 ## Usage
 
-- Setup a new database in the app, by adding at least one account.
-- Download your financial data in .csv format.
-- Upload the data into the app in the update tab.
-- View the finacial dashboard in the dasboard tab.
-- Categorise the data as required.
-- Finally, save your account. The resulting
-  text file can be opened again using the app.
+- To view a demo using an example database click on Example.<br>
+
+- To setup a new database add at least one account in the start page<br>
+  and then click the create button.<br>
+- Download your financial data in .csv format.<br>
+- Upload the data into the app in the update tab.<br>
+- View the finacial dashboard in the dashboard tab.<br>
+- Categorise the data as required in the categories tab.<br>
+- Finally, save your account. The resulting<br>
+  text file can be opened again using the app.<br>
 
 ## How to Build
 
