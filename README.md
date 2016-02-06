@@ -9,7 +9,7 @@ Made using AngularJS, HTML5, D3, PapaParse, and Bootstrap.
 - To view a demo using an example database click on Example.<br>
 
 - To setup a new database add at least one account in the start page<br>
-  and then click the create button.<br>
+  and then click the create button.
 - Download your financial data in .csv format.<br>
 - Upload the data into the app in the update tab.<br>
 - View the finacial dashboard in the dashboard tab.<br>
