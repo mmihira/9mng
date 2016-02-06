@@ -6,16 +6,14 @@ Made using AngularJS, HTML5, D3, PapaParse, and Bootstrap.
 
 ## Usage
 
-- To view a demo using an example database click on Example.<br>
-
-- To setup a new database add at least one account in the start page<br>
-  and then click the create button.
-- Download your financial data in .csv format.<br>
-- Upload the data into the app in the update tab.<br>
-- View the finacial dashboard in the dashboard tab.<br>
-- Categorise the data as required in the categories tab.<br>
-- Finally, save your account. The resulting<br>
-  text file can be opened again using the app.<br>
+- To view a demo using an example database click on Example.
+- To setup a new database add at least one account in the start page and then click the create button.
+- Download your financial data in .csv format.
+- Upload the data into the app in the update tab.
+- View the finacial dashboard in the dashboard tab.
+- Categorise the data as required in the categories tab.
+- Finally, save your account. The resulting
+  text file can be opened again using the app.
 
 ## How to Build
 
